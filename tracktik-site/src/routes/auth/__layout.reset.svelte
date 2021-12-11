@@ -1,20 +1,24 @@
-<script lang="ts">
-    import '$lib/js/media-theme';
-    import '$lib/css/sanitize.css';
-    import '$lib/css/themes/default/index.css';
+<script context="module">
+	import { init } from '$lib/i18n';
 
-    import { browser } from '$app/env';
-    import { goto } from '$app/navigation';
-    import { domain } from '$lib/stores/portal';
-    if (browser && !$domain) {
-        goto('/auth/setup');
-    }
+	export async function load({session}) {
+	  await init(session);
+	  return {};
+	}
 </script>
+<script lang="ts">
+	import '$lib/js/media-theme';
+	import '$lib/css/sanitize.css';
+	import '$lib/css/themes/default/index.css';
+
+	import { t } from '$lib/i18n';
+</script>
+
+<svelte:head><title>{$t('page.auth.title')}</title></svelte:head>
+
+<main>
+	<slot />
+</main>
 
 <style lang="css">
 </style>
-
-<h1>AUTH LAYOUT</h1>
-<main>
-    <slot></slot>
-</main>

@@ -1,0 +1,21 @@
+{
+	"common": {
+		"form": {
+			"submit": "Submit"
+		}
+	},
+	"page": {
+		"auth": {
+			"title": "Login Into TrackTik UI",
+			"enter_domain": "Enter Domain",
+			"enter_username": "Enter username",
+			"enter_password": "Enter password"
+		},
+		"layout": {
+			"title": "TrackTik UI"
+		},
+		"index": {
+			"title": "Welcome to TrackTik UI"
+		}
+	}
+}
