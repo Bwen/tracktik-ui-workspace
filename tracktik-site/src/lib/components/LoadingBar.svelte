@@ -25,8 +25,10 @@
     .bar {
         border: 1px solid #EEE;
         position: relative;
-        height: 10px;
         overflow: hidden;
+        width: 100%;
+        height: 100%;
+        border:none;
     }
 
     .inner-bar {

@@ -4,6 +4,7 @@
     import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
     import { parseAttributes } from '$lib/js/attributeProps';
     import Link from '$lib/components/Link.svelte';
+    import OutClick from 'svelte-outclick';
     import { createEventDispatcher, onMount } from "svelte";
 
     const dispatch = createEventDispatcher();
@@ -16,8 +17,8 @@
     export let placeholder = '';
     export let data = {};
     let selectedValue;
-    let selectWrapper;
     let formInput;
+    let optionsOpen = false;
     let commonAttributes: any = {};
     $: {
         commonAttributes = parseAttributes({id, css, data});
@@ -36,8 +37,8 @@
         })
     }
 
-    function toggleOptions() {
-        selectWrapper.classList.toggle('open');
+    function toggleOptions(event) {
+        optionsOpen = optionsOpen ? false : true;
     }
 
     /**
@@ -49,26 +50,28 @@
         selectedValue.innerText = option.querySelector('.text').innerText;
         formInput.value = option.getAttribute('data-value');
         dispatch('input', formInput.value);
-        selectWrapper.classList.remove('open');
+        optionsOpen = false;
     }
 </script>
 
-<div class="wrapper-select" bind:this={selectWrapper}>
+<div class="wrapper-select" class:open={optionsOpen === true}>
     <div {...commonAttributes}>
         <input type="hidden" name="{name}" value="{value}" bind:this={formInput}/>
-        <span class="selected-arrow" on:click={toggleOptions}><Fa icon={faAngleUp} /></span>
-        <div class="input-select" bind:this={selectedValue} on:click={toggleOptions}>Enter password</div>
-        <ul>
-        {#each options as option, i}
-            <li>
-                <Link
-                    on:mousedown={onMouseDown}
-                    data={{value: option.value}}
-                    icon={option.icon}
-                >{option.text}</Link>
-            </li>
-        {/each}
-        </ul>
+        <span class="selected-arrow" on:mousedown={toggleOptions}><Fa icon={faAngleUp} /></span>
+        <div class="input-select" bind:this={selectedValue} on:mousedown={toggleOptions} />
+        <OutClick on:outclick={() => optionsOpen = false} exclude={['.input-select', '.selected-arrow']}>
+            <ul>
+            {#each options as option, i}
+                <li>
+                    <Link
+                        on:mousedown={onMouseDown}
+                        data={{value: option.value}}
+                        icon={option.icon}
+                    >{option.text}</Link>
+                </li>
+            {/each}
+            </ul>
+        </OutClick>
     </div>
 </div>
 
@@ -79,6 +82,7 @@
         display: inline-block;
         position: relative;
     }
+
     .wrapper-select ul,
     .wrapper-select li {
         list-style: none;
@@ -91,30 +95,24 @@
         overflow: hidden;
         position: absolute;
         display: block;
-        background-color: #EEE;
-        width: 12.2em;
     }
     .wrapper-select.open :global(ul) {
         opacity: 100%;
-        height: 10em;
+        height: 15em;
         z-index: 100;
         overflow-x: hidden;
+        overflow-y: auto;
+        transition: height .2s ease-in;
     }
     .wrapper-select ul :global(a) {
         text-decoration: none;
         padding: .35em;
         display: block;
     }
-    .wrapper-select ul :global(a:hover) {
-        background-color: #FFF;
-    }
 
     .wrapper-select ul :global(.fa) {
         position: absolute;
         margin: 8px;
-    }
-    .wrapper-select.open ul :global(.fa) {
-        transform: rotate(90deg);
     }
 
     .wrapper-select .selectedIcon,
@@ -130,7 +128,6 @@
     .wrapper-select.open .selected-arrow {
         transition: transform .1s ease-in;
         transform: rotate(180deg);
-        right: 0;
     }
     .wrapper-select .selectedIcon {
         padding: 4px;
@@ -151,17 +148,5 @@
     .wrapper-select .selected-arrow,
     .wrapper-select .input-select {
         cursor: pointer;
-    }
-
-    .wrapper-select .input-select {
-        width: 13.85em;
-        -moz-appearance: textfield;
-        -webkit-appearance: textfield;
-        background-color: white;
-        background-color: -moz-field;
-        border: 1px solid darkgray;
-        font: -moz-field;
-        font: -webkit-small-control;
-        padding: 6px 4px;
     }
 </style>

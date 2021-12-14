@@ -1,14 +1,15 @@
 <script lang="ts">
-    import type { Fieldset, FormField } from '$lib/@types/form.type';
-    import { FormFieldType } from '$lib/@types/form.type';
+    import type { Fieldset, Field } from '$form';
+    import { FieldType } from '$form';
+    import { t } from '$lib/i18n';
 
     import { v4 as uuidv4 } from 'uuid';
     import { createEventDispatcher } from 'svelte';
 
-    import { t } from '$lib/i18n';
     import Input from './Input.svelte';
     import Select from './Select.svelte';
-    import LoadingBar from '$lib/components/LoadingBar.svelte';
+    import LoadingBar from '$components/LoadingBar.svelte';
+    import Link from '$components/Link.svelte';
 
     export let isLoading: boolean = false;
     export let error: string = '';
@@ -17,68 +18,43 @@
     let formId = uuidv4();
     let sanitizedFieldsets: Fieldset[] = [];
     $: sanitizedFieldsets = sanitizeFieldsets(fieldsets);
-    
+
     const dispatch = createEventDispatcher();
     function onSubmit(event) {
         event.preventDefault();
-        dispatch('submit', {
-            form: {
-                id: formId,
-                fieldsets: sanitizedFieldsets,
-                getField(name: string): FormField {
-                    let foundField = undefined;
-                    this.fieldsets.forEach(fieldset => {
-                        fieldset.fields.forEach(field => {
-                            if (field.name == name) {
-                                foundField =  field;
-                            }
-                        });
-                    });
-
-                    return foundField;
-                },
-                setFieldError(name: string, error: string) {
-                    this.fieldsets.forEach(fieldset => {
-                        fieldset.fields.forEach(field => {
-                            if (field.name == name) {
-                                field.error = error;
-                            }
-                        });
-                    });
-                }
-            }
-        });
+        dispatch('submit', {formId, fieldsets: sanitizedFieldsets});
     }
 
-    function onValueChange(field: FormField) {
+    function onValueChange(field: Field) {
         dispatch('change', {field});
     }
 
-    function getComponentForField(field) {
+    function getComponentForField(field: Field) {
         switch (field.type) {
-            case FormFieldType.SELECT:
+            case FieldType.SELECT:
                 return Select;
                 break;
             default:
-            case FormFieldType.TEXT:
-            case FormFieldType.PASSWORD:
+            case FieldType.TEXT:
+            case FieldType.PASSWORD:
                 return Input;
                 break;
         }
     }
 
-    function getComponentProps(field: FormField) {
+    function getComponentProps(field: Field) {
         let props = JSON.parse(JSON.stringify(field));
+        delete props.validators;
 
         switch (field.type) {
-            case FormFieldType.SELECT:
+            case FieldType.SELECT:
                 delete props.type;
                 break;
             default:
-            case FormFieldType.TEXT:
+            case FieldType.TEXT:
                 props.type = 'text';
                 break;
-            case FormFieldType.PASSWORD:
+            case FieldType.PASSWORD:
                 props.type = 'password';
                 break;
         }
@@ -119,7 +95,7 @@
             <fieldset>
                 {#if fieldset.legend}<legend>{fieldset.legend}</legend>{/if}
                 {#each fieldset.fields as field}
-                <div class="wrapper-field {field.error ? 'error' : '' }">
+                <div class="wrapper-field" class:error={field.error}>
                     <section>
                         {#if field.label}<label for="{field.id}">{field.label}</label>{/if}
                         <svelte:component 
@@ -137,7 +113,9 @@
                 {/each}
             </fieldset>
         </div>
-        <slot name="submit"><input type="submit" value="{$t('common.form.submit')}" disabled={isLoading ? true : false} /></slot>
+        <slot name="submit">
+            <Link on:link-click={onSubmit} css="btn submit {isLoading ? 'disabled' : ''}">{$t('common.form.submit')}</Link>
+        </slot>
         {#if error}<div class="error">{error}</div>{/if}
         {/each}
     </form>

@@ -56,9 +56,8 @@ export default async function ({ request, resolve }) {
         'rest-session-id', 
         request.locals.sessionId,
         {
-            httpOnly: true,
+            httpOnly: false,
             maxAge: SESSION_COOKIE_TTL,
-            sameSite: 'lax',
             path: '/',
         }
     );

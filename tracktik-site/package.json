@@ -24,7 +24,7 @@
 		"svelte": "^3.44.0",
 		"svelte-check": "^2.2.6",
 		"svelte-fa": "^2.4.0",
-		"svelte-intl-precompile": "^0.6.2",
+		"svelte-outclick": "^2.6.5",
 		"svelte-preprocess": "^4.9.4",
 		"tslib": "^2.3.1",
 		"typescript": "^4.4.3"
@@ -38,7 +38,9 @@
 		"cookie": "^0.4.1",
 		"dotenv": "^10.0.0",
 		"ioredis": "^4.28.2",
+		"js-cookie": "^3.0.1",
 		"sanitize.css": "^13.0.0",
+		"svelte-i18n": "^3.3.13",
 		"uuid": "^8.3.2"
 	}
 }

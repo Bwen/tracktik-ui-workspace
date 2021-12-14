@@ -1,6 +1,5 @@
 import adapter from '@sveltejs/adapter-auto';
 import preprocess from 'svelte-preprocess';
-import precompileIntl from 'svelte-intl-precompile/sveltekit-plugin.js';
 import path from 'path';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -15,20 +14,20 @@ const config = {
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',
 		vite: {
+			server: { fs: { allow: ['locales'] } },
 			resolve: {
 				alias: {
 					$lib: path.resolve('./src/lib'),
+					$components: path.resolve('./src/lib/components'),
 					$stores: path.resolve('./src/lib/stores'),
+					$locales: path.resolve('./locales'),
+					$form: path.resolve('./src/lib/js/form'),
+					"@rest": path.resolve('./tt-rest'),
+					"@types": path.resolve('./src/lib/@types'),
 				},
 			},
 		},
 	},
-	vite: {
-		plugins: [
-			precompileIntl('locales')
-			// precompileIntl('locales', '$myprefix') // also you can change import path prefix for json files ($locales by default)
-		]
-	}
 };
 
 export default config;

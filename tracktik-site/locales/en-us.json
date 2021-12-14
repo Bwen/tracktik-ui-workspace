@@ -1,0 +1,29 @@
+{
+	"common": {
+		"form": {
+			"submit": "Submit",
+			"errors": {
+				"invalid-field": "Invalid {fieldname}",
+				"invalid-not-blank": "{fieldname} cannot be blank",
+				"invalid-domain": "Invalid domain name syntax"
+			}
+		}
+	},
+	"page": {
+		"auth": {
+			"title": "Login Into TrackTik UI",
+			"enter_domain": "Enter Domain",
+			"enter_username": "Enter username",
+			"enter_password": "Enter password",
+			"invalid_credentials": "Invalid credentials"
+		},
+		"layout": {
+			"title": "TrackTik UI",
+			"darkmode": "Light/Dark mode",
+			"logout": "Logout"
+		},
+		"index": {
+			"title": "Welcome to TrackTik UI"
+		}
+	}
+}

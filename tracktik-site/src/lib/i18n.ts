@@ -4,13 +4,13 @@ import {
     init as i18nInit,
     register,
     waitLocale,
-} from 'svelte-intl-precompile';
+} from 'svelte-i18n';
 
 export async function init(session) {
-    register('en', () => import('$lib/locales/en-us.json'));
-    register('en-us', () => import('$lib/locales/en-us.json'));
-    register('fr', () => import('$lib/locales/fr-ca.json'));
-    register('fr-ca', () => import('$lib/locales/fr-ca.json'));
+    register('en', () => import('$locales/en-us.json'));
+    register('en-us', () => import('$locales/en-us.json'));
+    register('fr', () => import('$locales/fr-ca.json'));
+    register('fr-ca', () => import('$locales/fr-ca.json'));
 
     i18nInit({
         fallbackLocale: 'en-us',

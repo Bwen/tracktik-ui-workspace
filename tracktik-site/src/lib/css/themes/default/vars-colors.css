@@ -1,4 +1,4 @@
-[theme^='material']:root {
+[theme^='default']:root {
 	--color-white: #fff;
 	--color-black: #000;
 
@@ -321,5 +321,5 @@
 	--txt-surface-error: #fff;
 }
 
-[theme='material-dark']:root {
+[theme='default-dark']:root {
 }

@@ -1,0 +1,28 @@
+
+.app-header {
+    color: #EEE;
+    background-color: #393F51;
+    border-bottom: 1px solid #1c1c1c;
+    border-bottom: 1px solid #ffffff10;
+    height: 50px;
+}
+
+.wrapper-loading {
+    border: 1px solid var(--color-secondary-dark);
+    margin-bottom: .25em;
+    height: 5px;
+}
+
+.wrapper-loading .bar {
+    background-color: var(--color-secondary-light2);
+}
+
+.wrapper-loading .inner-bar {
+    background-color: var(--color-secondary);
+    
+    background: linear-gradient(
+        -90deg,
+        var(--color-secondary) 0%, 
+        var(--color-secondary-light2) 100%
+    );
+}

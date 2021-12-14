@@ -1,5 +1,4 @@
 
-
 /** @type {import('@sveltejs/kit').Handle} */
 export default async function ({ request, resolve }) {
     if (request.path === '/rest') {
@@ -14,6 +13,15 @@ export default async function ({ request, resolve }) {
     // If no user session (not logged in) redirect to login
 	if (['/auth/setup', '/auth'].indexOf(request.path) === -1 && (!request.locals.auth || !request.locals.auth.user)) {
         return { headers: { Location: '/auth' }, status: 302 };
+    }
+
+    // If we are trying to access a portal we dont have access to, redirect to the right portal
+    if (request.locals.auth && request.locals.auth.auth) {
+        let portal = request.locals.auth.auth.portal;
+        let regex = new RegExp(`^/portal/${portal}`)
+        if (!request.path.match(regex)) {
+            return { headers: { Location: `/portal/${portal}` }, status: 302 };
+        }
     }
 
     return await resolve(request);

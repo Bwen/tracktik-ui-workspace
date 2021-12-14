@@ -1,20 +1,23 @@
 <script type="ts">
+	import { fly } from 'svelte/transition';
 	import { goto } from '$app/navigation';
-    import type { Fieldset } from '$lib/@types/form.type';
-    import { FormFieldType } from '$lib/@types/form.type';
-	import { Form } from '$lib/components/form';
-	import { t, locale } from '$lib/i18n';
 	import { session } from '$app/stores';
+
+	import { t, locale } from '$lib/i18n';
+    import type { Fieldset } from '$form';
+    import { Manager, FieldType } from '$form';
+	import { Form } from '$components/form';
 	import { request, METHODS } from '$lib/js/restClient';
+    import { isNotBlank } from '$form/FieldValidator';
 
 	let isLoading = false;
 	let fieldsets: Fieldset[] = [{
 		fields: [
-			{name: 'username', type: FormFieldType.TEXT, value: '', placeholder: $t('page.auth.enter_username')},
-			{name: 'password', type: FormFieldType.PASSWORD, value: '', placeholder: $t('page.auth.enter_password')},
+			{name: 'username', type: FieldType.TEXT, value: '', placeholder: $t('page.auth.enter_username'), validators: [isNotBlank]},
+			{name: 'password', type: FieldType.PASSWORD, value: '', placeholder: $t('page.auth.enter_password'), validators: [isNotBlank]},
 			{
 				name: 'locale', 
-				type: FormFieldType.SELECT, 
+				type: FieldType.SELECT, 
 				value: $locale,
 				options: [
 					{value: "en-us", text: 'English'},
@@ -33,16 +36,22 @@
 	}];
 
 	async function login(event) {
-		let { form } = event.detail;
+		let form = new Manager(event.detail.formId, event.detail.fieldsets);
 		const username = form.getField('username').value;
 		const password = form.getField('password').value;
 		const language = form.getField('locale').value;
 		try {
 			isLoading = true;
+			fieldsets = await form.validateFieldsets();
+			if (form.hasErrors()) {
+				isLoading = false;
+				return;
+			}
+
 			let res = await request('/auth', METHODS.POST, { username, password, language });
 			if (res.ok) {
 				const response = await res.json();
-				
+
 				$locale = language;
 				$session.locale = language;
 				$session.auth = {
@@ -54,14 +63,16 @@
 				};
 
 				isLoading = false;
-				goto('/');
+				goto(`/portal/${response.auth.portal}`);
 				return;
 			}
 
-			form.setFieldError('locale', 'Invalid credentials');
+			form.setFieldError('locale', $t('page.auth.invalid_credentials'));
 		} catch (err) {
 			form.setFieldError('locale', err.message);
 		}
+
+		fieldsets = form.getFieldsets();
 		isLoading = false;
 	}
 
@@ -73,10 +84,25 @@
 	}
 </script>
 
-{#if $session.portal}<img src={$session.portal.logo} alt="Logo" />{/if}
-<Form 
-	on:submit={login} 
-	on:change={onValueChange}
-	fieldsets={fieldsets} 
-	isLoading={isLoading}
-/>
+<div class="form-login"
+	in:fly="{{ y: -50, duration: 250, delay: 300 }}"
+    out:fly="{{ y: -50, duration: 250 }}" 
+>
+	{#if $session.portal}<img src={$session.portal.logo} alt="Logo" />{/if}
+	<Form 
+		on:submit={login} 
+		on:change={onValueChange}
+		fieldsets={fieldsets} 
+		isLoading={isLoading}
+	/>
+</div>
+
+<style lang="css">
+
+	.form-login :global(form) {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	
+</style>

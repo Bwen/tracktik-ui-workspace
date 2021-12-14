@@ -1,0 +1,29 @@
+{
+	"common": {
+		"form": {
+			"submit": "Soumettre",
+			"errors": {
+				"invalid-field": "{fieldname} invalide",
+				"invalid-not-blank": "{fieldname} ne peut pas être vide",
+				"invalid-domain": "Syntax du nom de domaine invalide"
+			}
+		}
+	},
+	"page": {
+		"auth": {
+			"title": "Connexion à TrackTik UI",
+			"enter_domain": "Entrez Domain",
+			"enter_username": "Entrez utilisateur",
+			"enter_password": "Entrez mot de pase",
+			"invalid_credentials": "Identifiant invalide"
+		},
+		"layout": {
+			"title": "TrackTik UI",
+			"darkmode": "Mode clair/sombre",
+			"logout": "Se déconnecter"
+		},
+		"index": {
+			"title": "Bienvenu à TrackTik UI"
+		}
+	}
+}

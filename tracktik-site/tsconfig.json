@@ -29,6 +29,14 @@
 			"$components/*": ["src/lib/components/*"],
 			"$stores": ["src/lib/stores"],
 			"$stores/*": ["src/lib/stores/*"],
+			"$form": ["src/lib/js/form"],
+			"$form/*": ["src/lib/js/form/*"],
+			"$locales": ["locales"],
+			"$locales/*": ["locales/*"],
+			"@rest": ["tt-rest"],
+			"@rest/*": ["tt-rest/*"],
+			"@types": ["src/lib/@types"],
+			"@types/*": ["src/lib/@types/*"],
 		}
 	},
 	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]

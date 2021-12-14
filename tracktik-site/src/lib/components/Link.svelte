@@ -8,17 +8,19 @@
     function onLinkClick(event) {
         dispatch('link-click', {hyperlink: event.target.closest('a')});
     }
+
     export let icon: IconDefinition = null;
     export let icon_hover: IconDefinition = null;
-    export let unicode: IconDefinition = null;
+    export let unicode: string = null;
     export let subtext = '';
     export let text = '';
     export let href = '';
     export let id = '';
     export let css = '';
+    export let title = '';
     export let data = {};
     let commonAttributes: any = {};
-    $: commonAttributes = parseAttributes({href, id, css, data});
+    $: commonAttributes = parseAttributes({title, href, id, css, data});
 </script>
 
 <a {...commonAttributes} on:click="{onLinkClick}" on:mousedown>
