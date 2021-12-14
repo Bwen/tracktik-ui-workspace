@@ -47,6 +47,7 @@
 .wrapper-form input[type="text"] {
     width: var(--input-width);
     height: var(--input-height);
+    line-height: var(--input-height);
     color: var(--color-bg-text);
     background-color: var(--color-bg-light);
     border: 1px solid var(--color-bg-dark);
@@ -54,7 +55,7 @@
     font-size: .9em;
     box-shadow: 0 0 0px 2px #ebebeb;
     outline: none;
-    
+
 }
 
 div.wrapper-field div.wrapper-select div[class^="s-"] > span.selectedIcon,
