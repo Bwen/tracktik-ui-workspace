@@ -35,6 +35,7 @@
 	--color-error-dark: var(--color-red-900);
 	--color-error-text: var(--color-red-900);
 
+	--color-box-shadow: var(rgb(245, 245, 245, .5));
 	--radius-border: 6px;
 
 	--spacing: 4px;

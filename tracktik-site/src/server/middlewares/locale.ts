@@ -21,7 +21,7 @@ export default async function ({ request, resolve }) {
 
     // If the browser's locale is supported use it
     const browserLocale = headers['accept-language'] && headers['accept-language'].split(',')[0];
-    if (supportedLocales.indexOf(browserLocale.toLowerCase()) !== -1) {
+    if (browserLocale && supportedLocales.indexOf(browserLocale.toLowerCase()) !== -1) {
         locale = browserLocale.toLowerCase();
     }
     // If the browser's locale is NOT supported check portal's defaultLanguage

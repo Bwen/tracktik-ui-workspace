@@ -1,10 +1,10 @@
 
 .app-header {
-    color: #EEE;
-    background-color: #393F51;
-    border-bottom: 1px solid #1c1c1c;
-    border-bottom: 1px solid #ffffff10;
+    color: var(--color-bg-text);
+    background-color: var(--color-bg-dark);
+    border-bottom: 1px solid var(--color-bg-light);
     height: 50px;
+    box-shadow: 0 0 0px 2px var(--color-box-shadow);
 }
 
 .wrapper-loading {

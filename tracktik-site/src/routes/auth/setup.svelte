@@ -33,6 +33,7 @@
 			let res = await request('/about', METHODS.GET, {}, portalDomain.value);
 			if (res.ok) {
 				$session.portal = await res.json();
+				console.log($session.portal);
 
 				goto('/auth');
 				isLoading = false;
