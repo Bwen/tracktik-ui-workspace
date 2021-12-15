@@ -1,28 +1,32 @@
 
+.side-bar,
 .app-header {
-    color: var(--color-bg-text);
-    background-color: var(--color-bg-dark);
-    border-bottom: 1px solid var(--color-bg-light);
+    color: var(--tcolor-bg-dark-text);
+    background-color: var(--tcolor-bg-dark);
+    border-bottom: 1px solid var(--tcolor-bg-dark2);
+    box-shadow: 0 0 0 2px var(--tcolor-box-shadow);
+}
+
+.app-header {
     height: 50px;
-    box-shadow: 0 0 0px 2px var(--color-box-shadow);
 }
 
 .wrapper-loading {
-    border: 1px solid var(--color-secondary-dark);
+    border: 1px solid var(--tcolor-success);
     margin-bottom: .25em;
-    height: 5px;
+    height: 3px;
 }
 
 .wrapper-loading .bar {
-    background-color: var(--color-secondary-light2);
+    background-color: var(--tcolor-success-light);
 }
 
 .wrapper-loading .inner-bar {
-    background-color: var(--color-secondary);
-    
-    background: linear-gradient(
-        -90deg,
-        var(--color-secondary) 0%, 
-        var(--color-secondary-light2) 100%
-    );
+    background: var(--tcolor-success-light)
+        linear-gradient(
+            90deg,
+            var(--tcolor-success-light) 0%,
+            var(--tcolor-success) 100%
+        )
+    ;
 }

@@ -1,12 +1,12 @@
-import { 
-    t as text, 
+import {
+    t as text,
     locale as currentLocale,
     init as i18nInit,
     register,
     waitLocale,
 } from 'svelte-i18n';
 
-export async function init(session) {
+export async function init(session): Promise<void> {
     register('en', () => import('$locales/en-us.json'));
     register('en-us', () => import('$locales/en-us.json'));
     register('fr', () => import('$locales/fr-ca.json'));
@@ -18,7 +18,7 @@ export async function init(session) {
     });
 
     await waitLocale();
-};
+}
 
 export const locale = currentLocale;
 export const t = text;

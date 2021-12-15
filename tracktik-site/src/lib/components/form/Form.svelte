@@ -33,12 +33,10 @@
         switch (field.type) {
             case FieldType.SELECT:
                 return Select;
-                break;
             default:
             case FieldType.TEXT:
             case FieldType.PASSWORD:
                 return Input;
-                break;
         }
     }
 
@@ -98,14 +96,14 @@
                 <div class="wrapper-field" class:error={field.error}>
                     <section>
                         {#if field.label}<label for="{field.id}">{field.label}</label>{/if}
-                        <svelte:component 
+                        <svelte:component
                             this={getComponentForField(field)}
                             on:input={(event) => {
                                 field.value = event.detail;
                                 onValueChange(field);
                             }}
-                            disabled={isLoading ? true : false}
-                            {...getComponentProps(field)} 
+                            disabled={isLoading}
+                            {...getComponentProps(field)}
                         />
                     </section>
                     {#if field.error}<div class="error">{field.error}</div>{/if}
@@ -114,7 +112,7 @@
             </fieldset>
         </div>
         <slot name="submit">
-            <Link on:link-click={onSubmit} css="btn submit {isLoading ? 'disabled' : ''}">{$t('common.form.submit')}</Link>
+            <button type="submit" on:click={onSubmit} class:disabled={isLoading} disabled={isLoading}>{$t('common.form.submit')}</button>
         </slot>
         {#if error}<div class="error">{error}</div>{/if}
         {/each}

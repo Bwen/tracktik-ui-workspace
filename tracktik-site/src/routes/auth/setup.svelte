@@ -10,9 +10,9 @@
 
 	let isLoading = false;
 	let fieldsets: Fieldset[] = [{fields: [{
-		name: 'domain', 
-		type: FieldType.TEXT, 
-		value: '', 
+		name: 'domain',
+		type: FieldType.TEXT,
+		value: '',
 		placeholder: $t('page.auth.enter_domain'),
 		validators: [
 			isNotBlank, isDomain
@@ -33,7 +33,6 @@
 			let res = await request('/about', METHODS.GET, {}, portalDomain.value);
 			if (res.ok) {
 				$session.portal = await res.json();
-				console.log($session.portal);
 
 				goto('/auth');
 				isLoading = false;
@@ -47,14 +46,14 @@
 		}
 
 		fieldsets = form.getFieldsets();
-		//isLoading = false;
+		isLoading = false;
 	}
 </script>
 
 <div class="form-setup">
-	<Form 
-		on:submit={setup} 
-		fieldsets={fieldsets} 
+	<Form
+		on:submit={setup}
+		fieldsets={fieldsets}
 		isLoading={isLoading}
 	/>
 </div>
@@ -63,7 +62,7 @@
 		display: flex;
 	}
 
-	.form-setup :global(a.btn) {
+	.form-setup :global([type="submit"]) {
 		border-width: 1px 1px 1px 0;
 		width: 100px;
 	}

@@ -16,8 +16,8 @@
 			{name: 'username', type: FieldType.TEXT, value: '', placeholder: $t('page.auth.enter_username'), validators: [isNotBlank]},
 			{name: 'password', type: FieldType.PASSWORD, value: '', placeholder: $t('page.auth.enter_password'), validators: [isNotBlank]},
 			{
-				name: 'locale', 
-				type: FieldType.SELECT, 
+				name: 'locale',
+				type: FieldType.SELECT,
 				value: $locale,
 				options: [
 					{value: "en-us", text: 'English'},
@@ -86,13 +86,13 @@
 
 <div class="form-login"
 	in:fly="{{ y: -50, duration: 250, delay: 300 }}"
-    out:fly="{{ y: -50, duration: 250 }}" 
+    out:fly="{{ y: -50, duration: 250 }}"
 >
 	{#if $session.portal}<img src={$session.portal.logo} alt="Logo" />{/if}
-	<Form 
-		on:submit={login} 
+	<Form
+		on:submit={login}
 		on:change={onValueChange}
-		fieldsets={fieldsets} 
+		fieldsets={fieldsets}
 		isLoading={isLoading}
 	/>
 </div>
@@ -104,5 +104,5 @@
 		flex-direction: column;
 		align-items: center;
 	}
-	
+
 </style>

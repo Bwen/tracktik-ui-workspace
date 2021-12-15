@@ -6,6 +6,6 @@ html, body, #svelte, main {
 }
 
 html, body, #svelte {
-    color: var(--color-bg-text);
-    background-color: var(--color-bg);
+    color: var(--tcolor-bg-text);
+    background-color: var(--tcolor-bg);
 }

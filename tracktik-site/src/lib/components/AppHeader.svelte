@@ -116,11 +116,15 @@
         text-align: right;
     }
 
+    .wrapper-app-header .left {
+        margin-left: var(--spacing);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .wrapper-app-header .left img {
-        max-height: 2.5em;
-        min-height: 2.5em;
-        min-width: 2.5em;
-        max-width: 2.5em;
+        max-height: 50px;
     }
 
     .wrapper-app-header .menu-bars {

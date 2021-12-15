@@ -11,51 +11,55 @@
 
 .wrapper-field.error input[type="password"],
 .wrapper-field.error input[type="text"] {
-    border-color: var(--color-error);
+    border-color: var(--tcolor-error);
 }
 
 .wrapper-form div.error:not(.wrapper-field) {
-    color: var(--color-error);
+    color: var(--tcolor-error);
     font-size: .75em;
 }
 
 .form-setup .wrapper-input input[name="domain"] {
-    border-radius: var(--radius-border) 0 0 var(--radius-border);
-    box-shadow: -2px 0 0px 2px var(--color-box-shadow);
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
 }
 
-.form-setup .wrapper-form form a.submit {
-    border-radius: 0 var(--radius-border) var(--radius-border) 0;
-    height: var(--input-height);
-    width: 90px;
-    margin: var(--spacing) 0;
-    box-shadow: 2px 0 0px 2px var(--color-box-shadow);
-}
-
-.form-login .wrapper-form a.submit {
-    width: var(--input-width);
-    margin: var(--spacing) 0;
-}
-
-.wrapper-form a.btn {
+.wrapper-form button {
     padding: 8px;
+}
+.wrapper-select .input-select,
+.wrapper-form input[type="email"],
+.wrapper-form input[type="password"],
+.wrapper-form input[type="text"] {
+    color: var(--tcolor-bg-text);
+    background-color: var(--tcolor-bg-light);
+    border: 1px solid var(--tcolor-border);
 }
 
 .wrapper-select .input-select,
+.wrapper-form button[type="submit"],
+.wrapper-form input[type="submit"],
 .wrapper-form input[type="email"],
 .wrapper-form input[type="password"],
 .wrapper-form input[type="text"] {
     width: var(--input-width);
     height: var(--input-height);
     line-height: var(--input-height);
-    color: var(--color-bg-text);
-    background-color: var(--color-bg-light);
-    border: 1px solid var(--color-bg-dark);
     padding: 8px;
     font-size: .9em;
-    box-shadow: 0 0 0px 2px var(--color-box-shadow);
     outline: none;
+    box-sizing: content-box;
+}
 
+.form-setup .wrapper-form form [type="submit"] {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    height: var(--input-height);
+    width: 90px;
+    margin: var(--spacing) 0;
+}
+
+.form-login .wrapper-form [type="submit"] {
+    width: var(--input-width);
+    margin: var(--spacing) 0;
 }
 
 div.wrapper-field div.wrapper-select div[class^="s-"] > span.selectedIcon,
@@ -64,16 +68,15 @@ div.wrapper-field div.wrapper-select div[class^="s-"] > span.selected-arrow {
 }
 
 .wrapper-select ul {
-    color:  var(--color-bg-text);
-    background-color: var(--color-bg-light);
-    border: 1px solid var(--color-bg-dark);
+    color:  var(--tcolor-bg-text);
+    background-color: var(--tcolor-bg-light);
+    border: 1px solid var(--tcolor-border);
     min-width: 16.12em;
     padding: 8px;
     font-size: .9em;
     border-top: 0;
-    box-shadow: 0 0 0px 2px var(--color-box-shadow);
 }
 
 .wrapper-select ul a:hover {
-    background-color: var(--color-secondary-light2);
+    background-color: var(--tcolor-success-light);
 }

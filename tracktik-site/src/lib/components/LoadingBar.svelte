@@ -19,11 +19,10 @@
     }
 
     .wrapper-loading.active .inner-bar {
-        animation: load 1s linear infinite;
+        animation: load .75s linear infinite;
     }
 
     .bar {
-        border: 1px solid #EEE;
         position: relative;
         overflow: hidden;
         width: 100%;
@@ -36,7 +35,7 @@
         height: 100%;
         position: absolute;
         background-color: #DDD;
-        left: 0%;
+        left: 0;
     }
 
     @keyframes load{

@@ -3,6 +3,8 @@ import adapter from '@sveltejs/adapter-node';
 import preprocess from 'svelte-preprocess';
 import path from 'path';
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	// Consult https://github.com/sveltejs/svelte-preprocess
@@ -10,7 +12,6 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		//adapter: adapter(),
 		adapter: adapter({ out: '.svelte-kit/build' }),
 
 		// hydrate the <div id="svelte"> element in src/app.html
