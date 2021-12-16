@@ -13,8 +13,6 @@
 
 .wrapper-loading {
     border: 1px solid var(--tcolor-success);
-    margin-bottom: .25em;
-    height: 3px;
 }
 
 .wrapper-loading .bar {
@@ -29,4 +27,17 @@
             var(--tcolor-success) 100%
         )
     ;
+}
+
+.side-bar ul {
+    border-bottom: 1px solid var(--tcolor-bg-dark2);
+}
+
+.side-bar li a {
+    border-top: 1px solid var(--tcolor-bg-dark2);
+}
+
+.side-bar li a:hover {
+    color: var(--tcolor-success);
+    background-color: var(--tcolor-box-shadow);
 }

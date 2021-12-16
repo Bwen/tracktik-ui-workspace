@@ -8,4 +8,5 @@ html, body, #svelte, main {
 html, body, #svelte {
     color: var(--tcolor-bg-text);
     background-color: var(--tcolor-bg);
+    font-family: Roboto, Arial, Verdana;
 }

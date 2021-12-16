@@ -24,7 +24,7 @@ export async function getSession({ locals }) {
             user: locals.auth.user,
         };
     }
-    
+
     session.locale = locals.locale;
     return session;
 }

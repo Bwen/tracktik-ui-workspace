@@ -12,6 +12,8 @@
     .wrapper-loading {
         display:none;
         width: 100%;
+        margin-bottom: .25em;
+        height: 3px;
     }
 
     .wrapper-loading.active {

@@ -18,29 +18,29 @@
 	import { faLightbulb } from '@fortawesome/free-regular-svg-icons';
 	import { session } from '$app/stores';
 	import { t } from '$lib/i18n';
+    import type { Link as LinkType } from '@type/Link.type';
 
-	let logoItem = undefined;
-	if ($session.portal) {
-		logoItem = {img: $session.portal.logoApp};
-	}
-
-	let rightItems = [
+	let rightItems: LinkType[] = [];
+	let initialItems: LinkType[] = [
 		{icon: faLightbulbDark, icon_hover: faLightbulb, title: 'Light/Dark mode'},
 	];
 
+	let logoItem = undefined;
 	$: {
+		let items = initialItems;
 		if ($session.portal) {
-			rightItems.push({icon: faDoorClosed, icon_hover: faDoorOpen, title: 'Logout', id: "logout"});
+			logoItem = {img: $session.portal.logoApp};
+			items.push({icon: faDoorClosed, icon_hover: faDoorOpen, title: 'Logout', id: "logout"});
 		}
+		rightItems = items;
 	}
 
 	function onItemClick(event) {
         if ('logout' === event.detail.hyperlink.id) {
-			Cookies.remove('rest-session-id', { path: '/', domain: 'localhost' });
+			Cookies.remove('rest-session-id', { path: '/' });
 			location.reload();
 		}
 	}
-
 </script>
 
 <svelte:head><title>{$t('page.layout.title')}</title></svelte:head>

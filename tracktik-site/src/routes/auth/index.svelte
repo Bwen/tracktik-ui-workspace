@@ -50,8 +50,8 @@
 
 			let res = await request('/auth', METHODS.POST, { username, password, language });
 			if (res.ok) {
+				//location.reload();
 				const response = await res.json();
-
 				$locale = language;
 				$session.locale = language;
 				$session.auth = {
@@ -61,7 +61,7 @@
 					scopes: response.auth.scopes,
 					user: response.auth.user,
 				};
-
+				session.set($session);
 				isLoading = false;
 				goto(`/portal/${response.auth.portal}`);
 				return;
