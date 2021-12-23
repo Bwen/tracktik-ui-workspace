@@ -1,8 +1,13 @@
+import { browser } from '$app/env';
 
 /** @type {import('@sveltejs/kit').Handle} */
 export default async function ({ request, resolve }) {
     if (request.path === '/rest') {
         return await resolve(request);
+    }
+
+    if (browser && ['/auth/setup', '/auth'].indexOf(request.path) === -1 && (!request.locals.auth || !request.locals.auth.user)) {
+        return { status: 401 };
     }
 
     // If no portal domains redirect to auth/setup

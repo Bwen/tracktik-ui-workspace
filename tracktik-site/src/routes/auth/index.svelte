@@ -6,9 +6,12 @@
 	import { t, locale } from '$lib/i18n';
     import type { Fieldset } from '$form';
     import { Manager, FieldType } from '$form';
-	import { Form } from '$components/form';
+	import { Form } from '$components/ext/form';
 	import { request, METHODS } from '$lib/js/restClient';
     import { isNotBlank } from '$form/FieldValidator';
+
+	// TODO: Implement Force Password Change, dont forget to change sentinel server side
+	// TODO: Implement the custom Signin screen
 
 	let isLoading = false;
 	let fieldsets: Fieldset[] = [{
@@ -50,18 +53,17 @@
 
 			let res = await request('/auth', METHODS.POST, { username, password, language });
 			if (res.ok) {
-				//location.reload();
 				const response = await res.json();
 				$locale = language;
 				$session.locale = language;
 				$session.auth = {
 					portal: response.auth.portal,
 					permissions: response.auth.permissions,
-					pref: response.auth.pref,
-					scopes: response.auth.scopes,
-					user: response.auth.user,
+					pref: response.pref,
+					scopes: response.scopes,
+					user: response.user,
 				};
-				session.set($session);
+
 				isLoading = false;
 				goto(`/portal/${response.auth.portal}`);
 				return;
@@ -103,6 +105,17 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+	}
+
+	.form-login :global(.input-select),
+	.form-login :global(button[type="submit"]),
+	.form-login :global(input[type="submit"]),
+	.form-login :global(input[type="email"]),
+	.form-login :global(input[type="password"]),
+	.form-login :global(input[type="text"]) {
+		width: 13em;
+		line-height: .8em;
+		padding: .8em;
 	}
 
 </style>

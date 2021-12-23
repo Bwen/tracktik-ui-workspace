@@ -1,43 +1,23 @@
 <script lang="ts">
+    import { filterItemsBySession } from '$lib/js/utils';
     import type { Link as LinkType } from '@type/Link.type';
-    import Link from '$components/Link.svelte';
-    import { 
-        faDesktop, faUsers, faUserFriends, faMapMarkedAlt, 
-        faChartLine, faEllipsisH
-    } from '@fortawesome/free-solid-svg-icons';
-    //import { faUser } from '@fortawesome/free-regular-svg-icons';
-
-    import { session } from '$app/stores';
-
-    let avatar;
-    $: {
-        if ($session.auth) {
-            console.log($session.auth);
-            avatar = $session.auth.user.avatar;
-        }
-    }
+    import Link from '$components/ext/Link.svelte';
+    import { page, session } from '$app/stores';
 
     export let menuItems: LinkType = [];
 
-    menuItems = [
-        {text: 'Dashboards', icon: faDesktop},
-        {text: 'Sites (Client)', icon: faUserFriends},
-        {text: 'Employees', icon: faUsers},
-        {text: 'Maps', icon: faMapMarkedAlt},
-        {text: 'Sales & Lists', icon: faChartLine},
-        {text: 'Settings', icon: faEllipsisH},
-    ];
+    filterItemsBySession(menuItems, $session);
 </script>
 
 <section class="side-bar">
-    {#if avatar}
+    {#if $session.auth && $session.auth && $session.auth.user}
     <div class="logged-user">
-        <img src="{avatar}" alt="User Avatar" />
+        <img src="{$session.auth.user.avatar}" alt="User Avatar" />
     </div>
     {/if}
     <ul>
     {#each menuItems as item}
-        <li><Link {...item} /></li>
+        <li><Link {...item} css="{$page.path.startsWith(item.href) ? 'active' : ''}" /></li>
     {/each}
     </ul>
 </section>
@@ -62,9 +42,10 @@
 
     .side-bar li :global(a) {
         display: block;
-        padding: .85em 0;
+        padding: 1em 0;
         text-align: center;
-        font-size: .9em;
+        font-size: .85em;
+        text-decoration: none;
     }
     
     .side-bar li :global(.icon) {
@@ -72,7 +53,7 @@
     }
 
     .side-bar li :global(.text) {
-        margin-top: .65em;
+        margin-top: 1em;
         display: block;
     }
 </style>

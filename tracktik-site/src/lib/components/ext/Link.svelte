@@ -6,6 +6,9 @@
     import { parseAttributes } from '$lib/js/attributeProps';
     const dispatch = createEventDispatcher();
     function onLinkClick(event) {
+        //event.preventDefault();
+        event.stopPropagation();
+
         dispatch('link-click', {hyperlink: event.target.closest('a')});
     }
 
@@ -26,14 +29,9 @@
 <a {...commonAttributes} on:click="{onLinkClick}" on:mousedown>
     <span class="wrapper-link">
     {#if icon}
-        <span class="icon">
-            <Fa class="{icon_hover ? 'on' : ''}" {icon} />
-            {#if icon_hover}<Fa class="off" icon={icon_hover} />{/if}
-        </span>
+        <span class="icon"><Fa class="{icon_hover ? 'on' : ''}" {icon} />{#if icon_hover}<Fa class="off" icon={icon_hover} />{/if}</span>
     {:else if unicode}
-        <span class="icon">
-            <span class="unicode">{unicode}</span>
-        </span>
+        <span class="icon"><span class="unicode">{unicode}</span></span>
     {/if}
     {#if $$slots.default || text}
         <span class="text">

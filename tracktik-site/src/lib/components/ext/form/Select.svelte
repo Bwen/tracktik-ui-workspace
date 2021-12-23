@@ -3,12 +3,12 @@
     import type { SelectOptions } from '$lib/@types/form.type';
     import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
     import { parseAttributes } from '$lib/js/attributeProps';
-    import Link from '$lib/components/Link.svelte';
-    import OutClick from 'svelte-outclick';
+    import Link from '$components/ext/Link.svelte';
+    import ClickOutside from '$components/ext/ClickOutside.svelte';
     import { createEventDispatcher, onMount } from "svelte";
 
     const dispatch = createEventDispatcher();
-    export let value = '';
+    export let value: any = '';
     export let name = '';
     export let options: SelectOptions[] = [];
     export let id = '';
@@ -59,7 +59,7 @@
         <input type="hidden" name="{name}" value="{value}" bind:this={formInput}/>
         <span class="selected-arrow" on:mousedown={toggleOptions}><Fa icon={faAngleUp} /></span>
         <div class="input-select" bind:this={selectedValue} on:mousedown={toggleOptions} />
-        <OutClick on:outclick={() => optionsOpen = false} exclude={['.input-select', '.selected-arrow']}>
+        <ClickOutside on:click-outside={toggleOptions} exclude=".wrapper-select" active={optionsOpen}>
             <ul>
             {#each options as option, i}
                 <li>
@@ -71,7 +71,7 @@
                 </li>
             {/each}
             </ul>
-        </OutClick>
+        </ClickOutside>
     </div>
 </div>
 
@@ -83,6 +83,12 @@
         position: relative;
     }
 
+    .wrapper-select .input-select {
+        white-space: nowrap;
+        overflow: hidden;
+        user-select: none;
+    }
+
     .wrapper-select ul,
     .wrapper-select li {
         list-style: none;
@@ -90,21 +96,21 @@
         margin: 0;
     }
     .wrapper-select ul {
-        opacity: 0;
-        height: 1px;
         overflow: hidden;
         position: absolute;
-        display: block;
+        display: none;
+        margin-top: -.25em;
+        max-height: 15em;
     }
     .wrapper-select.open :global(ul) {
-        opacity: 100%;
-        height: 15em;
+        display: block;
+        height: auto;
         z-index: 100;
         overflow-x: hidden;
         overflow-y: auto;
-        transition: height .2s ease-in;
     }
     .wrapper-select ul :global(a) {
+        white-space: nowrap;
         text-decoration: none;
         padding: .35em;
         display: block;
@@ -117,15 +123,14 @@
 
     .wrapper-select .selectedIcon,
     .wrapper-select .selected-arrow {
-        z-index: 1;
+        z-index: 5;
         position: absolute;
         top: 0;
-        padding: 4px 8px;
     }
     .wrapper-select .selected-arrow {
         right: 0;
     }
-    .wrapper-select.open .selected-arrow {
+    .wrapper-select.open .selected-arrow > :global(svg) {
         transition: transform .1s ease-in;
         transform: rotate(180deg);
     }
@@ -135,14 +140,6 @@
     }
     .wrapper-select .active {
         display: block;
-    }
-    .wrapper-select .selected-reset :global(.fa) {
-        margin: 8px;
-        font-size: initial;
-    }
-    .wrapper-select :global(input[type="text"]) {
-        padding-left: 3.5em;
-        padding-right: 1.5em;
     }
 
     .wrapper-select .selected-arrow,

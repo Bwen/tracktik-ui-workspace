@@ -5,7 +5,8 @@
     border: 0;
 }
 
-.wrapper-field {
+.form-login .wrapper-field,
+.form-setup .wrapper-field {
     padding: var(--spacing) 0;
 }
 
@@ -23,24 +24,25 @@
     border-radius: var(--border-radius) 0 0 var(--border-radius);
 }
 
-.wrapper-form button {
+button {
     padding: 8px;
 }
+
 .wrapper-select .input-select,
-.wrapper-form input[type="email"],
-.wrapper-form input[type="password"],
-.wrapper-form input[type="text"] {
+input[type="email"],
+input[type="password"],
+input[type="text"] {
     color: var(--tcolor-bg-text);
     background-color: var(--tcolor-bg-light);
     border: 1px solid var(--tcolor-border);
 }
 
-.wrapper-select .input-select,
-.wrapper-form button[type="submit"],
-.wrapper-form input[type="submit"],
-.wrapper-form input[type="email"],
-.wrapper-form input[type="password"],
-.wrapper-form input[type="text"] {
+.input-select,
+button[type="submit"],
+input[type="submit"],
+input[type="email"],
+input[type="password"],
+input[type="text"] {
     width: var(--input-width);
     height: var(--input-height);
     line-height: var(--input-height);
@@ -64,14 +66,21 @@
 
 div.wrapper-field div.wrapper-select div[class^="s-"] > span.selectedIcon,
 div.wrapper-field div.wrapper-select div[class^="s-"] > span.selected-arrow {
-    padding: 10px 14px;
+    padding: .2em .65em;
+}
+
+div.wrapper-field div.wrapper-select div[class^="s-"] > span.selected-arrow {
+    background-color: var(--tcolor-bg-light);
+    border: 1px solid var(--tcolor-border);
+    border-left: none;
+    border-bottom: none;
 }
 
 .wrapper-select ul {
     color:  var(--tcolor-bg-text);
     background-color: var(--tcolor-bg-light);
     border: 1px solid var(--tcolor-border);
-    min-width: 16.12em;
+    min-width: 11.12em;
     padding: 8px;
     font-size: .9em;
     border-top: 0;
@@ -79,4 +88,13 @@ div.wrapper-field div.wrapper-select div[class^="s-"] > span.selected-arrow {
 
 .wrapper-select ul a:hover {
     background-color: var(--tcolor-success-light);
+}
+
+.filters form,
+.filters fieldset {
+    display: flex;
+}
+
+.filters fieldset .wrapper-field {
+    margin-right: .5em;
 }

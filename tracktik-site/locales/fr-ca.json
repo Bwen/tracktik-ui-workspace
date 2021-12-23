@@ -7,7 +7,10 @@
 				"invalid-not-blank": "{fieldname} ne peut pas être vide",
 				"invalid-domain": "Syntax du nom de domaine invalide"
 			}
-		}
+		},
+		"overview": "Aperçu",
+		"edit": "Éditer",
+		"map": "Carte"
 	},
 	"page": {
 		"auth": {
@@ -20,7 +23,38 @@
 		"layout": {
 			"title": "TrackTik UI",
 			"darkmode": "Mode clair/sombre",
-			"logout": "Se déconnecter"
+			"logout": "Se déconnecter",
+			"side-bar": {
+				"dashboards": "Tableaux de bord",
+				"sites": "Sites (Clients)",
+				"employees": "Employés",
+				"maps": "Cartes",
+				"settings": "Réglages",
+				"sales": "Ventes et listes"
+			}
+		},
+		"admin": {
+			"title": "Portail d'administration"
+		},
+		"employee": {
+			"title": "Employés",
+			"top-tabs": {
+				"departments": "Départements",
+				"skills": "Compétences et attributs",
+				"audit": "Journal d'audit"
+			},
+			"mid-tabs": {
+				"patrol": "Sécurité et patrouille",
+				"timesheets": "Feuilles de temps",
+				"skills": "Compétences et attributs",
+				"schedules": "Horaires"
+			},
+			"list": {
+				"region": "Région",
+				"name": "Nom",
+				"title": "Titre",
+				"phone": "Téléphone"
+			}
 		},
 		"index": {
 			"title": "Bienvenu à TrackTik UI"

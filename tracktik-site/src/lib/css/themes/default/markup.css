@@ -17,3 +17,7 @@ button:hover,
 a.btn:hover {
     background-color: var(--tcolor-primary-light);
 }
+
+a:hover {
+    text-decoration: none;
+}

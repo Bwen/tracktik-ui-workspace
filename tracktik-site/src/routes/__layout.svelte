@@ -20,19 +20,29 @@
 	import { t } from '$lib/i18n';
     import type { Link as LinkType } from '@type/Link.type';
 
-	let rightItems: LinkType[] = [];
-	let initialItems: LinkType[] = [
-		{icon: faLightbulbDark, icon_hover: faLightbulb, title: 'Light/Dark mode'},
+	let rightItems: LinkType[] = [
+		{icon: faLightbulbDark, icon_hover: faLightbulb, title: 'Light/Dark mode'}
 	];
 
 	let logoItem = undefined;
 	$: {
-		let items = initialItems;
 		if ($session.portal) {
 			logoItem = {img: $session.portal.logoApp};
-			items.push({icon: faDoorClosed, icon_hover: faDoorOpen, title: 'Logout', id: "logout"});
+			if (!hasItemId('logout', rightItems)) {
+				rightItems.push({icon: faDoorClosed, icon_hover: faDoorOpen, title: 'Logout', id: "logout"});
+			}
 		}
-		rightItems = items;
+		rightItems = rightItems;
+	}
+
+	function hasItemId(id: string, items: LinkType[]): boolean {
+		for (let i=0; i < items.length; i++) {
+			if (id === items[i].id) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	function onItemClick(event) {

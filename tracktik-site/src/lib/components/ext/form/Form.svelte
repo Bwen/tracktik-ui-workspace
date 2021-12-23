@@ -8,8 +8,7 @@
 
     import Input from './Input.svelte';
     import Select from './Select.svelte';
-    import LoadingBar from '$components/LoadingBar.svelte';
-    import Link from '$components/Link.svelte';
+    import LoadingBar from '$components/ext/LoadingBar.svelte';
 
     export let isLoading: boolean = false;
     export let error: string = '';

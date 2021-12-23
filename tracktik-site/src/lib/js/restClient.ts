@@ -1,3 +1,4 @@
+import { browser } from '$app/env';
 
 enum METHODS {
     GET = 'GET',
@@ -9,7 +10,7 @@ enum METHODS {
     HEAD = 'HEAD',
 };
 
-async function request(path: string, method: METHODS = METHODS.GET, params: object = {}, portalDomain = '') {
+async function request(path: string, method: METHODS = METHODS.GET, params: object = {}, portalDomain = '', svelteFetch = undefined) {
     try {
         let headers = {
             'Content-Type': 'application/json',
@@ -21,11 +22,18 @@ async function request(path: string, method: METHODS = METHODS.GET, params: obje
             headers['rest-domain'] = portalDomain;
         }
 
-        return await fetch('/rest', {
+        let sfetch = svelteFetch || fetch;
+        let res = await sfetch('/rest', {
             headers,
             method: 'POST',
             body: JSON.stringify(params),
         });
+        
+        if (res.status === 401 && '/auth' !== path) {
+            location.reload();
+        }
+
+        return res;
     } catch (err) {
         console.error(err);
     }

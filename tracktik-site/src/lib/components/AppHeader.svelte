@@ -4,7 +4,7 @@
     import type { Link as LinkType } from '@types/Link.type';
     import { faBars } from '@fortawesome/free-solid-svg-icons';
     import {createEventDispatcher} from "svelte";
-    import Link from './Link.svelte';
+    import Link from '$components/ext/Link.svelte';
 
     let menuBarItem = {icon: faBars, id: 'menu-bars'};
     export let logoItem: {img: string, url: string, icon: IconDefinition} = null;

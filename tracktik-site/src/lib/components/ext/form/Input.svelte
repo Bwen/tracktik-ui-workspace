@@ -6,7 +6,7 @@
 
     const dispatch = createEventDispatcher();
     export let icon: IconDefinition = null;
-    export let value = '';
+    export let value: string | number = '';
     export let name = '';
     export let type = 'text';
     export let placeholder = '';

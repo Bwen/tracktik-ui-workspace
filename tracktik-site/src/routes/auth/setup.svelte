@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { t } from '$lib/i18n';
 	import { request, METHODS } from '$lib/js/restClient';
-	import { Form } from '$lib/components/form';
+	import Form from '$components/ext/form/Form.svelte';
     import type { Fieldset } from '$form';
     import { Manager, FieldType } from '$form';
     import { isNotBlank, isDomain } from '$form/FieldValidator';
@@ -62,7 +62,14 @@
 		display: flex;
 	}
 
-	.form-setup :global([type="submit"]) {
+	.form-setup :global(button[type="submit"]),
+	.form-setup :global(input[type="text"]) {
+		width: 13em;
+		line-height: .8em;
+		padding: .8em;
+	}
+
+	.form-setup :global(button[type="submit"]) {
 		border-width: 1px 1px 1px 0;
 		width: 100px;
 	}

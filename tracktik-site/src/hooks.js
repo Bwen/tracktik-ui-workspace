@@ -5,6 +5,7 @@ export const handle = sequence(...middlewares);
 
 /** @type {import('@sveltejs/kit').GetSession} */
 export async function getSession({ locals }) {
+    
     if (!locals.sessionId) {
         return {};
     }

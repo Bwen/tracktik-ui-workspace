@@ -1,5 +1,9 @@
 # create-svelte
 
+Add HERE Technology NPM Repository:
+```bash
+npm config set @here:registry https://repo.platform.here.com/artifactory/api/npm/maps-api-for-javascript/
+```
 
 Generate Typscript definitions from the TrackTik's Rest Open API Schema:
 ```bash
