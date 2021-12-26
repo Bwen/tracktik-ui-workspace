@@ -6,4 +6,5 @@ export type SelectOptions = {
     icon?: IconDefinition;
     indent?: number;
     parentValue?: string;
+    allowReset?: boolean;
 };

@@ -29,4 +29,5 @@ export type Field = {
     options?: SelectOptions[];
     validators?: FieldValidator[];
     includeChildsInSearch?: boolean;
+    allowReset?: boolean;
 };

@@ -13,7 +13,7 @@
     import { session } from '$app/stores';
     import type { Fieldset } from '$form';
     import { getRegionOptions } from '$lib/js/utils';
-    import { ClientsItem } from '@rest/models/ClientsItem';
+    import { EmployeesItem } from '@rest/models/EmployeesItem';
 
     let isLoading = false;
     let columns = [
@@ -51,38 +51,41 @@
     ];
     
     let statusOptions = [];
-    for (const status in ClientsItem.status) {
+    for (const status in EmployeesItem.status) {
         statusOptions.push({
             text: status,
             value: status,
         });
     }
+    statusOptions.sort((a, b) => a.text.localeCompare(b.text));
 
+    let zoneOptions = [];
+    let departmentOptions = [];
     const regionFilterOptions = getRegionOptions($session.auth.scopes.regions);
     let filterFields: Fieldset[] = [{
         fields: [
 			{
-				name: 'departement',
+				name: 'department',
 				type: FieldType.SELECT,
                 placeholder: 'Filter by Departement',
+                allowReset: true,
 				value: '',
-				options: [
-				]
+				options: departmentOptions,
 			},
 			{
 				name: 'zone',
 				type: FieldType.SELECT,
                 placeholder: 'Filter by Zone',
+                allowReset: true,
 				value: '',
-				options: [
-				]
+				options: zoneOptions,
 			},
 			{
 				name: 'status',
 				type: FieldType.SELECT,
                 placeholder: 'Filter by Status',
 				value: '',
-				options: statusOptions
+				options: statusOptions,
 			},
 			{
 				name: 'region',
@@ -93,7 +96,7 @@
                 includeChildsInSearch: true,
 			},
 			{
-				name: 'keyword',
+				name: 'q',
 				type: FieldType.TEXT,
 				value: '',
                 placeholder: 'Type to filter'
@@ -101,16 +104,52 @@
         ]
     }];
 
+    request('/departments', METHODS.GET).then(res => {
+        if (res && res.ok) {
+            departmentOptions = [];
+            res.json().then(result => {
+                result.data.forEach(department => {
+                    departmentOptions.push({
+                        text: department.name,
+                        value: department.id,
+                    });
+                });
+
+                departmentOptions.sort((a, b) => a.text.localeCompare(b.text));
+                filterFields[0].fields[0].options = departmentOptions;
+            });
+        }
+    });
+
+    request('/zones', METHODS.GET).then(res => {
+        if (res && res.ok) {
+            zoneOptions = [];
+            res.json().then(result => {
+                result.data.forEach(zone => {
+                    zoneOptions.push({
+                        text: zone.name,
+                        value: zone.id,
+                    });
+                });
+
+                zoneOptions.sort((a, b) => a.text.localeCompare(b.text));
+                filterFields[0].fields[1].options = zoneOptions;
+            });
+        }
+    });
+
     let perPage = 15;
     let totalEntries = 0;
     let offset = 0;
     let employees = [];
+    let filters = {includeInactive: true, status: EmployeesItem.status.ACTIVE};
     async function fetchEmployees() {
         isLoading = true;
         let res = await request('/employees', METHODS.GET, {
             'include': 'region,region.address,address',
             'limit': perPage,
             'offset': offset,
+            ...filters,
         });
 
         if (res.ok) {
@@ -133,6 +172,20 @@
         await fetchEmployees();
     }
 
+    async function onFilterChange(event) {
+        const field = event.detail.field;
+        if (field.name === 'q' && field.value.length !== 0 && field.value.length < 3) {
+            return;
+        }
+
+        filters[field.name] = field.value;
+        if (!field.value) {
+            delete filters[field.name];
+        }
+
+        await fetchEmployees();
+    }
+
     if (browser) {
         session.subscribe(async () => {
             await fetchEmployees();
@@ -144,7 +197,7 @@
 
 <div class="content"><div class="content-inner">
     <div class="page-employee-list">
-        <div class="filters"><Form fieldsets={filterFields} /></div>
+        <div class="filters"><Form fieldsets={filterFields} on:change={onFilterChange}><div slot="submit"></div></Form></div>
         <TableData 
             columns={columns}
             entries={employees}

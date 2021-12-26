@@ -43,7 +43,7 @@ input[type="submit"],
 input[type="email"],
 input[type="password"],
 input[type="text"] {
-    width: var(--input-width);
+    min-width: var(--input-width);
     height: var(--input-height);
     line-height: var(--input-height);
     padding: 8px;

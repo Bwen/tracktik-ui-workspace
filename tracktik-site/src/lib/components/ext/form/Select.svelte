@@ -16,17 +16,18 @@
     export let disabled = false;
     export let placeholder = '';
     export let data = {};
+    export let allowReset = false;
     let valueText = '';
     let formInput;
     let optionsOpen = false;
     let commonAttributes: any = {};
     $: {
         commonAttributes = parseAttributes({id, css, data});
-        options.unshift({text: '- Reset -', value: undefined});
-        setValue(value);
+        if (allowReset) {
+            options.unshift({text: '- Reset -', value: undefined});
+        }
     }
  
-
     onMount(() => {
         setValue(value);
     });
@@ -36,8 +37,15 @@
         options.forEach(option => {
             if (value && value == option.value) {
                 valueText = option.text;
+                formInput.value = option.value;
             }
-        })
+        });
+
+        // if no value, pick first option
+        if (!allowReset && !valueText && options[0]) {
+            valueText = options[0].text;
+            formInput.value = options[0].value;
+        }
     }
 
     function toggleOptions(event) {
@@ -46,8 +54,8 @@
 
     function onSelectOption (event) {
         const option = event.target.closest('a');
-        valueText = option.querySelector('.text').innerText;
-        formInput.value = option.getAttribute('data-value');
+        const value = option.getAttribute('data-value') ?? '';
+        setValue(value);
         optionsOpen = false;
         dispatch('input', formInput.value);
     }
