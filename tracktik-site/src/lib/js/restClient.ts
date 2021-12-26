@@ -1,5 +1,3 @@
-import { browser } from '$app/env';
-
 enum METHODS {
     GET = 'GET',
     POST = 'POST',
@@ -10,17 +8,14 @@ enum METHODS {
     HEAD = 'HEAD',
 };
 
-async function request(path: string, method: METHODS = METHODS.GET, params: object = {}, portalDomain = '', svelteFetch = undefined) {
+async function request(path: string, method: METHODS = METHODS.GET, params: object = {}, restHeaders = {}, svelteFetch = undefined) {
     try {
         let headers = {
             'Content-Type': 'application/json',
             'rest-path': path,
             'rest-method': method.toUpperCase(),
+            ...restHeaders,
         };
-
-        if (portalDomain) {
-            headers['rest-domain'] = portalDomain;
-        }
 
         let sfetch = svelteFetch || fetch;
         let res = await sfetch('/rest', {
@@ -35,7 +30,7 @@ async function request(path: string, method: METHODS = METHODS.GET, params: obje
 
         return res;
     } catch (err) {
-        console.error(err);
+        console.warn(err);
     }
 
     return undefined;

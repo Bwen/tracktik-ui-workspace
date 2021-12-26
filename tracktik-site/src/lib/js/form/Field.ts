@@ -11,6 +11,7 @@ export enum FieldType {
     TEXT = 'Input',
     PASSWORD = 'Password',
     SELECT = 'Select',
+    AUTOCOMPLETE = 'Autocomplete',
 };
 
 
@@ -27,4 +28,5 @@ export type Field = {
     data?: object;
     options?: SelectOptions[];
     validators?: FieldValidator[];
+    includeChildsInSearch?: boolean;
 };

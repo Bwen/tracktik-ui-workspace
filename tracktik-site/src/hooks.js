@@ -25,6 +25,10 @@ export async function getSession({ locals }) {
             user: locals.auth.user,
         };
     }
+    
+    if (locals['rest-region-filter']) {
+        session['rest-region-filter'] = locals['rest-region-filter'];
+    }
 
     session.locale = locals.locale;
     return session;

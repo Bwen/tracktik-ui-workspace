@@ -16,23 +16,26 @@
     export let disabled = false;
     export let placeholder = '';
     export let data = {};
-    let selectedValue;
+    let valueText = '';
     let formInput;
     let optionsOpen = false;
     let commonAttributes: any = {};
     $: {
         commonAttributes = parseAttributes({id, css, data});
+        options.unshift({text: '- Reset -', value: undefined});
         setValue(value);
     }
  
+
     onMount(() => {
         setValue(value);
     });
 
     function setValue(value: string) {
+        valueText = '';
         options.forEach(option => {
-            if (value == option.value && selectedValue) {
-                selectedValue.innerText = option.text;
+            if (value && value == option.value) {
+                valueText = option.text;
             }
         })
     }
@@ -41,16 +44,12 @@
         optionsOpen = optionsOpen ? false : true;
     }
 
-    /**
-     * mouse-down occurs before the input's blur
-     * @param event
-     */
-    function onMouseDown (event) {
+    function onSelectOption (event) {
         const option = event.target.closest('a');
-        selectedValue.innerText = option.querySelector('.text').innerText;
+        valueText = option.querySelector('.text').innerText;
         formInput.value = option.getAttribute('data-value');
-        dispatch('input', formInput.value);
         optionsOpen = false;
+        dispatch('input', formInput.value);
     }
 </script>
 
@@ -58,13 +57,19 @@
     <div {...commonAttributes}>
         <input type="hidden" name="{name}" value="{value}" bind:this={formInput}/>
         <span class="selected-arrow" on:mousedown={toggleOptions}><Fa icon={faAngleUp} /></span>
-        <div class="input-select" bind:this={selectedValue} on:mousedown={toggleOptions} />
+        <div class="input-select" class:disabled={disabled} on:mousedown={toggleOptions}>
+            {#if valueText}
+            {valueText}
+            {:else if placeholder}
+            <span class="placeholder">{placeholder}</span>
+            {/if}
+        </div>
         <ClickOutside on:click-outside={toggleOptions} exclude=".wrapper-select" active={optionsOpen}>
             <ul>
             {#each options as option, i}
                 <li>
                     <Link
-                        on:mousedown={onMouseDown}
+                        on:mousedown={onSelectOption}
                         data={{value: option.value}}
                         icon={option.icon}
                     >{option.text}</Link>

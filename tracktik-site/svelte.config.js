@@ -17,7 +17,7 @@ const config = {
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',
 		vite: {
-			server: { fs: { allow: ['locales'] } },
+			server: { fs: { allow: ['locales', 'tt-rest'] } },
 			resolve: {
 				alias: {
 					$lib: path.resolve('./src/lib'),

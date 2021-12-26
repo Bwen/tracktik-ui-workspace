@@ -8,6 +8,7 @@
 
     import Input from './Input.svelte';
     import Select from './Select.svelte';
+    import Autocomplete from './Autocomplete.svelte';
     import LoadingBar from '$components/ext/LoadingBar.svelte';
 
     export let isLoading: boolean = false;
@@ -32,6 +33,8 @@
         switch (field.type) {
             case FieldType.SELECT:
                 return Select;
+            case FieldType.AUTOCOMPLETE:
+                return Autocomplete;
             default:
             case FieldType.TEXT:
             case FieldType.PASSWORD:
@@ -45,6 +48,9 @@
 
         switch (field.type) {
             case FieldType.SELECT:
+                delete props.type;
+                break;
+            case FieldType.AUTOCOMPLETE:
                 delete props.type;
                 break;
             default:

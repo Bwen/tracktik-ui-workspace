@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
+    import { slide } from 'svelte/transition';
     import { faPhone, faEnvelope, faUser, faHashtag } from '@fortawesome/free-solid-svg-icons';
     import Phone from '$components/ext/Phone.svelte';
     import TextIcon from '$lib/components/ext/TextIcon.svelte';
@@ -40,7 +41,7 @@
     let administrativeArea = subdivision ? subdivision.name : '';
     let country = getCountryByAlpha2(postalCountry || defaultCountry);
     let address = {
-        countryName: country.name,
+        countryName: country ? country.name : '',
         postalCountry: postalCountry || defaultCountry,
         administrativeArea,
         locality: profile.address.city,
@@ -56,7 +57,7 @@
 
 <div class="wrapper-header-profile">
     <div class="header-profile">
-        {#if profile.avatar}<img src="{profile.avatar}" alt="Employee Avatar" />{/if}
+        {#if profile.avatar}<img src="{profile.avatar}" alt="Employee Avatar"  transition:slide={{duration: 500}}/>{/if}
         <div class="contact-address">
             <h2>{profile.name}</h2>
             <Address {...address} />

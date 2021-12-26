@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { pref } from '$lib/stores/cache';
+	import { goto } from '$app/navigation';
     import Fa from 'svelte-fa/src/fa.svelte';
     import type { IconDefinition } from "@fortawesome/fontawesome-common-types";
     import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
@@ -6,10 +8,21 @@
     import { parseAttributes } from '$lib/js/attributeProps';
     const dispatch = createEventDispatcher();
     function onLinkClick(event) {
-        //event.preventDefault();
         event.stopPropagation();
 
-        dispatch('link-click', {hyperlink: event.target.closest('a')});
+        const a = event.target.closest('a');
+        dispatch('link-click', {hyperlink: a});
+
+        // if we are debuging SSR dont use `goto`, let page reload completely
+        if ($pref.debug.ssr) {
+            return;
+        }
+
+        if (a.href) {
+            event.preventDefault();
+            goto(a.href);
+            return;
+        }
     }
 
     export let icon: IconDefinition = null;
@@ -26,7 +39,7 @@
     $: commonAttributes = parseAttributes({title, href, id, css, data});
 </script>
 
-<a {...commonAttributes} on:click="{onLinkClick}" on:mousedown>
+<a {...commonAttributes} on:click="{onLinkClick}" on:mousedown on:mouseover on:mouseout>
     <span class="wrapper-link">
     {#if icon}
         <span class="icon"><Fa class="{icon_hover ? 'on' : ''}" {icon} />{#if icon_hover}<Fa class="off" icon={icon_hover} />{/if}</span>

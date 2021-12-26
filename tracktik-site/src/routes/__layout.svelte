@@ -5,7 +5,6 @@
 	  await init(session);
 	  return {};
 	}
-
 </script>
 <script lang="ts">
 	import '$lib/js/media-theme';
@@ -18,7 +17,7 @@
 	import { faLightbulb } from '@fortawesome/free-regular-svg-icons';
 	import { session } from '$app/stores';
 	import { t } from '$lib/i18n';
-    import type { Link as LinkType } from '@type/Link.type';
+    import type { Link as LinkType } from '$lib/@types/Link.type';
 
 	let rightItems: LinkType[] = [
 		{icon: faLightbulbDark, icon_hover: faLightbulb, title: 'Light/Dark mode'}

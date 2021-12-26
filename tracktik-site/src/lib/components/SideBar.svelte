@@ -1,12 +1,13 @@
 <script lang="ts">
     import { filterItemsBySession } from '$lib/js/utils';
-    import type { Link as LinkType } from '@type/Link.type';
+    import type { MenuItem } from '@types/MenuItem.type';
     import Link from '$components/ext/Link.svelte';
     import { page, session } from '$app/stores';
 
-    export let menuItems: LinkType = [];
+    export let menuItems: MenuItem = [];
 
     filterItemsBySession(menuItems, $session);
+    let hovers = [];
 </script>
 
 <section class="side-bar">
@@ -17,15 +18,35 @@
     {/if}
     <ul>
     {#each menuItems as item}
-        <li><Link {...item} css="{$page.path.startsWith(item.href) ? 'active' : ''}" /></li>
+        <li>
+            {#if item.subItems}
+            <ul class="sub-items" class:open={hovers[item.href]}>
+            {#each item.subItems as subItem}
+                <li><Link 
+                    on:mouseover={() => hovers[item.href] = true}
+                    on:mouseout={() => hovers[item.href] = false}
+                    {...subItem} 
+                    css="{$page.path.startsWith(subItem.href) ? 'active' : ''}" 
+                /></li>
+            {/each}
+            </ul>
+            {/if}
+            <Link 
+                on:mouseover={() => hovers[item.href] = true}
+                on:mouseout={() => hovers[item.href] = false}
+                {...item} 
+                css="{$page.path.startsWith(item.href) ? 'active' : ''}" 
+            />
+        </li>
     {/each}
     </ul>
 </section>
 
 <style lang="css">
     .side-bar {
-        width: 100px;
-        z-index: 10;
+        min-width: 100px;
+        max-width: 100px;
+        z-index: 200;
     }
 
     .side-bar .logged-user {
@@ -38,6 +59,7 @@
         padding: 0;
         margin: 0;
         display: block;
+        position: relative;
     }
 
     .side-bar li :global(a) {
@@ -53,7 +75,24 @@
     }
 
     .side-bar li :global(.text) {
-        margin-top: 1em;
         display: block;
+    }
+
+    .side-bar .sub-items {
+        position: absolute;
+        margin-left: 100px;
+        z-index: 500;
+        display: none;
+    }
+
+    .side-bar .sub-items.open {
+        display: block;
+    }
+
+    .side-bar .sub-items li :global(a) {
+        font-size: .8em;
+        padding: .5em 1em;
+        white-space: nowrap;
+        text-align: left;
     }
 </style>

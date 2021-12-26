@@ -21,6 +21,7 @@ export default async function ({ request, resolve }) {
     const KEY_PORTAL = `${request.locals.sessionId}:portal`;
     const KEY_AUTH = `${request.locals.sessionId}:auth`;
     const KEY_LOCALE = `${request.locals.sessionId}:locale`;
+    const KEY_REST_REGION_FILTER = `${request.locals.sessionId}:rest-region-filter`;
 
     const portal = await request.locals.redis.get(KEY_PORTAL);
     if (portal) {
@@ -35,6 +36,14 @@ export default async function ({ request, resolve }) {
     const locale = await request.locals.redis.get(KEY_LOCALE);
     if (locale) {
         request.locals.locale = locale;
+    }
+
+    const regionFilter = await request.locals.redis.get(KEY_REST_REGION_FILTER);
+    if (request.headers['rest-region-filter'] !== undefined) {
+        request.locals['rest-region-filter'] = request.headers['rest-region-filter'];
+        request.locals.redis.set(KEY_REST_REGION_FILTER, request.headers['rest-region-filter'], 'EX', SESSION_REDIS_TTL);
+    } else if (regionFilter) {
+        request.locals['rest-region-filter'] = regionFilter;
     }
 
 	const response = await resolve(request);

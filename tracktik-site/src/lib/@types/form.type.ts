@@ -4,4 +4,6 @@ export type SelectOptions = {
     value: string | number;
     text: string;
     icon?: IconDefinition;
+    indent?: number;
+    parentValue?: string;
 };

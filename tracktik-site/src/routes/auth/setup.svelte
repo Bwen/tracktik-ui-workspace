@@ -30,8 +30,8 @@
 		}
 
 		try {
-			let res = await request('/about', METHODS.GET, {}, portalDomain.value);
-			if (res.ok) {
+			let res = await request('/about', METHODS.GET, {},  {"rest-domain": portalDomain.value});
+			if (res && res.ok) {
 				$session.portal = await res.json();
 
 				goto('/auth');

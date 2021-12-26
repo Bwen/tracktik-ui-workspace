@@ -1,4 +1,5 @@
 
+.side-bar .sub-items,
 .side-bar,
 .top-tabs,
 .app-header {
@@ -31,6 +32,7 @@
 
 .side-bar {
     box-shadow: none;
+    border-right: 1px solid var(--tcolor-bg-border);
 }
 .side-bar ul {
     border-bottom: 1px solid var(--tcolor-bg-border);
@@ -160,4 +162,21 @@
 
 .wrapper-address a:hover {
     color: var(--tcolor-primary);
+}
+
+.region-selector .wrapper-input,
+.region-selector input::placeholder {
+    color: #999;
+}
+
+.region-selector input {
+    color: var(--tcolor-bg-dark-text);
+    background-color: var(--tcolor-bg-dark);
+    border: 1px solid var(--tcolor-bg-border);
+    border-top: 0;
+    border-left: 0;
+}
+
+.region-selector .wrapper-autocomplete a:hover {
+    background-color: var(--tcolor-success-dark);
 }

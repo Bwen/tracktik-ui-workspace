@@ -12,6 +12,8 @@
     import { Manager, FieldType } from '$form';
     import { session } from '$app/stores';
     import type { Fieldset } from '$form';
+    import { getRegionOptions } from '$lib/js/utils';
+    import { ClientsItem } from '@rest/models/ClientsItem';
 
     let isLoading = false;
     let columns = [
@@ -48,19 +50,21 @@
         },
     ];
     
-    const regionFilterOptions = [];
-    for (let i=0; i < $session.auth.scopes.regions.length; i++) {
-        const region = $session.auth.scopes.regions[i];
-        regionFilterOptions.push({
-            value: region.id,
-            text: region.name,
+    let statusOptions = [];
+    for (const status in ClientsItem.status) {
+        statusOptions.push({
+            text: status,
+            value: status,
         });
     }
+
+    const regionFilterOptions = getRegionOptions($session.auth.scopes.regions);
     let filterFields: Fieldset[] = [{
         fields: [
 			{
 				name: 'departement',
 				type: FieldType.SELECT,
+                placeholder: 'Filter by Departement',
 				value: '',
 				options: [
 				]
@@ -68,6 +72,7 @@
 			{
 				name: 'zone',
 				type: FieldType.SELECT,
+                placeholder: 'Filter by Zone',
 				value: '',
 				options: [
 				]
@@ -75,16 +80,17 @@
 			{
 				name: 'status',
 				type: FieldType.SELECT,
+                placeholder: 'Filter by Status',
 				value: '',
-				options: [
-				]
+				options: statusOptions
 			},
 			{
 				name: 'region',
-				type: FieldType.SELECT,
+				type: FieldType.AUTOCOMPLETE,
                 placeholder: 'Filter by Region',
 				value: '',
-				options: regionFilterOptions
+				options: regionFilterOptions,
+                includeChildsInSearch: true,
 			},
 			{
 				name: 'keyword',
@@ -128,6 +134,10 @@
     }
 
     if (browser) {
+        session.subscribe(async () => {
+            await fetchEmployees();
+        });
+
         (async () => await fetchEmployees())();
     }
 </script>

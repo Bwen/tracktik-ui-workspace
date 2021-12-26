@@ -69,6 +69,7 @@ div.wrapper-field div.wrapper-select div[class^="s-"] > span.selected-arrow {
     padding: .2em .65em;
 }
 
+div.wrapper-field div.wrapper-autocomplete div[class^="s-"] > .selectedReset,
 div.wrapper-field div.wrapper-select div[class^="s-"] > span.selected-arrow {
     background-color: var(--tcolor-bg-light);
     border: 1px solid var(--tcolor-border);
@@ -76,6 +77,7 @@ div.wrapper-field div.wrapper-select div[class^="s-"] > span.selected-arrow {
     border-bottom: none;
 }
 
+.wrapper-autocomplete ul,
 .wrapper-select ul {
     color:  var(--tcolor-bg-text);
     background-color: var(--tcolor-bg-light);
@@ -86,8 +88,13 @@ div.wrapper-field div.wrapper-select div[class^="s-"] > span.selected-arrow {
     border-top: 0;
 }
 
+.wrapper-autocomplete ul a:hover,
 .wrapper-select ul a:hover {
     background-color: var(--tcolor-success-light);
+}
+
+.wrapper-select .placeholder {
+    color: #666;
 }
 
 .filters form,

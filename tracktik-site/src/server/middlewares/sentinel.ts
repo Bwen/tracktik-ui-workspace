@@ -2,7 +2,7 @@ import { browser } from '$app/env';
 
 /** @type {import('@sveltejs/kit').Handle} */
 export default async function ({ request, resolve }) {
-    if (request.path === '/rest') {
+    if (['/rest', '/session'].indexOf(request.path) !== -1) {
         return await resolve(request);
     }
 

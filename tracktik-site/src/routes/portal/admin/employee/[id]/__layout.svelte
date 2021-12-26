@@ -26,10 +26,11 @@
     }
 </script>
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import { setContext } from 'svelte';
 	import TopTabs from '$components/TopTabs.svelte';
 	import ProfileHeader from '$lib/components/ProfileHeader.svelte';
-    import type { Link as LinkType } from '@type/Link.type';
+    import type { Link as LinkType } from '$lib/@types/Link.type';
 	import { t } from '$lib/i18n';
 	
 	let urlPrefix = '/portal/admin/employee';
@@ -50,7 +51,7 @@
 <div class="layout-employee-profile">
 	<ProfileHeader />
 	<TopTabs tabItems={topTabItems} />
-	<div class="content"><div class="content-inner">
+	<div class="content" transition:fade={{duration: 300}}><div class="content-inner">
     	<slot />
 	</div></div>
 </div>

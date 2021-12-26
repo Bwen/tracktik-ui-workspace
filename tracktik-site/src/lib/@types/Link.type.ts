@@ -12,6 +12,5 @@ export type Link = {
     title?: string;
     css?: string;
     data?: { [key: string]: string };
-    acl?: string;
 };
 

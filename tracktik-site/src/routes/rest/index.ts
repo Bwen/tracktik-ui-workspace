@@ -2,7 +2,6 @@
 export async function post({ locals, body, headers }) {
     let { sessionId } = locals;
 
-    // Fetch Redis session
     if (!sessionId && !Object.hasOwnProperty.call(headers, 'rest-domain')) {
         return { status: 400, body: { message: 'Missing Rest-Domain or Rest-Session-Id header' } };
     }
@@ -30,6 +29,10 @@ export async function post({ locals, body, headers }) {
 
     if (locals.auth) {
         options.headers['Authorization'] = `Bearer ${locals.auth.auth.token}`;
+    }
+
+    if (locals['rest-region-filter']) {
+        options.headers['TTC-Region-Filter'] = locals['rest-region-filter'];
     }
 
     let url = new URL(`https://${domain}/rest/v1${path}`);
