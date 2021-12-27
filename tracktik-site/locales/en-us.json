@@ -54,6 +54,13 @@
 				"name": "Name",
 				"title": "Title",
 				"phone": "Phone"
+			},
+			"filters": {
+				"department": "Filter By Department",
+				"zone": "Filter by Zone",
+				"status": "Filter by Status",
+				"region": "Filter by Region",
+				"keyword": "Type to Filter"
 			}
 		},
 		"index": {

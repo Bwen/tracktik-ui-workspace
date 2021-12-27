@@ -54,6 +54,13 @@
 				"name": "Nom",
 				"title": "Titre",
 				"phone": "Téléphone"
+			},
+			"filters": {
+				"department": "Filtrer par Département",
+				"zone": "Filtrer par Zone",
+				"status": "Filtrer par Statut",
+				"region": "Filtrer par Region",
+				"keyword": "Tapez pour Filtrer"
 			}
 		},
 		"index": {

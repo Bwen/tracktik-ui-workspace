@@ -18,7 +18,8 @@
         {value: 100, text: 100},
     ];
 
-    let pageCurrent = 0;
+    export let pageCurrent = 0;
+    let currentAmount = 0;
     let totalPages = 0;
     let pagesDisplay = [];
     $: {
@@ -38,10 +39,10 @@
             pagesDisplay.push(i);
         }
 
-        // If the pageCurrent is out of bound bring it back to the first page
-        if (-1 === pagesDisplay.indexOf(pageCurrent)) {
-            pageCurrent = 0;
-            dispatch('page-change', {pageNumber: 0});
+
+        currentAmount = perPage * (pageCurrent ? pageCurrent : 1);
+        if (currentAmount > total) {
+            currentAmount = total;
         }
     }
 
@@ -80,7 +81,7 @@
 </script>
 
 <div class="wrapper-pagination">
-    {#if showTotal}<div class="total">{perPage * (pageCurrent ? pageCurrent : 1)} of {total}</div>{/if}
+    {#if showTotal}<div class="total">{currentAmount} of {total}</div>{/if}
     {#if showPerPage}<div class="per-page"><Select on:input={onPerPageChange} options={perPageOptions} value={perPage} /></div>{/if}
     <section class="pagination">
         {#if totalPages > 1}

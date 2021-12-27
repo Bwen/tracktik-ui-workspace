@@ -24,12 +24,15 @@
     export let entries = [];
     export let uid = '';
     export let perPage = 20;
+    export let offset = 0;
     export let totalEntries = 0;
     export let columns: ColumnDefinition[] = [];
 
+    let pageCurrent = 0;
     let page = 0;
     let pageEntries = [];
     $: {
+        pageCurrent = Math.ceil(offset / perPage);
         pageEntries = getPageEntries(entries);
     }
 
@@ -127,6 +130,7 @@
     <Pagination 
         showTotal={true}
         showPerPage={true}
+        pageCurrent={pageCurrent}
         perPage={perPage}
         total={totalEntries}
         on:page-change={onPageChange}

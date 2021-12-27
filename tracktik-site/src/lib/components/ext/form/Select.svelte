@@ -41,6 +41,10 @@
             }
         });
 
+        if (!valueText) {
+            formInput.value = '';
+        }
+
         // if no value, pick first option
         if (!allowReset && !valueText && options[0]) {
             valueText = options[0].text;
