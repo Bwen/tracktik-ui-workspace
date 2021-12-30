@@ -1,0 +1,67 @@
+
+$content-body-text: #3f3f3f;
+$content-body-bg: #ededed;
+
+$content-bg: #FAFAFA;
+$content-border: #DDD;
+$content-border-light: #FFF;
+$content-shadow: 
+    0 3px 1px -2px rgb(0 0 0 / 20%), 
+    0 2px 2px 0 rgb(0 0 0 / 14%), 
+    0 1px 5px 0 rgb(0 0 0 / 12%)
+;
+
+$menu-text: #f5f5f5;
+$menu-bg: #393F51;
+$menu-bg-dark: #2A2E3C;
+$menu-text-dark: #BBB;
+$menu-border: #ffffff30;
+$menu-selected-bg: rgba(0, 0, 0, 0.19);
+$menu-selected-text: rgb(221, 120, 125);
+$menu-selected-border: rgb(193, 22, 30);
+
+$form-ele-text: #858585;
+$form-ele-bg: #fdfdfd;
+$form-ele-shadow: 0 0 0 2px #ebebeb;
+$form-ele-border: #d7d7d7;
+
+$form-ele-disabled-bg: #CCC;
+$form-ele-disabled-text: #AAA;
+$form-ele-disabled-border: #BBB;
+
+$button-primary-text: #fff;
+$button-primary-bg: #4786b8;
+$button-primary-bg-light: #a8d8ff;
+$button-primary-bg-hover: #3b91d8;
+$button-primary-border: #3e76af;
+
+$border-radius: 3px;
+
+$loading-border: #66bb6a;
+$loading-bg: #c5e1a5;
+$loading-bg-light: #4caf50;
+
+$success-text: #f0ffdf;
+$success-icon: #cbfa96;
+$success-bg: rgba(102, 187, 106, .85);
+$success-border: #c8ff8a;
+
+$warning-text: #ffe8cd;
+$warning-icon: #ffcd6f;
+$warning-bg: rgba(175, 106, 26, .85);
+$warning-border: #ffab4b;
+
+$error-text: #ffe1eb;
+$error-text-dark: darken($error-text, 50%);
+$error-icon: #ff7c8d;
+$error-bg: rgba(129, 21, 57, .85);
+$error-border: #e91e63;
+
+$info-text: #c4ddff;
+$info-icon: #71c6ff;
+$info-bg: rgba(33, 100, 189, .85);
+$info-border: #76c8ff;
+
+[theme^='default-dark'] {
+    $content: #000;
+}

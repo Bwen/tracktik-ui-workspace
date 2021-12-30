@@ -146,31 +146,37 @@
 </div>
 
 <style lang="css">
-    .wrapper-autocomplete,
-    .wrapper-autocomplete div {
+    .wrapper-autocomplete {
         display: inline-block;
         position: relative;
     }
-
-    .wrapper-autocomplete ul,
-    .wrapper-autocomplete li {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    .wrapper-autocomplete ul {
-        overflow: hidden;
-        position: absolute;
-        display: none;
-        max-height: 15em;
-    }
-    .wrapper-autocomplete.open :global(ul) {
+        
+    .wrapper-autocomplete.open ul {
         display: block;
         height: auto;
         z-index: 100;
         overflow-x: hidden;
         overflow-y: auto;
     }
+        
+    .wrapper-autocomplete div {
+        display: inline-block;
+        position: relative;
+    }
+
+    .wrapper-autocomplete ul, .wrapper-autocomplete li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .wrapper-autocomplete ul {
+        overflow: hidden;
+        position: absolute;
+        display: none;
+        max-height: 15em;
+    }
+
     .wrapper-autocomplete ul :global(a) {
         white-space: nowrap;
         text-decoration: none;
@@ -193,9 +199,11 @@
         padding: 3px 8px;
         cursor: pointer;
     }
+
     .wrapper-autocomplete .selectedReset.active {
         display: block;
     }
+
     .wrapper-autocomplete .selectedIcon {
         padding: 4px;
         left: 1.75em;
@@ -210,7 +218,12 @@
         cursor: pointer;
     }
     
+    .wrapper-autocomplete :global(.wrapper-link .icon svg) {
+        margin: 0;
+    }
+
     .wrapper-autocomplete :global(.icon + .text) {
         margin-left: .65em;
     }
+
 </style>

@@ -4,7 +4,7 @@
     
     function handleKeydown(event){
         if(event.key=="Escape") {
-            close() //ESC
+            close();
         } 
     }
 
@@ -42,7 +42,9 @@
 
 <div class="overlay-modal" class:active bind:this={modal} on:click={()=>close()}>
     <div class="wrapper-modal" on:click|stopPropagation={()=>{}}>
-        <div class="content-modal"><slot /></div>
+        <div class="wrapper-content"><div class="content">
+            <slot />
+        </div></div>
     </div>
 </div>
 
@@ -56,7 +58,7 @@
 		bottom: 0;
         background-color: rgba(0, 0, 0, .6);
 		visibility: hidden;
-		z-index: 9999;
+		z-index: 5000;
 		position: fixed;
 		display: flex;
 		align-items: center;

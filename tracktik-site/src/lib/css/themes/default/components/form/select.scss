@@ -1,0 +1,17 @@
+
+.wrapper-select {
+    ul {
+        background-color: $form-ele-bg;
+        box-shadow: $content-shadow;
+        border-radius: 0 0 $border-radius $border-radius;
+
+        a:hover {
+            background-color: $button-primary-bg-light;
+        }
+    }
+
+    .selected-arrow {
+        position: absolute;
+        border-left: 1px solid $content-border;
+    }
+}

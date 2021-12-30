@@ -83,11 +83,6 @@
 </div>
 
 <style lang="css">
-    .wrapper-header-profile {
-        background-color: var(--tcolor-bg-dark2);
-        color: #CCC;
-    }
-
     .header-profile {
         display: flex;
     }
@@ -106,7 +101,6 @@
     
     .header-profile img {
         box-sizing: border-box;
-        border: 1px solid var(--tcolor-bg-border);
         margin: 6px;
         width: 100px;
         height: 100px;

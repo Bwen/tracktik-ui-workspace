@@ -1,0 +1,41 @@
+
+.wrapper-snackbar {
+    ul {
+        li {
+            font-size: .75em;
+            color: #FFF;
+            background-color: rgba(0, 0, 0, .75);
+            border: 1px solid #DDD;
+            border-radius: $border-radius;
+            box-shadow: $content-shadow;
+
+            &.info {
+                .icon { color: $info-icon; }
+                color: $info-text;
+                background-color: $info-bg;
+                border: 2px solid $info-border;
+            }
+
+            &.success {
+                .icon { color: $success-icon; }
+                color: $success-text;
+                background-color: $success-bg;
+                border: 2px solid $success-border;
+            }
+
+            &.warning {
+                .icon { color: $warning-icon; }
+                color: $warning-text;
+                background-color: $warning-bg;
+                border: 2px solid $warning-border;
+            }
+
+            &.error {
+                .icon { color: $error-icon; }
+                color: $error-text;
+                background-color: $error-bg;
+                border: 2px solid $error-border;
+            }
+        }
+    }
+}

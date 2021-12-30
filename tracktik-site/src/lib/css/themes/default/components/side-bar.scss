@@ -1,0 +1,46 @@
+
+.side-bar {
+    color: $menu-text;
+    background-color: $menu-bg;
+    border-right: 1px solid $menu-border;
+
+    ul {
+        border-bottom: 1px solid $menu-border;
+
+        li {
+            border-top: 1px solid $menu-border;
+
+            a {
+                color: $menu-text;
+                .text {
+                    margin-top: .5em;
+                }
+            }
+
+            a.active,
+            a:hover {
+                color: $menu-selected-text;
+                background-color: $menu-selected-bg;
+                border-left: 6px solid $menu-selected-border;
+                transition: all .25s ease-in-out;
+            }
+
+            ul {
+                background-color: $menu-bg;
+                li {
+                    a {
+                        background-color: $menu-bg;
+                        .text {
+                            margin: 0;
+                        }
+                    }
+
+                    a.active,
+                    a:hover {
+                        background-color: $menu-selected-bg;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,6 +1,6 @@
 //import adapter from '@sveltejs/adapter-auto';
 import adapter from '@sveltejs/adapter-node';
-import preprocess from 'svelte-preprocess';
+import autoPreprocess from 'svelte-preprocess';
 import path from 'path';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -9,7 +9,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const config = {
 	// Consult https://github.com/sveltejs/svelte-preprocess
 	// for more information about preprocessors
-	preprocess: preprocess(),
+	preprocess: autoPreprocess(),
 
 	kit: {
 		adapter: adapter({ out: '.svelte-kit/build' }),

@@ -39,7 +39,7 @@
     $: commonAttributes = parseAttributes({title, href, id, css, data});
 </script>
 
-<a {...commonAttributes} on:click="{onLinkClick}" on:mousedown on:mouseover on:mouseout>
+<a {...commonAttributes} on:click="{onLinkClick}" on:mousedown on:mouseover on:mouseout on:focus on:blur>
     <span class="wrapper-link">
     {#if icon}
         <span class="icon"><Fa class="{icon_hover ? 'on' : ''}" {icon} />{#if icon_hover}<Fa class="off" icon={icon_hover} />{/if}</span>

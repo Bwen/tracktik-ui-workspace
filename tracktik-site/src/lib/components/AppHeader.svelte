@@ -1,7 +1,7 @@
 <script lang="ts">
     import { page } from '$app/stores';
     import type { IconDefinition } from "@fortawesome/fontawesome-common-types";
-    import type { Link as LinkType } from '@types/Link.type';
+    import type { Link as LinkType } from '$lib/@types/Link.type';
     import { faBars } from '@fortawesome/free-solid-svg-icons';
     import {createEventDispatcher} from "svelte";
     import Link from '$components/ext/Link.svelte';
@@ -26,8 +26,8 @@
     }
 </script>
 
-<header class="app-header">
-    <section class="wrapper-app-header">
+<header class="wrapper-app-header">
+    <section class="app-header">
     {#if logoItem && logoItem.img}
         <section class="left">
             <img src="{logoItem.img}" alt="logo" />
@@ -53,97 +53,75 @@
     </section>
 </header>
 
-<style lang="css">
-    .app-header {
-        position: relative;
-    }
-
-    :global([media="small"]) .app-header {
-        position: fixed;
-        bottom: 0;
-        z-index: 100;
-        width: 100%;
-    }
-
+<style lang="scss">
     .wrapper-app-header {
-        margin: 0 auto;
-        display: flex;
-        flex-flow: row;
-        width: var(--layout-width);
-    }
-
-    .wrapper-app-header :global(a) {
         position: relative;
-        cursor: pointer;
-        color: inherit;
-        text-decoration: none;
-    }
 
-    .wrapper-app-header :global(.icon) {
-        padding: .25em .45em;
-        font-size: 1.75em;
-        vertical-align: top;
-        max-width: 1.90em;
-    }
+        .app-header {
+            margin: 0 auto;
+            display: flex;
+            flex-flow: row;
 
-    .wrapper-app-header :global(a),
-    .wrapper-app-header :global(.wrapper-link) {
-        display: inline-block;
-        vertical-align: top;
-    }
+            :global(a) {
+                position: relative;
+                cursor: pointer;
+                color: inherit;
+                text-decoration: none;
+            }
 
-    .wrapper-app-header :global(.text) {
-        display: inline-block;
-        position: relative;
-        line-height: 3.5em;
-        padding: 0 1em;
-    }
+            :global(.icon) {
+                padding: .25em .45em;
+                font-size: 1.75em;
+                vertical-align: top;
+                max-width: 1.90em;
+            }
 
-    .wrapper-app-header :global(sup) {
-        font-style: italic;
-        font-size: .65em;
-        text-align: center;
-        line-height: initial;
-        display: block;
-        position: absolute;
-        bottom: .65em;
-        left: 0;
-        width: 100%;
-    }
+            :global(a),
+            :global(.wrapper-link) {
+                display: inline-block;
+                vertical-align: top;
+            }
 
-    .wrapper-app-header .right {
-        flex: auto;
-        text-align: right;
-    }
+            :global(.text) {
+                display: inline-block;
+                position: relative;
+                line-height: 3.5em;
+                padding: 0 1em;
+            }
 
-    .wrapper-app-header .left {
-        margin-left: var(--spacing);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+            :global(sup) {
+                font-style: italic;
+                font-size: .65em;
+                text-align: center;
+                line-height: initial;
+                display: block;
+                position: absolute;
+                bottom: .65em;
+                left: 0;
+                width: 100%;
+            }
 
-    .wrapper-app-header .left img {
-        max-height: 50px;
-    }
+            .right {
+                flex: auto;
+                text-align: right;
+            }
 
-    .wrapper-app-header .menu-bars {
-        display: none;
-    }
+            .left {
+                margin-left: var(--spacing);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
-    :global([media="small"]) .menu-bars,
-    :global([media="medium"]) .menu-bars {
-        display: inherit;
-    }
+            .left img {
+                max-height: 38px;
+                padding: 6px;
+            }
 
-    :global([media="small"]) .center-items,
-    :global([media="medium"]) .center-items {
-        display: flex;
-        flex-flow: column;
-        position: absolute;
-        opacity: 0;
-        height: 1px;
-        overflow: hidden;
+            .menu-bars {
+                display: none;
+            }
+        }
     }
 
 </style>

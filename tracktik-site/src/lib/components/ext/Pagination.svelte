@@ -104,44 +104,34 @@
     .wrapper-pagination {
         display: flex;
         flex-flow: row;
-        width: 100%;
         padding: .5em;
-        line-height: 2.6em;
     }
 
     .wrapper-pagination > * {
         margin-left: .65em;
     }
 
-    .wrapper-pagination :global(.input-select) {
-        width: 3.5em;
-        padding: .5em;
-        height: 1em;
-        line-height: 1.25em;
-    }
-
     .wrapper-pagination :global(.selected-arrow) {
         width: .5em;
-        height: .8em;
-        line-height: .8em;
-        padding: .5em;
-        margin-top: 3px;
     }
 
-    .wrapper-pagination :global(.wrapper-select .outclick-wrapper > ul) {
+    .wrapper-pagination .pagination,
+    .wrapper-pagination :global(.total) {
+        line-height: 2em;
+    }
+
+    .wrapper-pagination :global(.wrapper-select ul) {
         height: 7.2em;
-        min-width: 4.5em;
+        min-width: 3.35em;
         text-align: right;
-        margin-top: -5px;
     }
 
-    .wrapper-pagination :global(.wrapper-select .outclick-wrapper li) {
+    .wrapper-pagination :global(.wrapper-select li) {
         line-height: 1em;
     }
 
     .pagination :global(a) {
         text-decoration: none;
-        width: 2em;
     }
 
     .pagination :global(.current) {

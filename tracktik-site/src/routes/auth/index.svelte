@@ -100,22 +100,9 @@
 </div>
 
 <style lang="css">
-
 	.form-login :global(form) {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 	}
-
-	.form-login :global(.input-select),
-	.form-login :global(button[type="submit"]),
-	.form-login :global(input[type="submit"]),
-	.form-login :global(input[type="email"]),
-	.form-login :global(input[type="password"]),
-	.form-login :global(input[type="text"]) {
-		width: 13em;
-		line-height: .8em;
-		padding: .8em;
-	}
-
 </style>

@@ -8,6 +8,8 @@ export type SelectOptions = {
 }
 
 export enum FieldType {
+    SWITCH = 'Switch',
+    BUTTON = 'Button',
     TEXT = 'Input',
     PASSWORD = 'Password',
     SELECT = 'Select',
@@ -19,8 +21,9 @@ export type Field = {
     id?: string;
     name: string;
     label?: string;
+    tooltip?: string;
     type: FieldType;
-    value?: string;
+    value?: string | number | boolean;
     error?: string;
     placeholder?: string;
     icon?: IconDefinition;

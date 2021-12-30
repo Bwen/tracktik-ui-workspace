@@ -10,7 +10,11 @@
 		},
 		"overview": "Aperçu",
 		"edit": "Éditer",
-		"map": "Carte"
+		"map": "Carte",
+		"on": "Act.",
+		"off": "Dés.",
+		"enabled": "Activé",
+		"disabled": "Désactivé"
 	},
 	"page": {
 		"auth": {
@@ -31,6 +35,20 @@
 				"maps": "Cartes",
 				"settings": "Réglages",
 				"sales": "Ventes et listes"
+			}
+		},
+		"ui-controls": {
+			"title": "UI Controls",
+			"page-state": {
+				"label": "États des pages",
+				"tooltip": "Tous les états de page seront effacés, tels que le nombre d'entrées par table de données, les filtres de table de données, etc.",
+				"action": "Purger",
+				"success": "Tous les états de page ont été purgés"
+			},
+			"ssr": {
+				"label": "Débogage SSR",
+				"tooltip": "Le SSR (Rendu côté serveur) sera appliqué sur tous les liens, un clic sur un lien redirigera le navigateur vers cette page. Agit comme un \"premier chargement\" comme si l'url avait été saisie manuellement dans le navigateur.",
+				"success": "Débogage SSR <strong>{state}</strong>"
 			}
 		},
 		"admin": {

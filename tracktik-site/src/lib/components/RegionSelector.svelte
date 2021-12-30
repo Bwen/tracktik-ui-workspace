@@ -26,39 +26,27 @@
     />
 </div></div>
 
-<style lang="css">
+<style lang="scss">
     .region-selector {
         font-size: 1.5em;
         position: relative;
-    }
-
-    .region-selector :global(input) {
-        padding: .75em 1em;
-    }
-
-    .region-selector :global(.wrapper-autocomplete .wrapper-input),
-    .region-selector :global(.wrapper-autocomplete > div),
-    .region-selector :global(.wrapper-autocomplete) {
-        width: 100%;
-        display: flex;
-    }
-
-    .region-selector :global(.wrapper-autocomplete ul) {
-        left: 0;
-        top: 2.35em;
-        width: 100%;
-        opacity: .85;
-        border: 0;
-        color: #CCC;
-        border-bottom: 1px solid #CCC;
-        background-color: #111;
-    }
-
-    .region-selector :global(.wrapper-autocomplete input) {
-        flex-grow: 1;
-    }
     
-    .region-selector :global(.wrapper-autocomplete ul) {
-        margin-top: -.25em;
+        :global(.wrapper-autocomplete .wrapper-input),
+        :global(.wrapper-autocomplete > div),
+        :global(.wrapper-autocomplete) {
+            width: 100%;
+            display: flex;
+        }
+
+        :global(.wrapper-autocomplete ul) {
+            left: 0;
+            top: 2.15em;
+            width: 100%;
+            border: 0;
+        }
+
+        :global(.wrapper-autocomplete input) {
+            flex-grow: 1;
+        }
     }
 </style>

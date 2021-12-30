@@ -1,0 +1,13 @@
+
+.wrapper-phone {
+    border: 1px solid $content-border;
+    border-radius: $border-radius;
+    background-color: $content-bg;
+
+    .phone {
+        border-top: 1px solid $content-border-light;
+        border-radius: $border-radius;
+        padding: 2px;
+        font-weight: bold;
+    }
+}

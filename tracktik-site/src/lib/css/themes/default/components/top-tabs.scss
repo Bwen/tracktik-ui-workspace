@@ -1,0 +1,30 @@
+
+.top-tabs {
+    color: $menu-text;
+    background-color: $menu-bg;
+    border-top: 1px solid $menu-border;
+
+    ul {
+        //border-bottom: 1px solid $menu-border;
+
+        li {
+            border-right: 1px solid $menu-border;
+
+            a {
+                color: $menu-text;
+            }
+
+            a.active {
+                color: $content-body-text;
+                background-color: $content-bg;
+                border-bottom: 1px solid $content-border;
+            }
+
+            a:hover {
+                color: $menu-selected-text;
+                background-color: $menu-selected-bg;
+                transition: all .25s ease-in-out;
+            }
+        }
+    }
+}

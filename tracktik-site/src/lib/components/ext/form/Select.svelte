@@ -68,8 +68,8 @@
 <div class="wrapper-select" class:open={optionsOpen === true}>
     <div {...commonAttributes}>
         <input type="hidden" name="{name}" value="{value}" bind:this={formInput}/>
-        <span class="selected-arrow" on:mousedown={toggleOptions}><Fa icon={faAngleUp} /></span>
-        <div class="input-select" class:disabled={disabled} on:mousedown={toggleOptions}>
+        <span class="selected-arrow" on:mousedown={!disabled ? toggleOptions : undefined}><Fa icon={faAngleUp} /></span>
+        <div class="input-select" class:disabled={disabled} on:mousedown={!disabled ? toggleOptions : undefined}>
             {#if valueText}
             {valueText}
             {:else if placeholder}
@@ -94,8 +94,25 @@
 
 
 <style lang="css">
-    .wrapper-select,
-    .wrapper-select div {
+    .wrapper-select {
+        display: inline-block;
+        position: relative;
+        user-select: none;
+    }
+    .wrapper-select.open div :global(ul) {
+        display: block;
+        height: auto;
+        z-index: 100;
+        overflow-x: hidden;
+        overflow-y: auto;
+        min-width: 11.75em;
+    }
+    .wrapper-select div  .selected-arrow > :global(svg) {
+        transition: transform .1s ease-in;
+        transform: rotate(180deg);
+    }
+
+    .wrapper-select {
         display: inline-block;
         position: relative;
     }
@@ -103,54 +120,44 @@
     .wrapper-select .input-select {
         white-space: nowrap;
         overflow: hidden;
-        user-select: none;
+        padding: .25em;
+        padding-right: .5em;
     }
-
-    .wrapper-select ul,
-    .wrapper-select li {
+    .wrapper-select ul, li {
         list-style: none;
         padding: 0;
         margin: 0;
     }
+    
     .wrapper-select ul {
         overflow: hidden;
         position: absolute;
         display: none;
         margin-top: -.25em;
         max-height: 15em;
-    }
-    .wrapper-select.open :global(ul) {
-        display: block;
-        height: auto;
-        z-index: 100;
-        overflow-x: hidden;
-        overflow-y: auto;
-    }
-    .wrapper-select ul :global(a) {
         white-space: nowrap;
+    }
+
+    .wrapper-select :global(a) {
         text-decoration: none;
         padding: .35em;
         display: block;
     }
-
-    .wrapper-select ul :global(.fa) {
+    .wrapper-select :global(.fa) {
         position: absolute;
-        margin: 8px;
     }
 
-    .wrapper-select .selectedIcon,
-    .wrapper-select .selected-arrow {
+    .wrapper-select .selectedIcon, .wrapper-select .selected-arrow {
         z-index: 5;
         position: absolute;
         top: 0;
     }
+
     .wrapper-select .selected-arrow {
         right: 0;
+        padding: .3em .55em;
     }
-    .wrapper-select.open .selected-arrow > :global(svg) {
-        transition: transform .1s ease-in;
-        transform: rotate(180deg);
-    }
+    
     .wrapper-select .selectedIcon {
         padding: 4px;
         left: 1.75em;
@@ -159,8 +166,7 @@
         display: block;
     }
 
-    .wrapper-select .selected-arrow,
-    .wrapper-select .input-select {
+    .wrapper-select .selected-arrow, .wrapper-select .input-select {
         cursor: pointer;
     }
 </style>

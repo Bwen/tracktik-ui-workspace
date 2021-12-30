@@ -1,0 +1,32 @@
+
+@import 'elements.scss';
+@import 'select.scss';
+@import 'autocomplete.scss';
+
+.wrapper-form {
+    fieldset {
+        padding: 0;
+        margin: 0;
+        border: 0;
+    }
+
+    .wrapper-field {
+        padding: 8px;
+        
+        &.error {
+            .wrapper-input {
+                .wrapper-select .input-select,
+                input[type="email"],
+                input[type="password"],
+                input[type="text"] {
+                    border: 1px solid $error-text-dark;
+                }
+            }
+
+            div.error {
+                font-size: .8em;
+                color: $error-text-dark;
+            }
+        }
+    }
+}

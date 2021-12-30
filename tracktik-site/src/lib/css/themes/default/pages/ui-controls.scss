@@ -1,0 +1,13 @@
+
+.wrapper-ui-setting {
+    .wrapper-form {
+        label {
+            display: inline-block;
+            width: 175px;
+        }
+
+        .wrapper-field:nth-child(odd) {
+            background-color: $content-border-light;
+        }
+    }
+}

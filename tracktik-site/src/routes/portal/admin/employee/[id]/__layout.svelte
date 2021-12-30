@@ -51,7 +51,7 @@
 <div class="layout-employee-profile">
 	<ProfileHeader />
 	<TopTabs tabItems={topTabItems} />
-	<div class="content" transition:fade={{duration: 300}}><div class="content-inner">
+	<div class="wrapper-content" transition:fade={{duration: 300}}><div class="content">
     	<slot />
 	</div></div>
 </div>

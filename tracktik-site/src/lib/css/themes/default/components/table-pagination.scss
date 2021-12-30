@@ -1,0 +1,31 @@
+
+.wrapper-table-data {
+    div.wrapper-pagination {
+        padding: 4px 0 2px 0;
+        border-top: 1px solid $content-border-light;
+
+        .per-page {
+            .input-select {
+                width: 3em;
+            }
+
+            .wrapper-select ul {
+                min-width: 3.75em;
+            }
+        }
+
+        .pagination {
+            margin-right: 0;
+            a {
+                border: 1px solid #EEE;
+                border-width: 0 1px;
+                padding: .8em 1.2em;
+            }
+
+            a.current,
+            a:hover {
+                background-color: $button-primary-bg-light;
+            }
+        }
+    }
+}

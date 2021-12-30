@@ -1,6 +1,6 @@
 <script lang="ts">
     import { filterItemsBySession } from '$lib/js/utils';
-    import type { MenuItem } from '@types/MenuItem.type';
+    import type { MenuItem } from '$lib/@types/MenuItem.type';
     import Link from '$components/ext/Link.svelte';
     import { page, session } from '$app/stores';
 
@@ -22,18 +22,14 @@
             {#if item.subItems}
             <ul class="sub-items" class:open={hovers[item.href]}>
             {#each item.subItems as subItem}
-                <li><Link 
-                    on:mouseover={() => hovers[item.href] = true}
-                    on:mouseout={() => hovers[item.href] = false}
+                <li  on:mouseover={() => hovers[item.href] = true} on:mouseout={() => hovers[item.href] = false}><Link 
                     {...subItem} 
                     css="{$page.path.startsWith(subItem.href) ? 'active' : ''}" 
                 /></li>
             {/each}
             </ul>
             {/if}
-            <Link 
-                on:mouseover={() => hovers[item.href] = true}
-                on:mouseout={() => hovers[item.href] = false}
+            <Link  on:mouseover={() => hovers[item.href] = true} on:mouseout={() => hovers[item.href] = false}
                 {...item} 
                 css="{$page.path.startsWith(item.href) ? 'active' : ''}" 
             />
@@ -42,57 +38,57 @@
     </ul>
 </section>
 
-<style lang="css">
+<style lang="scss">
     .side-bar {
         min-width: 100px;
         max-width: 100px;
         z-index: 200;
-    }
 
-    .side-bar .logged-user {
-        padding: 16px;
-    }
+        .logged-user {
+            padding: 16px;
+        }
 
-    .side-bar ul,
-    .side-bar li {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: block;
-        position: relative;
-    }
+        ul, li {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: block;
+            position: relative;
+        }
 
-    .side-bar li :global(a) {
-        display: block;
-        padding: 1em 0;
-        text-align: center;
-        font-size: .85em;
-        text-decoration: none;
-    }
-    
-    .side-bar li :global(.icon) {
-        font-size: 1.5em;
-    }
+        li :global(a) {
+            display: block;
+            padding: 1em 0;
+            text-align: center;
+            font-size: .85em;
+            text-decoration: none;
+        }
+        
+        li :global(.icon) {
+            font-size: 1.5em;
+        }
 
-    .side-bar li :global(.text) {
-        display: block;
-    }
+        li :global(.text) {
+            display: block;
+        }
 
-    .side-bar .sub-items {
-        position: absolute;
-        margin-left: 100px;
-        z-index: 500;
-        display: none;
-    }
+        .sub-items {
+            position: absolute;
+            margin-left: 100px;
+            z-index: 500;
+            display: none;
+        }
 
-    .side-bar .sub-items.open {
-        display: block;
-    }
+        .sub-items.open {
+            display: block;
+        }
 
-    .side-bar .sub-items li :global(a) {
-        font-size: .8em;
-        padding: .5em 1em;
-        white-space: nowrap;
-        text-align: left;
+        .sub-items li :global(a) {
+            font-size: .8em;
+            padding: .5em 1em;
+            white-space: nowrap;
+            text-align: left;
+        }
+
     }
 </style>

@@ -15,8 +15,7 @@ import type { PageState } from '$lib/@types/PageState.type';
 
 const $t = get(t);
 
-const KEY_PREFIX = 'admin.employee';
-const KEY_STATE = `${KEY_PREFIX}:state`;
+const KEY = 'employee.list:state';
 
 let initialPageState: PageState = {
     tableData: {perPage: 15, offset: 0}, 
@@ -27,12 +26,12 @@ let initialPageState: PageState = {
     },
 };
 
-if (browser && sessionStorage.getItem(KEY_STATE) !== null) {
-    initialPageState = JSON.parse(sessionStorage.getItem(KEY_STATE));
+if (browser && localStorage.getItem(KEY) !== null) {
+    initialPageState = JSON.parse(localStorage.getItem(KEY));
 }
 
 export const pageState = writable(initialPageState);
-pageState.subscribe(value => browser ? sessionStorage.setItem(KEY_STATE, JSON.stringify(value)) : undefined);
+pageState.subscribe(value => browser ? localStorage.setItem(KEY, JSON.stringify(value)) : undefined);
 
 export function getTableDataColumns() {
     return [

@@ -72,5 +72,6 @@
 	.form-setup :global(button[type="submit"]) {
 		border-width: 1px 1px 1px 0;
 		width: 100px;
+		height: 40px;
 	}
 </style>

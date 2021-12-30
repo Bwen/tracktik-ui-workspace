@@ -1,0 +1,24 @@
+
+.wrapper-header-profile {
+    border-top: 1px solid $menu-border;
+    background-color: $menu-bg-dark;
+    color: darken($menu-text, 25%);
+
+    img {
+        border: 1px solid darken($menu-text, 10%);
+        border-radius: $border-radius;
+    }
+
+    .wrapper-phone {
+        border: 0;
+        background-color: transparent;
+        box-shadow: none;
+
+        .phone {
+            box-shadow: none;
+            border: 0;
+            font-weight: normal;
+        }
+    }
+
+}

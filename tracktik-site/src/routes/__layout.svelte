@@ -9,18 +9,23 @@
 <script lang="ts">
 	import '$lib/js/media-theme';
 	import '$lib/css/sanitize.css';
-	import '$lib/css/themes/default/index.css';
+	import '$lib/css/themes/default/index.scss';
 
 	import Cookies from 'js-cookie';
 	import AppHeader from '$components/AppHeader.svelte';
-    import { faDoorClosed, faDoorOpen, faLightbulb as faLightbulbDark } from '@fortawesome/free-solid-svg-icons';
+	import Snackbar from '$components/ext/Snackbar.svelte';
+    import { faCog, faCogs, faDoorClosed, faDoorOpen, faLightbulb as faLightbulbDark } from '@fortawesome/free-solid-svg-icons';
 	import { faLightbulb } from '@fortawesome/free-regular-svg-icons';
 	import { session } from '$app/stores';
+	import Modal from '$components/ext/Modal.svelte';
+	import UiSettings from '$components/UiSettings.svelte';
 	import { t } from '$lib/i18n';
     import type { Link as LinkType } from '$lib/@types/Link.type';
 
+	let uiSettingModal;
 	let rightItems: LinkType[] = [
-		{icon: faLightbulbDark, icon_hover: faLightbulb, title: 'Light/Dark mode'}
+		{icon: faCog, icon_hover: faCogs, title: 'UI Settings', id: 'ui-settings'},
+		{icon: faLightbulbDark, icon_hover: faLightbulb, title: 'Light/Dark mode', id: 'theme-mode'},
 	];
 
 	let logoItem = undefined;
@@ -49,6 +54,11 @@
 			Cookies.remove('rest-session-id', { path: '/' });
 			location.reload();
 		}
+
+		
+        if ('ui-settings' === event.detail.hyperlink.id) {
+			uiSettingModal.open();
+		}
 	}
 </script>
 
@@ -57,6 +67,9 @@
 <main>
 	<slot />
 </main>
+
+<Snackbar />
+<Modal bind:this={uiSettingModal}><UiSettings /></Modal>
 
 <style lang="css">
 	:global(.app-header) {

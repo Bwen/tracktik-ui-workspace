@@ -6,6 +6,8 @@
     import { v4 as uuidv4 } from 'uuid';
     import { createEventDispatcher } from 'svelte';
 
+    import Switch from './Switch.svelte';
+    import Button from './Button.svelte';
     import Input from './Input.svelte';
     import Select from './Select.svelte';
     import Autocomplete from './Autocomplete.svelte';
@@ -31,6 +33,10 @@
 
     function getComponentForField(field: Field) {
         switch (field.type) {
+            case FieldType.SWITCH:
+                return Switch;
+            case FieldType.BUTTON:
+                return Button;
             case FieldType.SELECT:
                 return Select;
             case FieldType.AUTOCOMPLETE:
@@ -47,9 +53,9 @@
         delete props.validators;
 
         switch (field.type) {
+            case FieldType.SWITCH:
+            case FieldType.BUTTON:
             case FieldType.SELECT:
-                delete props.type;
-                break;
             case FieldType.AUTOCOMPLETE:
                 delete props.type;
                 break;
@@ -88,6 +94,14 @@
 
         return fsets;
     }
+
+    function getTooltipAttribute(field: Field) {
+        if (field.tooltip) {
+            return {"data-tooltip": field.tooltip};
+        }
+
+        return {};
+    }
 </script>
 
 <div class="wrapper-form">
@@ -100,7 +114,7 @@
                 {#each fieldset.fields as field}
                 <div class="wrapper-field" class:error={field.error}>
                     <section>
-                        {#if field.label}<label for="{field.id}">{field.label}</label>{/if}
+                        {#if field.label}<label for="{field.id}" {...getTooltipAttribute(field)}>{field.label}</label>{/if}
                         <svelte:component
                             this={getComponentForField(field)}
                             on:input={(event) => {
@@ -123,3 +137,9 @@
         {/each}
     </form>
 </div>
+
+<style lang="css">
+    .wrapper-form [type="submit"] {
+        cursor: pointer;
+    }
+</style>

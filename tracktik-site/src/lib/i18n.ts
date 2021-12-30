@@ -13,7 +13,7 @@ export async function init(session): Promise<void> {
     register('en-us', () => import('$locales/en-us.json'));
     register('fr', () => import('$locales/fr-ca.json'));
     register('fr-ca', () => import('$locales/fr-ca.json'));
-//console.log(session.auth.pref);
+
     i18nInit({
         fallbackLocale: 'en-us',
         initialLocale: session.locale,

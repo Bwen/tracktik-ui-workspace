@@ -10,7 +10,11 @@
 		},
 		"overview": "Overview",
 		"edit": "Edit",
-		"map": "Map"
+		"map": "Map",
+		"on": "on",
+		"off": "off",
+		"enabled": "enabled",
+		"disabled": "disabled"
 	},
 	"page": {
 		"auth": {
@@ -31,6 +35,20 @@
 				"maps": "Maps",
 				"settings": "Settings",
 				"sales": "Sales & Lists"
+			}
+		},
+		"ui-controls": {
+			"title": "UI Controls",
+			"page-state": {
+				"label": "Page States",
+				"tooltip": "All page states will be cleared, such as amount of entries per data table, data table filters, etc.",
+				"action": "Purge",
+				"success": "All page states have been purged"
+			},
+			"ssr": {
+				"label": "SSR Debug",
+				"tooltip": "SSR (Server Side Rendering) will be enforced on all Links, making a click on a link redirect the browser to that page. Acting as a \"first load\" as if the url was entered manually in the browser.",
+				"success": "SSR Debugging <strong>{state}</strong>"
 			}
 		},
 		"admin": {

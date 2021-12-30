@@ -22,6 +22,7 @@
 		"eslint-plugin-svelte3": "^3.2.1",
 		"prettier": "^2.4.1",
 		"prettier-plugin-svelte": "^2.4.0",
+		"sass": "^1.45.1",
 		"svelte": "^3.44.0",
 		"svelte-check": "^2.2.6",
 		"svelte-fa": "^2.4.0",
@@ -35,15 +36,14 @@
 		"@fortawesome/free-brands-svg-icons": "^5.15.4",
 		"@fortawesome/free-regular-svg-icons": "^5.15.4",
 		"@fortawesome/free-solid-svg-icons": "^5.15.4",
-		"@here/maps-api-for-javascript": "^1.30.7",
 		"cookie": "^0.4.1",
 		"dotenv": "^10.0.0",
 		"ioredis": "^4.28.2",
 		"js-cookie": "^3.0.1",
+		"libphonenumber-js": "^1.9.44",
+		"localized-address-format": "^1.1.0",
 		"sanitize.css": "^13.0.0",
 		"svelte-i18n": "^3.3.13",
-		"uuid": "^8.3.2",
-		"libphonenumber-js": "^1.9.44",
-		"localized-address-format": "^1.1.0"
+		"uuid": "^8.3.2"
 	}
 }

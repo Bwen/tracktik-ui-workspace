@@ -4,7 +4,7 @@
     import { browser } from '$app/env';
     import Form from '$lib/components/ext/form/Form.svelte';
     import { session } from '$app/stores';
-    import { pageState, getTableDataColumns, getFiltersFieldset } from '$stores/page/admin.employee';
+    import { pageState, getTableDataColumns, getFiltersFieldset } from '$lib/stores/page/employee.list';
 
     let isLoading = false;
     let columns = getTableDataColumns();
@@ -91,7 +91,7 @@
     }
 </script>
 
-<div class="content"><div class="content-inner">
+<div class="wrapper-content"><div class="content">
     <div class="page-employee-list">
         <div class="filters"><Form fieldsets={filterFields} on:change={onFilterChange}><div slot="submit"></div></Form></div>
         <TableData 
@@ -109,8 +109,9 @@
 </div></div>
 
 <style lang="css">
-    .page-employee-list .filters {
-        padding: .5em;
+    .page-employee-list .filters :global(form),
+    .page-employee-list .filters :global(fieldset) {
+        display: flex;
     }
 
     .page-employee-list :global(.wrapper-table-data) {
