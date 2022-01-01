@@ -7,7 +7,7 @@
     import { pageState, getTableDataColumns, getFiltersFieldset } from '$lib/stores/page/employee.list';
 
     let isLoading = false;
-    let columns = getTableDataColumns();
+    let columns = getTableDataColumns($session);
     
     let filterFields = [];
     (async () => filterFields = await getFiltersFieldset($session))();

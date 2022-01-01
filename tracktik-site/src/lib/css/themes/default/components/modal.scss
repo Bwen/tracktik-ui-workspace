@@ -1,6 +1,11 @@
 
 .overlay-modal {
     .wrapper-modal {
+        box-shadow: $content-shadow;
+        border: 1px solid $content-border;
+        border-radius: $border-radius;
+        background-color: $content-bg;
+
         header {
             font-weight: bolder;
             padding: .5em;

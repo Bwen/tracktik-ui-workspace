@@ -33,7 +33,8 @@
 			let res = await request('/about', METHODS.GET, {},  {"rest-domain": portalDomain.value});
 			if (res && res.ok) {
 				$session.portal = await res.json();
-
+				localStorage.setItem('session:domain', $session.portal.url);
+				
 				goto('/auth');
 				isLoading = false;
 				return;

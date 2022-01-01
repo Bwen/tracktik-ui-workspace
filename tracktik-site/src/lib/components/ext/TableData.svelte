@@ -2,24 +2,10 @@
     import LoadingBar from '$components/ext/LoadingBar.svelte';
     import Pagination from './Pagination.svelte';
     import {createEventDispatcher} from "svelte";
-    import { getItemValue, replaceMarkers} from '$lib/js/utils';
+    import {getItemValue, replaceMarkers} from '$lib/js/utils';
+    import type {ColumnDefinition} from '$lib/@types/TableData.type';
 
     const dispatch = createEventDispatcher();
-    type CompProp = {
-        name: string;
-        key: string;
-        raw: string;
-    } & ({name: string; key: string} | {name: string; raw: string});
-
-    type ColumnDefinition = {
-        key?: string;
-        component?: any;
-        componentProps?: CompProp[];
-        text?: string;
-        css?: string;
-        parse?: (value: string) => string;
-    };
-
     export let isLoading = false;
     export let entries = [];
     export let uid = '';

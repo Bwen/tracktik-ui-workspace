@@ -39,7 +39,7 @@
 <div class="layout-admin">
 	<Sidebar menuItems={menuItems} />
     <div class="layout-admin-content">
-        <RegionSelecter on:change={onRegionChange} icon={faGlobeAmericas} />
+        {#if $session.auth.scopes.regions.length > 1}<RegionSelecter on:change={onRegionChange} icon={faGlobeAmericas} />{/if}
 	    <slot />
     </div>
 </div>

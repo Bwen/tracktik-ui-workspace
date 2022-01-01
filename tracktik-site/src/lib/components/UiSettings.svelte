@@ -34,7 +34,8 @@
         console.log('Form Value Change: ', field.id);
 
         if ('page-state' === field.id) {
-            clearAllStorageSuffix(':state');
+            const portalDomain = localStorage.getItem('session:domain');
+            clearAllStoragePrefix(`${portalDomain}:state`);
             addSnack({text: $t('page.ui-controls.page-state.success'), type: SnackType.Success});
         } else if ('debug.ssr' === field.id) {
             $pref.debug.ssr = field.value ? true : false;
@@ -43,10 +44,10 @@
         }
     }
 
-    function clearAllStorageSuffix(suffix: string) {
+    function clearAllStoragePrefix(suffix: string) {
         let storageKeys = [];
         for (var i = 0; i < localStorage.length; i++){
-            if (localStorage.key(i).endsWith(suffix)) {
+            if (localStorage.key(i).startsWith(suffix)) {
                 storageKeys.push(localStorage.key(i));
             }
         }

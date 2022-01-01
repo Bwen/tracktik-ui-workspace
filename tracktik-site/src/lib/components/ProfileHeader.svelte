@@ -11,7 +11,6 @@
     import { getCountryByAlpha2, getSubdivisionByCode } from '$lib/js/riso';
     import {t, date, time} from '$lib/i18n';
 
-
     let profile: EmployeesItem | ClientsItem = getContext('current-profile');
     if (typeof profile.address !== 'object') {
         throw new Error('Component ProfileHeader requires an AddressesItem sub-object');
@@ -60,7 +59,7 @@
         {#if profile.avatar}<img src="{profile.avatar}" alt="Employee Avatar"  transition:slide={{duration: 500}}/>{/if}
         <div class="contact-address">
             <h2>{profile.name}</h2>
-            <Address {...address} />
+            <Address {...address} profileId={profile.address.id} />
         </div>
         <div class="contact">
             <ul>

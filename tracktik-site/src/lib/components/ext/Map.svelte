@@ -23,6 +23,7 @@
 	export let defaultLayer: 'satellite' | 'normal' | undefined = undefined;
 	export let markers: Coord[] = [];
 	export let address: string = '';
+	export let profileId: number = undefined;
 
 	let hasDraggableMarker = false;
 	onMount(() => {
@@ -112,6 +113,7 @@
 <div class="wrapper-map">
 	<Fa icon={faMapPin} color="red" id="mapMarkerSVG" />
 	<slot name="header" />
+	<div class="address">{address}</div>
 	<div class="map" bind:this={mapMarkup} />
 	<slot name="footer" />
 </div>

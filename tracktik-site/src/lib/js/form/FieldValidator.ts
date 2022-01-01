@@ -18,7 +18,7 @@ export function isNotBlank(field: Field): Promise<string> {
 
 export function isDomain(field: Field): Promise<string> {
     return new Promise(resolve => {
-        if (!field.value.match(/^([a-zA-Z0-9][a-zA-Z0-9-]{1,61}\.|)[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/)) {
+        if (!field.value.match(/^([a-zA-Z0-9][a-zA-Z0-9-]{1,61}\.|)*[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/)) {
             resolve(t('common.form.errors.invalid-domain'));
             return;
         }

@@ -1,6 +1,6 @@
 import { browser } from '$app/env';
 import { FieldType } from '$form';
-import type { Fieldset } from '$form';
+import type { Fieldset, Field } from '$form';
 import Phone from '$components/ext/Phone.svelte';
 import Checkbox from '$components/ext/form/Checkbox.svelte';
 import UID from '$components/UID.svelte';
@@ -8,14 +8,13 @@ import Link from '$components/ext/Link.svelte';
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { t } from '$lib/i18n';
 import { getRegionOptions } from '$lib/js/utils';
-import { request, METHODS } from '$lib/js/restClient';
 import { EmployeesItem } from '@rest/models/EmployeesItem';
 import { get, writable } from 'svelte/store';
 import type { PageState } from '$lib/@types/PageState.type';
+import type {ColumnDefinition} from '$lib/@types/TableData.type';
+import { departments, zones } from '../cache';
 
 const $t = get(t);
-
-const KEY = 'employee.list:state';
 
 let initialPageState: PageState = {
     tableData: {perPage: 15, offset: 0}, 
@@ -26,15 +25,28 @@ let initialPageState: PageState = {
     },
 };
 
-if (browser && localStorage.getItem(KEY) !== null) {
-    initialPageState = JSON.parse(localStorage.getItem(KEY));
+if (browser) {
+    const portalDomain = localStorage.getItem('session:domain');
+    const KEY = `${portalDomain}:state:employee.list`;
+    const savedState = JSON.parse(localStorage.getItem(KEY));
+    if (savedState) {
+        initialPageState = savedState;
+    }
 }
 
 export const pageState = writable(initialPageState);
-pageState.subscribe(value => browser ? localStorage.setItem(KEY, JSON.stringify(value)) : undefined);
+pageState.subscribe(value => {
+    if (browser) {
+        const portalDomain = localStorage.getItem('session:domain');
+        const KEY = `${portalDomain}:state:employee.list`;
+        localStorage.setItem(KEY, JSON.stringify(value));
+    }
 
-export function getTableDataColumns() {
-    return [
+    return undefined;
+});
+
+export function getTableDataColumns(session) {
+    let columns: ColumnDefinition[] = [
         {css: "cell-checkbox",
             component: Checkbox, 
             componentProps: [
@@ -42,7 +54,13 @@ export function getTableDataColumns() {
                 {name: 'name', raw: 'employeIds'},
             ]
         },
-        {css: 'cell-region', key: 'region.name', text: $t('page.employee.list.region')},
+    ];
+
+    if (session.auth.scopes.regions.length > 1) {
+        columns.push({css: 'cell-region', key: 'region.name', text: $t('page.employee.list.region')});
+    }
+
+    columns = columns.concat([
         {text: 'UID', css: 'cell-uid',
             component: UID, 
             componentProps: [
@@ -66,41 +84,43 @@ export function getTableDataColumns() {
                 {name: 'icon', raw: faPhone},
             ]
         },
-    ];
+    ]);
+
+    return columns;
 }
 
-async function getDepartmentOptions() {
-    let res = await request('/departments', METHODS.GET, {include: 'region'});
-    if (res && res.ok) {
-        let departmentOptions = [];
-        let result = await res.json();
-        result.data.forEach(department => {
-            departmentOptions.push({
-                text: `${department.region.name} / ${department.name}`,
-                value: department.id,
-            });
-        });
+async function getDepartmentOptions(regions) {
+    const deps = await get(await departments);
+    let departmentOptions = [];
+    for (const i in deps) {
+        const department = deps[i];
+        let text = department.name;
+        if (regions.length > 1) {
+            text = `${department.region.name} / ${text}`;
+        }
 
-        departmentOptions.sort((a, b) => a.text.localeCompare(b.text));
-        return departmentOptions;
+        departmentOptions.push({text, value: department.id});
     }
+
+    departmentOptions.sort((a, b) => a.text.localeCompare(b.text));
+    return departmentOptions;
 }
 
-async function getZoneOptions() {
-    let res = await request('/zones', METHODS.GET, {include: 'region'})
-    if (res && res.ok) {
-        let zoneOptions = [];
-        let result = await res.json();
-        result.data.forEach(zone => {
-            zoneOptions.push({
-                text: `${zone.region.name} / ${zone.name}`,
-                value: zone.id,
-            });
-        });
+async function getZoneOptions(regions) {
+    const zons = await get(await zones);
+    let zoneOptions = [];
+    for (const i in zons) {
+        const zone = zons[i];
+        let text = zone.name;
+        if (regions.length > 1) {
+            text = `${zone.region.name} / ${text}`;
+        }
 
-        zoneOptions.sort((a, b) => a.text.localeCompare(b.text));
-        return zoneOptions;
+        zoneOptions.push({text, value: zone.id});
     }
+
+    zoneOptions.sort((a, b) => a.text.localeCompare(b.text));
+    return zoneOptions;
 }
 
 function getStatusOptions() {
@@ -119,50 +139,70 @@ function getStatusOptions() {
 export async function getFiltersFieldset(session): Promise<Fieldset[]> {
     return new Promise(async resolve => {
         const $pageState = get(pageState);
-        const departmentFilterValue = $pageState.filters.forAllAccountAssignments.department ?? '';
-        const zoneFilterValue = $pageState.filters.forAllAccountAssignments.zone ?? '';
-        const filterStatusValue = $pageState.filters.status ?? '';
-        const filterRegionValue = $pageState.filters.region ?? '';
-        const filterKeywordValue = $pageState.filters.q ?? '';
-        resolve([{
-            fields: [
-                {
-                    name: 'department',
-                    type: FieldType.AUTOCOMPLETE,
-                    placeholder: $t('page.employee.filters.department'),
-                    value: departmentFilterValue,
-                    options: await getDepartmentOptions(),
-                },
-                {
-                    name: 'zone',
-                    type: FieldType.AUTOCOMPLETE,
-                    placeholder: $t('page.employee.filters.zone'),
-                    value: zoneFilterValue,
-                    options: await getZoneOptions(),
-                },
-                {
-                    name: 'status',
-                    type: FieldType.SELECT,
-                    placeholder: $t('page.employee.filters.status'),
-                    value: filterStatusValue,
-                    options: getStatusOptions(),
-                },
-                {
-                    name: 'region',
-                    type: FieldType.AUTOCOMPLETE,
-                    placeholder: $t('page.employee.filters.region'),
-                    value: filterRegionValue,
-                    includeChildsInSearch: true,
-                    options: getRegionOptions(session.auth.scopes.regions),
-                },
-                {
-                    name: 'q',
-                    type: FieldType.TEXT,
-                    value: filterKeywordValue,
-                    placeholder: $t('page.employee.filters.keyword'),
-                },
-            ]
-        }]);
+
+        let valueStatus = '';
+        let valueZone = '';
+        let valueDepartment = '';
+        let valueRegion = '';
+        let valueKeyword = '';
+        if ($pageState && $pageState.filters) {
+            valueStatus = $pageState.filters.status ?? '';
+            valueZone = $pageState.filters.forAllAccountAssignments.zone ?? '';
+            valueDepartment = $pageState.filters.forAllAccountAssignments.department ?? '';
+            valueRegion = $pageState.filters.region ?? '';
+            valueKeyword = $pageState.filters.q ?? '';
+        }
+        let fields: Field[] = [
+            {
+                name: 'status',
+                type: FieldType.SELECT,
+                placeholder: $t('page.employee.filters.status'),
+                value: valueStatus,
+                options: getStatusOptions(),
+            },
+        ];
+
+        let zoneOptions = await getZoneOptions(session.auth.scopes.regions);
+        if (zoneOptions.length) {
+            fields.unshift({
+                name: 'zone',
+                type: FieldType.AUTOCOMPLETE,
+                placeholder: $t('page.employee.filters.zone'),
+                value: valueZone,
+                options: zoneOptions,
+            });
+        }
+
+        let depOptions = await getDepartmentOptions(session.auth.scopes.regions);
+        if (depOptions.length) {
+            fields.unshift({
+                name: 'department',
+                type: FieldType.AUTOCOMPLETE,
+                placeholder: $t('page.employee.filters.department'),
+                value: valueDepartment,
+                options: depOptions,
+            });
+        }
+
+        if (session.auth.scopes.regions.length > 1) {
+            fields.push({
+                name: 'region',
+                type: FieldType.AUTOCOMPLETE,
+                placeholder: $t('page.employee.filters.region'),
+                value: valueRegion,
+                includeChildsInSearch: true,
+                options: getRegionOptions(session.auth.scopes.regions),
+            });
+        }
+
+        fields.push({
+            name: 'q',
+            type: FieldType.TEXT,
+            value: valueKeyword,
+            placeholder: $t('page.employee.filters.keyword'),
+        });
+
+        resolve([{fields}]);
     });
 }
 

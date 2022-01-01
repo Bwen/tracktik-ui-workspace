@@ -20,6 +20,7 @@
     export let name = '';
     export let addressLinesString = '';
     export let coord: {lat: number; lng: number} | undefined = undefined;
+    export let profileId: number = undefined;
 
     let address = formatAddress({
         postalCountry,
@@ -64,7 +65,7 @@
 
 {#if mapLink}
 <Modal bind:this={mapModal}>
-    <Map markers={markers} address={address.join("\n")} on:marker-loc-change={onMarkerLocChange}>
+    <Map profileId={profileId} markers={markers} address={address.join("\n")} on:marker-loc-change={onMarkerLocChange}>
         <div slot="header" class="map-header">
             <Accordion items={accordionItems} />
             <Input name="lat" value={lat} />
