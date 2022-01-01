@@ -14,7 +14,8 @@
 		"on": "on",
 		"off": "off",
 		"enabled": "enabled",
-		"disabled": "disabled"
+		"disabled": "disabled",
+		"purge": "Purge"
 	},
 	"page": {
 		"auth": {
@@ -42,13 +43,17 @@
 			"page-state": {
 				"label": "Page States",
 				"tooltip": "All page states will be cleared, such as amount of entries per data table, data table filters, etc.",
-				"action": "Purge",
 				"success": "All page states have been purged"
 			},
 			"ssr": {
 				"label": "SSR Debug",
 				"tooltip": "SSR (Server Side Rendering) will be enforced on all Links, making a click on a link redirect the browser to that page. Acting as a \"first load\" as if the url was entered manually in the browser.",
 				"success": "SSR Debugging <strong>{state}</strong>"
+			},
+			"cache": {
+				"label": "Entity Caches",
+				"tooltip": "Entities that do not change often are cached in localStorage of the browser for 7 days",
+				"success": "All entity caches have been purged"
 			}
 		},
 		"admin": {

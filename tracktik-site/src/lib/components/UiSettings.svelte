@@ -12,10 +12,17 @@
             fields: [
                 {
                     id: 'page-state',
-                    name: $t('page.ui-controls.page-state.action'),
+                    name: $t('common.purge'),
                     label: $t('page.ui-controls.page-state.label'),
                     type: FieldType.BUTTON,
                     tooltip: $t('page.ui-controls.page-state.tooltip'),
+                },
+                {
+                    id: 'cache',
+                    name: $t('common.purge'),
+                    label: $t('page.ui-controls.cache.label'),
+                    type: FieldType.BUTTON,
+                    tooltip: $t('page.ui-controls.cache.tooltip'),
                 },
                 {
                     id: 'debug.ssr',
@@ -31,12 +38,14 @@
     
     function onFormValueChange(event) {
         const { field } = event.detail;
-        console.log('Form Value Change: ', field.id);
-
         if ('page-state' === field.id) {
             const portalDomain = localStorage.getItem('session:domain');
             clearAllStoragePrefix(`${portalDomain}:state`);
             addSnack({text: $t('page.ui-controls.page-state.success'), type: SnackType.Success});
+        } else if ('cache' === field.id) {
+            const portalDomain = localStorage.getItem('session:domain');
+            clearAllStoragePrefix(`${portalDomain}:cache`);
+            addSnack({text: $t('page.ui-controls.cache.success'), type: SnackType.Success});
         } else if ('debug.ssr' === field.id) {
             $pref.debug.ssr = field.value ? true : false;
             let state = field.value ? $t('common.enabled') : $t('common.disabled');

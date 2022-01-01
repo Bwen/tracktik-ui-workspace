@@ -14,7 +14,8 @@
 		"on": "Act.",
 		"off": "Dés.",
 		"enabled": "Activé",
-		"disabled": "Désactivé"
+		"disabled": "Désactivé",
+		"purge": "Purger"
 	},
 	"page": {
 		"auth": {
@@ -42,13 +43,17 @@
 			"page-state": {
 				"label": "États des pages",
 				"tooltip": "Tous les états de page seront effacés, tels que le nombre d'entrées par table de données, les filtres de table de données, etc.",
-				"action": "Purger",
 				"success": "Tous les états de page ont été purgés"
 			},
 			"ssr": {
 				"label": "Débogage SSR",
 				"tooltip": "Le SSR (Rendu côté serveur) sera appliqué sur tous les liens, un clic sur un lien redirigera le navigateur vers cette page. Agit comme un \"premier chargement\" comme si l'url avait été saisie manuellement dans le navigateur.",
 				"success": "Débogage SSR <strong>{state}</strong>"
+			},
+			"cache": {
+				"label": "Caches d'entité",
+				"tooltip": "Les entités qui ne changent pas souvent sont mises en cache dans le stockage local du navigateur pendant 7 jours",
+				"success": "Tous les caches d'entités ont été purgés"
 			}
 		},
 		"admin": {
