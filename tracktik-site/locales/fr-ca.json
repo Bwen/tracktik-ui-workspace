@@ -15,7 +15,27 @@
 		"off": "Dés.",
 		"enabled": "Activé",
 		"disabled": "Désactivé",
-		"purge": "Purger"
+		"purge": "Purger",
+		"region": "Région",
+		"name": "Nom",
+		"title": "Titre",
+		"phone": "Téléphone",
+		"company": "Compagnie",
+		"address": "Adresse",
+		"city": "Ville",
+		"mainContact": "Contact principal",
+		"filters": {
+			"department": "Filtrer par Département",
+			"zone": "Filtrer par Zone",
+			"status": "Filtrer par Statut",
+			"region": "Filtrer par Region",
+			"keyword": "Tapez pour Filtrer"
+		}
+	},
+	"clientType": {
+        "CLIENT": "CLIENT",
+        "SERVICE_LOCATION": "SITE",
+        "MULTI_LOCATION_CLIENT": "MULTI"
 	},
 	"page": {
 		"auth": {
@@ -31,7 +51,7 @@
 			"logout": "Se déconnecter",
 			"side-bar": {
 				"dashboards": "Tableaux de bord",
-				"sites": "Sites (Clients)",
+				"clients": "Sites (Clients)",
 				"employees": "Employés",
 				"maps": "Cartes",
 				"settings": "Réglages",
@@ -59,9 +79,32 @@
 		"admin": {
 			"title": "Portail d'administration"
 		},
+		"dashboard": {
+			"sub-menu": {
+				"dashboard": "Tableau de bord en direct",
+				"vehicle": "Gestion des véhicules",
+				"schedule": "Horaire en direct",
+				"journal": "Journal",
+				"exceptions": "Exceptions système",
+				"attendance": "Tableau de bord des présences",
+				"loneworker": "Travailleur seul"
+			}
+		},
+		"client": {
+			"title": "Clients",
+			"sub-menu": {
+				"zones": "Zones (Groupes)"
+			},
+			"mid-tabs": {
+				"patrol": "Sécurité et patrouille",
+				"timesheets": "Feuilles de temps",
+				"skills": "Compétences et attributs",
+				"schedules": "Horaires"
+			}
+		},
 		"employee": {
 			"title": "Employés",
-			"top-tabs": {
+			"sub-menu": {
 				"departments": "Départements",
 				"skills": "Compétences et attributs",
 				"audit": "Journal d'audit"
@@ -71,19 +114,6 @@
 				"timesheets": "Feuilles de temps",
 				"skills": "Compétences et attributs",
 				"schedules": "Horaires"
-			},
-			"list": {
-				"region": "Région",
-				"name": "Nom",
-				"title": "Titre",
-				"phone": "Téléphone"
-			},
-			"filters": {
-				"department": "Filtrer par Département",
-				"zone": "Filtrer par Zone",
-				"status": "Filtrer par Statut",
-				"region": "Filtrer par Region",
-				"keyword": "Tapez pour Filtrer"
 			}
 		},
 		"index": {

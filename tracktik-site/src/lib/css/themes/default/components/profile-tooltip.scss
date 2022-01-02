@@ -1,0 +1,25 @@
+
+.wrapper-profile-tooltip {
+    border: $content-border;
+    background-color: $content-bg;
+    box-shadow: $content-shadow;
+
+    header {
+        color: $menu-text;
+        background-color: $menu-bg;
+        border-top: 1px solid $menu-border;
+        padding: .25em;
+    }
+
+    .wrapper-phone {
+        border: 0;
+        background-color: transparent;
+        box-shadow: none;
+
+        .phone {
+            box-shadow: none;
+            border: 0;
+            font-weight: normal;
+        }
+    }
+}

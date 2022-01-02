@@ -1,7 +1,9 @@
 import type { MenuItem } from '$lib/@types/MenuItem.type';
+import { getCountryByAlpha2, getSubdivisionByCode } from '$lib/js/riso';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import type { CountryCode } from 'libphonenumber-js';
 
-export function filterItemsBySession(items: MenuItem[], session: any): MenuItem[] {
+export function filterMenuItemsBySession(items: MenuItem[], session: any): MenuItem[] {
     let permissions = session.auth.permissions;
     let modules = session.portal.modules;
 
@@ -10,10 +12,10 @@ export function filterItemsBySession(items: MenuItem[], session: any): MenuItem[
     //    return;
     //}
 
-    return filterItems(items, permissions, modules);
+    return filterMenuItems(items, permissions, modules);
 }
 
-function filterItems(items: MenuItem[], permissions: any, modules: any): MenuItem[] {
+function filterMenuItems(items: MenuItem[], permissions: any, modules: any): MenuItem[] {
     for (let i=0; i < items.length; i++) {
         let item = items[i];
         if (Object.hasOwnProperty.call(item, 'acl')) {
@@ -33,7 +35,7 @@ function filterItems(items: MenuItem[], permissions: any, modules: any): MenuIte
         }
 
         if (Object.hasOwnProperty.call(item, 'subItems')) {
-            item['subItems'] = filterItems(item['subItems'], permissions, modules);
+            item['subItems'] = filterMenuItems(item['subItems'], permissions, modules);
         }
     }
 
@@ -139,4 +141,37 @@ function getRegionsByParentId(regions: [], ids: string[]): any[] {
     }
 
     return filteredRegions;
+}
+
+export function getPhoneProps(profile) {
+    let defaultCountry: CountryCode = profile.region.address.country;
+    let postalCountry: CountryCode = profile.address.country;
+    return {
+        phone: profile.primaryPhone,
+        defaultCountry,
+        country: postalCountry
+    };
+}
+
+export function getAddressProps(profile) {
+    const addressLines: string[] = [profile.address.addressLine1, profile.address.addressLine2];
+    const defaultCountry = profile.region.address.country;
+    const postalCountry = profile.address.country;
+    const subdivision = getSubdivisionByCode((postalCountry || defaultCountry) +'-'+ profile.address.state);
+    const administrativeArea = subdivision ? subdivision.name : '';
+    const country = getCountryByAlpha2(postalCountry || defaultCountry);
+    let address = {
+        countryName: country ? country.name : '',
+        postalCountry: postalCountry || defaultCountry,
+        administrativeArea,
+        locality: profile.address.city,
+        postalCode: profile.address.postalCode,
+        addressLinesString: addressLines.join('|'),
+    };
+    
+    if (profile.address.latitude && profile.address.longitude) {
+        address.coord = {lat: profile.address.latitude, lng: profile.address.longitude};
+    }
+
+    return address;
 }

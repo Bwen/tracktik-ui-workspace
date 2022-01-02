@@ -27,6 +27,17 @@
         return entries.slice(startIndex, startIndex + parseInt(perPage, 10));
     }
     
+    function onCellMouseEnter(event) {
+        const row = event.target.closest('tr');
+        const td = event.target.closest('td');
+
+        dispatch('cell-enter', {target: td, row});
+    }
+
+    function onCellMouseLeave(event) {
+        dispatch('cell-leave');
+    }
+
     function onClickRow(event) {
         let row = event.target.closest('tr');
         if (event.target.type && 'checkbox' === event.target.type) {
@@ -95,7 +106,7 @@
         {#each pageEntries as entry, i}
             <tr id="row-{ uid ? entry[uid] : i}" on:click={onClickRow}>
                 {#each columns as column}
-                <td class="{column.css || ''}">
+                <td class="{column.css || ''}" on:mouseenter={onCellMouseEnter} on:mouseleave={onCellMouseLeave}>
                     {#if column.parse}
                         {column.parse(getItemValue(column.key, entry))}
                     {:else if column.component}

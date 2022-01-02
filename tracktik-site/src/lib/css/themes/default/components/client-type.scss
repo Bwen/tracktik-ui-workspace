@@ -1,0 +1,21 @@
+
+.wrapper-client-type {
+    .client-type {
+        font-weight: 400;
+        color: $button-primary-text;
+        border-radius: $border-radius;
+        padding: 4px 6px;
+        display: block;
+        text-align: center;
+
+        &.CLIENT {
+            background-color: #3a87ad;
+        }
+        &.SERVICE_LOCATION {
+            background-color: #468847;
+        }
+        &.MULTI_LOCATION_CLIENT {
+            background-color: #FFD700;
+        }
+    }
+}

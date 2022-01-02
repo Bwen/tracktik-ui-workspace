@@ -4,8 +4,9 @@ import type { Fieldset, Field } from '$form';
 import Phone from '$components/ext/Phone.svelte';
 import Checkbox from '$components/ext/form/Checkbox.svelte';
 import UID from '$components/UID.svelte';
-import Avatar from '$components/Avatar.svelte';
 import Link from '$components/ext/Link.svelte';
+import Avatar from '$components/Avatar.svelte';
+import ClientType from '$components/ClientType.svelte';
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { t } from '$lib/i18n';
 import { getRegionOptions } from '$lib/js/utils';
@@ -13,7 +14,7 @@ import { EmployeesItem } from '@rest/models/EmployeesItem';
 import { get, writable } from 'svelte/store';
 import type { PageState } from '$lib/@types/PageState.type';
 import type {ColumnDefinition} from '$lib/@types/TableData.type';
-import { departments, zones } from '../cache';
+import { zones } from '../cache';
 
 const $t = get(t);
 
@@ -28,7 +29,7 @@ let initialPageState: PageState = {
 
 if (browser) {
     const portalDomain = localStorage.getItem('session:domain');
-    const KEY = `${portalDomain}:state:employee.list`;
+    const KEY = `${portalDomain}:state:client.list`;
     const savedState = JSON.parse(localStorage.getItem(KEY));
     if (savedState) {
         initialPageState = savedState;
@@ -39,7 +40,7 @@ export const pageState = writable(initialPageState);
 pageState.subscribe(value => {
     if (browser) {
         const portalDomain = localStorage.getItem('session:domain');
-        const KEY = `${portalDomain}:state:employee.list`;
+        const KEY = `${portalDomain}:state:client.list`;
         localStorage.setItem(KEY, JSON.stringify(value));
     }
 
@@ -60,7 +61,7 @@ export function getTableDataColumns(session) {
     if (session.auth.scopes.regions.length > 1) {
         columns.push({css: 'cell-region', key: 'region.name', text: $t('common.region')});
     }
-
+    
     columns = columns.concat([
         {text: 'UID', css: 'cell-uid',
             component: UID, 
@@ -74,14 +75,22 @@ export function getTableDataColumns(session) {
                 {name: 'img', key: 'avatar'},
             ]
         },
-        {css: 'cell-name', text: $t('common.name'),
-            component: Link,
+        {css: 'cell-type', text: $t('common.company'),
+            component: ClientType,
             componentProps: [
-                {name: 'text', key: 'firstName,lastName'},
-                {name: 'href', raw: '/portal/admin/employee/{id}'},
+                {name: 'type', key: 'type'},
             ]
         },
-        {key: 'jobTitle', text: $t('common.title')},
+        {css: 'cell-company', text: $t('common.company'),
+            component: Link,
+            componentProps: [
+                {name: 'text', key: 'company'},
+                {name: 'href', raw: '/portal/admin/client/{id}'},
+            ]
+        },
+        {key: 'address.addressLine1', text: $t('common.address')},
+        {key: 'address.city', text: $t('common.city')},
+        {key: 'firstName,lastName', text: $t('common.mainContact')},
         {css: 'cell-phone', text: $t('common.phone'),
             component: Phone, 
             componentProps: [
@@ -94,23 +103,6 @@ export function getTableDataColumns(session) {
     ]);
 
     return columns;
-}
-
-async function getDepartmentOptions(regions) {
-    const deps = await get(await departments);
-    let departmentOptions = [];
-    for (const i in deps) {
-        const department = deps[i];
-        let text = department.name;
-        if (regions.length > 1) {
-            text = `${department.region.name} / ${text}`;
-        }
-
-        departmentOptions.push({text, value: department.id});
-    }
-
-    departmentOptions.sort((a, b) => a.text.localeCompare(b.text));
-    return departmentOptions;
 }
 
 async function getZoneOptions(regions) {
@@ -159,6 +151,7 @@ export async function getFiltersFieldset(session): Promise<Fieldset[]> {
             valueRegion = $pageState.filters.region ?? '';
             valueKeyword = $pageState.filters.q ?? '';
         }
+
         let fields: Field[] = [];
         let zoneOptions = await getZoneOptions(session.auth.scopes.regions);
         if (zoneOptions.length) {
@@ -168,17 +161,6 @@ export async function getFiltersFieldset(session): Promise<Fieldset[]> {
                 placeholder: $t('common.filters.zone'),
                 value: valueZone,
                 options: zoneOptions,
-            });
-        }
-
-        let depOptions = await getDepartmentOptions(session.auth.scopes.regions);
-        if (depOptions.length) {
-            fields.unshift({
-                name: 'department',
-                type: FieldType.AUTOCOMPLETE,
-                placeholder: $t('common.filters.department'),
-                value: valueDepartment,
-                options: depOptions,
             });
         }
 

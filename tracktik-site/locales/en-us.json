@@ -15,7 +15,27 @@
 		"off": "off",
 		"enabled": "enabled",
 		"disabled": "disabled",
-		"purge": "Purge"
+		"purge": "Purge",
+		"region": "Region",
+		"name": "Name",
+		"title": "Title",
+		"phone": "Phone",
+		"company": "Company",
+		"address": "Address",
+		"city": "City",
+		"mainContact": "Main Contact",
+		"filters": {
+			"department": "Filter By Department",
+			"zone": "Filter by Zone",
+			"status": "Filter by Status",
+			"region": "Filter by Region",
+			"keyword": "Type to Filter"
+		}
+	},
+	"clientType": {
+        "CLIENT": "CLIENT",
+        "SERVICE_LOCATION": "SITE",
+        "MULTI_LOCATION_CLIENT": "MULTI"
 	},
 	"page": {
 		"auth": {
@@ -31,7 +51,7 @@
 			"logout": "Logout",
 			"side-bar": {
 				"dashboards": "Dashboards",
-				"sites": "Sites (Clients)",
+				"clients": "Sites (Clients)",
 				"employees": "Employees",
 				"maps": "Maps",
 				"settings": "Settings",
@@ -59,9 +79,26 @@
 		"admin": {
 			"title": "Administration Portal"
 		},
+		"dashboard": {
+			"sub-menu": {
+				"dashboard": "Live Dashboard",
+				"vehicle": "Vehicle Management",
+				"schedule": "Live Schedule",
+				"journal": "Journal",
+				"exceptions": "System Exceptions",
+				"attendance": "Attendance Dashboard",
+				"loneworker": "Loneworker"
+			}
+		},
+		"client": {
+			"title": "Clients",
+			"sub-menu": {
+				"zones": "Zones (Groups)"
+			}
+		},
 		"employee": {
 			"title": "Employees",
-			"top-tabs": {
+			"sub-menu": {
 				"departments": "Departments",
 				"skills": "Skills & Attributes",
 				"audit": "Audit Log"
@@ -77,13 +114,6 @@
 				"name": "Name",
 				"title": "Title",
 				"phone": "Phone"
-			},
-			"filters": {
-				"department": "Filter By Department",
-				"zone": "Filter by Zone",
-				"status": "Filter by Status",
-				"region": "Filter by Region",
-				"keyword": "Type to Filter"
 			}
 		},
 		"index": {

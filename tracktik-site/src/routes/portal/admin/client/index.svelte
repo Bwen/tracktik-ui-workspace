@@ -4,7 +4,7 @@
     import { browser } from '$app/env';
     import Form from '$lib/components/ext/form/Form.svelte';
     import { session } from '$app/stores';
-    import { pageState, getTableDataColumns, getFiltersFieldset } from '$lib/stores/page/employee.list';
+    import { pageState, getTableDataColumns, getFiltersFieldset } from '$lib/stores/page/client.list';
     import ProfileTooltip from '$lib/components/ProfileTooltip.svelte';
 
     let isLoading = false;
@@ -13,29 +13,25 @@
     let filterFields = [];
     (async () => filterFields = await getFiltersFieldset($session))();
 
-    let employees = [];
+    let clients = [];
     let totalEntries = 0;
     let perPage = $pageState.tableData.perPage;
     let offset = $pageState.tableData.offset;
     let filters = $pageState.filters;
-    async function fetchEmployees() {
+    async function fetchClients() {
         $pageState.filters = filters;
 
         let forAllAccountAssignments = filters.forAllAccountAssignments;
         let restFilters = JSON.parse(JSON.stringify(filters));
         delete restFilters['forAllAccountAssignments'];
 
-        if (forAllAccountAssignments.zone && forAllAccountAssignments.department) {
-            restFilters['forAllAccountAssignments'] = `${forAllAccountAssignments.zone},${forAllAccountAssignments.department}`;
-        } else if (forAllAccountAssignments.zone) {
+        if (forAllAccountAssignments.zone) {
             restFilters['forAllAccountAssignments'] = forAllAccountAssignments.zone;
-        } else if (forAllAccountAssignments.department) {
-            restFilters['forAllAccountAssignments'] = forAllAccountAssignments.department;
         }
 
         isLoading = true;
-        let res = await request('/employees', METHODS.GET, {
-            'include': 'region,region.address,address,username',
+        let res = await request('/clients', METHODS.GET, {
+            'include': 'region,region.address,address',
             'limit': perPage,
             'offset': offset,
             ...restFilters,
@@ -45,7 +41,7 @@
             let result = await res.json();
             totalEntries = result.meta.count;
             offset = result.meta.offset;
-            employees = result.data;
+            clients = result.data;
         }
 
         isLoading= false;
@@ -54,13 +50,13 @@
     async function onPerPageChange(event) {
         perPage = event.detail.perPage;
         $pageState.tableData.perPage = perPage;
-        await fetchEmployees();
+        await fetchClients();
     }
 
     async function onPageChange(event) {
         offset = event.detail.pageNumber * perPage;
         $pageState.tableData.offset = offset;
-        await fetchEmployees();
+        await fetchClients();
     }
 
     async function onFilterChange(event) {
@@ -80,9 +76,9 @@
             }
         }
 
-        await fetchEmployees();
+        await fetchClients();
     }
-    
+
     let tooltipProfile = null;
     function onCellEnter(event) {
         const td = event.detail.target;
@@ -90,9 +86,9 @@
         if (td.classList.contains('cell-avatar')) {
             const tdRect = td.getBoundingClientRect();
             const id = tr.id.replace('row-', '');
-            tooltipProfile = employees.find(entry => id == entry.id);
+            tooltipProfile = clients.find(entry => id == entry.id);
 
-            let tooltipMarkup = document.querySelector('.page-employee-list .wrapper-profile-tooltip');
+            let tooltipMarkup = document.querySelector('.page-client-list .wrapper-profile-tooltip');
             const top = (tdRect.top + window.scrollY) - 50;
             const left = (tdRect.left + window.scrollX + tdRect.width + 10);
             tooltipMarkup.style.top = top + 'px';
@@ -106,20 +102,20 @@
 
     if (browser) {
         session.subscribe(async () => {
-            await fetchEmployees();
+            await fetchClients();
         });
 
-        (async () => await fetchEmployees())();
+        (async () => await fetchClients())();
     }
 </script>
 
 <div class="wrapper-content"><div class="content">
-    <div class="page-employee-list">
+    <div class="page-client-list">
         <ProfileTooltip profile={tooltipProfile} active={Boolean(tooltipProfile)} />
         <div class="filters"><Form fieldsets={filterFields} on:change={onFilterChange}><div slot="submit"></div></Form></div>
         <TableData 
             columns={columns}
-            entries={employees}
+            entries={clients}
             isLoading={isLoading}
             perPage={perPage}
             offset={offset}
@@ -134,41 +130,41 @@
 </div></div>
 
 <style lang="css">
-    .page-employee-list :global(td) {
+    .page-client-list :global(td) {
         position: relative;
     }
 
-    .page-employee-list .filters :global(form),
-    .page-employee-list .filters :global(fieldset) {
+    .page-client-list .filters :global(form),
+    .page-client-list .filters :global(fieldset) {
         display: flex;
     }
 
-    .page-employee-list :global(.wrapper-table-data) {
-        font-size: .75em;
-    }
-
-    .page-employee-list :global(.cell-avatar) {
+    .page-client-list :global(.cell-avatar) {
         padding: 0;
         width: 28px;
     }
 
-    .page-employee-list :global(.cell-checkbox) {
+    .page-client-list :global(.wrapper-table-data) {
+        font-size: .75em;
+    }
+
+    .page-client-list :global(.cell-checkbox) {
         width: 1%;
     }
 
-    .page-employee-list :global(.cell-uid) {
+    .page-client-list :global(.cell-uid) {
         width: 5%;
     }
 
-    .page-employee-list :global(.cell-phone) {
+    .page-client-list :global(.cell-phone) {
         width: 10%;
     }
 
-    .page-employee-list :global(.cell-region) {
+    .page-client-list :global(.cell-region) {
         width: 15%;
     }
 
-    .page-employee-list :global(td.cell-phone) {
+    .page-client-list :global(td.cell-phone) {
         text-align: center;
     }
 </style>

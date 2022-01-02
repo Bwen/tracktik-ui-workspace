@@ -22,15 +22,22 @@
     export let coord: {lat: number; lng: number} | undefined = undefined;
     export let profileId: number = undefined;
 
-    let address = formatAddress({
-        postalCountry,
-        administrativeArea,
-        locality,
-        postalCode,
-        organization,
-        name,
-        addressLines: addressLinesString.split('|'),
-    });
+    let address = [];
+    $: {
+        address = formatAddress({
+            postalCountry,
+            administrativeArea,
+            locality,
+            postalCode,
+            organization,
+            name,
+            addressLines: addressLinesString.split('|'),
+        });
+
+        if (countryName) {
+            address.push(countryName);
+        }
+    }
 
     let mapModal;
     function onMapLinkClick() {
@@ -59,8 +66,8 @@
 </script>
 
 <div class="wrapper-address">
-    <address>{address.join("\n")}&nbsp;
-{countryName} {#if mapLink}<Link on:link-click={onMapLinkClick} icon={faMapMarked}>{mapLink.text}</Link>{/if}</address>
+    {#if mapLink}<Link on:link-click={onMapLinkClick} icon={faMapMarked}>{mapLink.text}</Link>{/if}
+    <address>{address.join("\n")}</address>
 </div>
 
 {#if mapLink}
@@ -79,12 +86,14 @@
 {/if}
 
 <style lang="css">
-    .wrapper-address address {
-        white-space: pre;
+    .wrapper-address :global(.wrapper-link) {
+        position: absolute;
+        left: 2.5em;
+        bottom: .5em;
     }
 
-    .wrapper-address :global(.wrapper-link) {
-        font-size: .8em;
+    .wrapper-address address {
+        white-space: pre;
     }
     
     :global(.wrapper-map .map-footer),
@@ -99,9 +108,4 @@
     :global(.wrapper-map .map-footer) {
         text-align: right;
     }
-
-    .wrapper-address :global(a) {
-        float: right;
-    }
-
 </style>

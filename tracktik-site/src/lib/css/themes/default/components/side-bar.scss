@@ -27,6 +27,10 @@
 
             ul {
                 background-color: $menu-bg;
+                box-shadow: $content-shadow;
+                border: 1px solid $menu-border;
+                border-top: none;
+
                 li {
                     a {
                         background-color: $menu-bg;

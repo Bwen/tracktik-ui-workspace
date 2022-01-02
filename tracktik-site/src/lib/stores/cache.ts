@@ -1,23 +1,27 @@
 import { browser } from '$app/env';
 import { asyncable } from 'svelte-asyncable';
-import { writable, readable } from 'svelte/store';
-import type {DepartmentsItem} from '@rest/models/DepartmentsItem';
-import type {ZonesItem} from '@rest/models/ZonesItem';
+import { writable } from 'svelte/store';
 import {METHODS, request} from '$lib/js/restClient';
 
 type DebugType = {
     ssr?: boolean;
 };
 
+type StateType = {
+    sideBar?: boolean;
+    profileHeader?: boolean;
+};
+
 type PrefType = {
-    debug?: DebugType
+    debug?: DebugType;
+    state?: StateType;
 };
 
 let initialPref: PrefType;
 if (browser && localStorage.getItem('pref') !== null) {
     initialPref = JSON.parse(localStorage.getItem('pref'));
 } else {
-    initialPref = {debug: {}};
+    initialPref = {debug: {}, state: {}};
 }
 
 export const pref = writable(initialPref);

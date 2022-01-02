@@ -8,15 +8,25 @@
     } from '@fortawesome/free-solid-svg-icons';
 	import { t } from '$lib/i18n';
     import { session } from '$app/stores';
-	
+
 	let urlPrefix = '/portal/admin';
 	let menuItems: MenuItem[] = [
-        {text: $t('page.layout.side-bar.dashboards'), icon: faDesktop, href: `${urlPrefix}/dashboards`, acl: 'dashboard/admin/overview'},
-        {text: $t('page.layout.side-bar.sites'), icon: faUserFriends, href: `${urlPrefix}/site/list`, acl: 'customer/view'},
+        {text: $t('page.layout.side-bar.dashboards'), icon: faDesktop, href: `${urlPrefix}/dashboard`, acl: 'dashboard/admin/overview', subItems: [
+            {text: $t('page.dashboard.sub-menu.dashboard'), href: `${urlPrefix}/dashboard`, acl: 'patrol/client/livedashboard'},
+            {text: $t('page.dashboard.sub-menu.schedule'), href: `${urlPrefix}/schedule`, acl: 'schedule/client/view', module: 'BACKOFFICE'},
+            {text: $t('page.dashboard.sub-menu.vehicle'), href: `${urlPrefix}/vehicle`, acl: 'patrol/vehicle', module: 'PATROLS'},
+            {text: $t('page.dashboard.sub-menu.journal'), href: `${urlPrefix}/journal`, acl: 'journal/dashboard'},
+            {text: $t('page.dashboard.sub-menu.exceptions'), href: `${urlPrefix}/exceptions`, acl: 'ticket/list'},
+            {text: $t('page.dashboard.sub-menu.attendance'), href: `${urlPrefix}/attendance`, acl: 'timekeeping/attendance/dashboard'},
+            {text: $t('page.dashboard.sub-menu.loneworker'), href: `${urlPrefix}/loneworker`, acl: 'loneworker/setup'},
+        ]},
+        {text: $t('page.layout.side-bar.clients'), icon: faUserFriends, href: `${urlPrefix}/client`, acl: 'customer/view', subItems: [
+            {text: $t('page.client.sub-menu.zones'), href: `${urlPrefix}/zone`},
+        ]},
         {text: $t('page.layout.side-bar.employees'), icon: faUsers, href: `${urlPrefix}/employee`, subItems: [
-            {text: $t('page.employee.top-tabs.departments'), href: `${urlPrefix}/departement`},
-            {text: $t('page.employee.top-tabs.skills'), href: `${urlPrefix}/skills`},
-            {text: $t('page.employee.top-tabs.audit'), href: `${urlPrefix}/audit`},
+            {text: $t('page.employee.sub-menu.departments'), href: `${urlPrefix}/departement`},
+            {text: $t('page.employee.sub-menu.skills'), href: `${urlPrefix}/skills`},
+            {text: $t('page.employee.sub-menu.audit'), href: `${urlPrefix}/audit`},
         ]},
         {text: $t('page.layout.side-bar.maps'), icon: faMapMarkedAlt, href: `${urlPrefix}/maps`},
         //{text: $t('page.layout.side-bar.sales'), icon: faChartLine, href: `${urlPrefix}/sales`},

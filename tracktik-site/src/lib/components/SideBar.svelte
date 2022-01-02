@@ -1,16 +1,33 @@
 <script lang="ts">
-    import { filterItemsBySession } from '$lib/js/utils';
+    import { filterMenuItemsBySession } from '$lib/js/utils';
     import type { MenuItem } from '$lib/@types/MenuItem.type';
+    import type { Link as LinkType } from '$lib/@types/Link.type';
     import Link from '$components/ext/Link.svelte';
     import { page, session } from '$app/stores';
+    import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+    import { pref } from '$lib/stores/cache';
 
     export let menuItems: MenuItem = [];
 
-    filterItemsBySession(menuItems, $session);
+    filterMenuItemsBySession(menuItems, $session);
     let hovers = [];
+
+    let minimized = $pref.state.sideBar ?? false;
+    let minimizeProps: LinkType = {
+        icon: minimized ? faArrowLeft : faArrowRight,
+        icon_hover: minimized ? faArrowRight : faArrowLeft
+    };
+
+    function toggleMinimize(event) {
+        minimized = !minimized;
+        $pref.state.sideBar = minimized;
+        minimizeProps.icon = minimized ? faArrowLeft : faArrowRight;
+        minimizeProps.icon_hover = minimized ? faArrowRight : faArrowLeft;
+    }
+
 </script>
 
-<section class="side-bar">
+<section class="side-bar" class:minimized>
     {#if $session.auth && $session.auth && $session.auth.user}
     <div class="logged-user">
         <img src="{$session.auth.user.avatar}" alt="User Avatar" />
@@ -36,6 +53,7 @@
         </li>
     {/each}
     </ul>
+    <div class="minimize"><Link {...minimizeProps} on:link-click={toggleMinimize}/></div>
 </section>
 
 <style lang="scss">
@@ -43,6 +61,12 @@
         min-width: 100px;
         max-width: 100px;
         z-index: 200;
+
+        .minimize {
+            padding: .5em;
+            display: block;
+            text-align: center;
+        }
 
         .logged-user {
             padding: 16px;
@@ -89,6 +113,35 @@
             white-space: nowrap;
             text-align: left;
         }
+    }
 
+    .side-bar.minimized {
+        min-width: 40px;
+        max-width: 40px;
+
+        li :global(a) {
+            padding: .65em .5em;
+        }
+
+        :global(.wrapper-link > .text) {
+            display: none;
+        }
+
+        :global(.wrapper-link > .icon) {
+            font-size: 1em;
+        }
+        
+        .logged-user {
+            padding: 0;
+            display: flex;
+        }
+
+        .sub-items {
+            margin-left: 40px;
+        }
+
+        .sub-items :global(.wrapper-link > .text) {
+            display: initial;
+        }
     }
 </style>
