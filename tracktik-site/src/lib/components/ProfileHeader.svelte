@@ -12,6 +12,8 @@
     import Address from '$components/ext/Address.svelte';
     import { getAddressProps, getPhoneProps } from '$lib/js/utils';
     import {t, date, time} from '$lib/i18n';
+    import {createEventDispatcher} from "svelte";
+    const dispatch = createEventDispatcher();
 
     const profile: EmployeesItem | ClientsItem = getContext('current-profile');
     if (typeof profile.address !== 'object') {
@@ -31,7 +33,6 @@
     const username = profile.username || '';
     const phone = getPhoneProps(profile);
     const address = getAddressProps(profile);
-    address.mapLink = {text: $t('common.map')};
 
     function getContactName(prof) {
         if (!prof.company) {
@@ -54,11 +55,18 @@
         minimizeProps.icon_hover = minimized ? faArrowDown : faArrowUp;
     }
 
+    export let actionItems = [];
+    function onActionClick(event) {
+        if (!event.detail.hyperlink.id) {
+            return;
+        }
+
+        dispatch('action-click', {hyperlink: event.detail.hyperlink});
+    }
 </script>
 
-<div class="wrapper-header-profile">
-    <div class="header-profile" class:minimized>
-        <div class="minimize"><Link {...minimizeProps} on:link-click={toggleMinimize}/></div>
+<div class="wrapper-header-profile" class:minimized>
+    <div class="header-profile">
         {#if profile.avatar}<img src="{profile.avatar}" alt="Avatar"  transition:fade={{duration: 250}}/>{/if}
         <div class="contact-address">
             <h2>{profile.company || profile.name}</h2>
@@ -83,83 +91,165 @@
         </div>
         {/if}
     </div>
+    {#if actionItems.length}
+    <div class="profile-actions">
+        <ul>
+            {#each actionItems as item}
+            <li><Link {...item} on:link-click={onActionClick} /></li>
+            {/each}
+        </ul>
+    </div>
+    {/if}
+    <div class="minimize"><Link {...minimizeProps} on:link-click={toggleMinimize} /></div>
 </div>
 
 <style lang="scss">
-    .header-profile {
+    .wrapper-header-profile {
         position: relative;
-        display: flex;
-        padding: .75em;
+        overflow: hidden;
 
-        .minimize {
-            font-size: 1.5em;
+        &:not(.minimized) .minimize {
+            font-size: 2em;
             position: absolute;
             right: 0;
-            margin: 0 .5em;
+            margin: .25em .5em;
+            top: 0;
         }
 
-        :global(.wrapper-address) {
-            margin-top: .5em;
+        li {
+            white-space: nowrap;
         }
 
-        [class^="contact"] {
-            margin-left: 1.5em;
-        }
-        
-        img {
-            box-sizing: border-box;
-            margin: 6px;
-            width: 100px;
-            height: 100px;
-            display: inline-block;
-        }
+        .header-profile {
+            display: flex;
+            padding: .75em;
 
-        h2 {
-            margin: 0;
-        }
+            :global(.wrapper-address) {
+                margin-top: .5em;
+            }
 
-        ul, li {
-            list-style-type: none;
-            margin: .35em 0;
-            padding: 0;
+            [class^="contact"] {
+                margin-left: 1.5em;
+            }
+            
+            img {
+                box-sizing: border-box;
+                margin: 6px;
+                width: 100px;
+                height: 100px;
+                display: inline-block;
+            }
+
+            h2 {
+                margin: 0;
+            }
+
+            ul, li {
+                list-style-type: none;
+                margin: .35em 0;
+                padding: 0;
+            }
         }
     }
 
-    .header-profile.minimized {
-        font-size: .8em;
-        padding: .25em .5em;
+    .profile-actions {
+        padding: 0 .75em 1em .75em;
 
-        img {
-            width: 35px;
-            height: 35px;
-            margin: 5px 0;
+        ul, li {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
         }
 
-        [class^="contact"] {
-            margin-left: 1em;
-        }
-        
-        li {
-            display: none;
-            margin: .15em 0;
-        }
-
-        li:nth-child(1), li:nth-child(2) {
-            display: initial;
-        }
-
-        :global(.wrapper-address) {
-            display: none;
-        }
-
-        .contact-extra ul {
+        ul {
             display: flex;
-            flex-flow: row;
+            flex-wrap: wrap;
             gap: .5em;
+            margin-left: 135px;
+
+            li {
+                :global(a) {
+                    font-size: .75em;
+                    display: block;
+                    padding: .5em;
+                }
+            }
+        }
+    }
+
+    .wrapper-header-profile.minimized {
+        display: flex;
+        align-items: center;
+
+        .minimize {
+            display: flex;
+            margin-left: auto;
+            
+            :global(a) {
+                margin: .75em;
+            }
         }
 
-        .contact-extra ul li {
-            display: initial;
+        .profile-actions {
+            padding: 0;
+
+            ul { 
+                gap: 4px;
+                //flex-direction: column;
+                flex-wrap: wrap;
+                align-items: center;
+                margin: 0;
+                margin-top: 4px;
+                height: 50px;
+            }
+            
+            li {
+
+                :global(a) {
+                    padding: .25em 1em;
+                    margin: 0;
+                    font-size: .6em;
+                    text-align: center;
+                }
+            }
+        }
+
+        .header-profile {
+            font-size: .8em;
+            padding: .25em .5em;
+
+            img {
+                width: 35px;
+                height: 35px;
+                margin: 5px 0;
+            }
+
+            [class^="contact"] {
+                margin-left: 1em;
+            }
+            
+            li {
+                display: none;
+                margin: .15em 0;
+            }
+
+            li:nth-child(1), li:nth-child(2) {
+                display: initial;
+            }
+
+            :global(.wrapper-address) {
+                display: none;
+            }
+
+            .contact-extra ul {
+                display: flex;
+                flex-flow: row;
+                gap: .5em;
+            }
+
+            .contact-extra ul li {
+                display: initial;
+            }
         }
     }
 </style>

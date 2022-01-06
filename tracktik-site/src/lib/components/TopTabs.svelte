@@ -8,7 +8,7 @@
     filterMenuItemsBySession(tabItems, $session);
 </script>
 
-<section class="sub-menu">
+<section class="top-tabs">
     <ul>
     {#each tabItems as item}
         <li><Link {...item} css="{$page.path.startsWith(item.href) ? 'active' : ''}" /></li>
@@ -17,20 +17,20 @@
 </section>
 
 <style lang="css">
-    .sub-menu {
+    .top-tabs {
         width: 100%;
         z-index: 15;
     }
 
-    .sub-menu ul,
-    .sub-menu li {
+    .top-tabs ul,
+    .top-tabs li {
         list-style: none;
         padding: 0;
         margin: 0;
         display: inline-block;
     }
 
-    .sub-menu li :global(a) {
+    .top-tabs li :global(a) {
         display: inline-block;
         text-align: center;
         font-size: .85em;

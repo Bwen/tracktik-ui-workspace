@@ -95,7 +95,7 @@
 			"sub-menu": {
 				"zones": "Zones (Groupes)"
 			},
-			"mid-tabs": {
+			"top-tabs": {
 				"patrol": "Sécurité et patrouille",
 				"timesheets": "Feuilles de temps",
 				"skills": "Compétences et attributs",
@@ -109,7 +109,29 @@
 				"skills": "Compétences et attributs",
 				"audit": "Journal d'audit"
 			},
-			"mid-tabs": {
+			"content-menu": {
+				"related": "En rapport",
+				"extra-info": "Extra Info.",
+                "assigned-sites": "Sites assignés",
+                "site-bans": "Interdictions de sites",
+                "emergency": "Contacts d'urgence",
+                "notes-on-employee": "Notes sur l'employé",
+                "notes-by-employee": "Notes par employé",
+                "documents": "Documents",
+                "availabilities": "Disponibilités",
+                "exception": "Exception de travail",
+                "history": "Histoire"
+			},
+			"action-items": {
+				"change-password": "Changer le mot de passe",
+				"force-change-password": "Forcer le changement de mot de passe",
+				"snap-picture": "Prendre une photo",
+				"terminate": "Terminer",
+				"id-card": "Carte d'identité",
+				"tracks": "Pistes",
+				"hr-profile": "Profil RH"
+			},
+			"top-tabs": {
 				"patrol": "Sécurité et patrouille",
 				"timesheets": "Feuilles de temps",
 				"skills": "Compétences et attributs",

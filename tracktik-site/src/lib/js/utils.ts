@@ -26,7 +26,7 @@ function filterMenuItems(items: MenuItem[], permissions: any, modules: any): Men
             }
         } 
 
-        if (Object.hasOwnProperty.call(item, 'module')) {
+        if (Object.hasOwnProperty.call(item, 'module') && modules) {
             if (modules.indexOf(item.module) === -1) {
                 items.splice(i, 1);
             } else {
@@ -160,7 +160,7 @@ export function getAddressProps(profile) {
     const subdivision = getSubdivisionByCode((postalCountry || defaultCountry) +'-'+ profile.address.state);
     const administrativeArea = subdivision ? subdivision.name : '';
     const country = getCountryByAlpha2(postalCountry || defaultCountry);
-    let address = {
+    return {
         countryName: country ? country.name : '',
         postalCountry: postalCountry || defaultCountry,
         administrativeArea,
@@ -168,10 +168,31 @@ export function getAddressProps(profile) {
         postalCode: profile.address.postalCode,
         addressLinesString: addressLines.join('|'),
     };
-    
-    if (profile.address.latitude && profile.address.longitude) {
-        address.coord = {lat: profile.address.latitude, lng: profile.address.longitude};
+}
+
+export function showProfileToolTip(event, entries, cellClass, tooltipSelector) {
+    let tooltipProfile = null;
+    const td = event.detail.target;
+    const tr = event.detail.row;
+    if (td.classList.contains(cellClass)) {
+        const tdRect = td.getBoundingClientRect();
+        const id = tr.id.replace('row-', '');
+        const entry = entries.find(entry => id == entry.id);
+        if (!entry) {
+            return tooltipProfile;
+        }
+
+        tooltipProfile = entry;
+        if (entry.account) {
+            tooltipProfile = entry.account;
+        }
+
+        let tooltipMarkup = document.querySelector(tooltipSelector);
+        const top = (tdRect.top + window.scrollY) - 50;
+        const left = (tdRect.left + window.scrollX + tdRect.width + 10);
+        tooltipMarkup.style.top = top + 'px';
+        tooltipMarkup.style.left = left + 'px';
     }
 
-    return address;
+    return tooltipProfile;
 }

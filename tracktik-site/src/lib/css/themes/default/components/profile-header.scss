@@ -21,4 +21,16 @@
         }
     }
 
+    .profile-actions a {
+        font-weight: 500;
+        color: $button-primary-text;
+        background-color: $button-primary-bg;
+        border: 1px solid $button-primary-border;
+        box-shadow: $content-shadow;
+        border-radius: $border-radius;
+
+        &:hover {
+            background-color: $button-primary-bg-hover;
+        }
+    }
 }

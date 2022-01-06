@@ -98,7 +98,7 @@
 
         .sub-items {
             position: absolute;
-            margin-left: 100px;
+            margin-left: 99px;
             z-index: 500;
             display: none;
         }
@@ -137,7 +137,7 @@
         }
 
         .sub-items {
-            margin-left: 40px;
+            margin-left: 39px;
         }
 
         .sub-items :global(.wrapper-link > .text) {

@@ -1,11 +1,41 @@
 
+body, #svelte, main {
+    height: 100vh;
+}
+
+#svelte, main {
+    display: flex;
+    flex-direction: column;
+}
+
 .wrapper-content {
-    padding: 15px;
     border-top: 1px solid $content-border-light;
-    
+
     .content {
+        margin: 15px;
         border: $content-border;
         background-color: $content-bg;
         box-shadow: $content-shadow;
     }
+}
+
+[class^="layout-"] {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex-grow: 1;
+    align-items: stretch;
+}
+
+[class*="-content"] {
+    display: flex;
+    flex-grow: 1;
+}
+
+.layout-admin {
+    flex-direction: row;
+}
+
+.layout-auth {
+    align-items: center;
 }

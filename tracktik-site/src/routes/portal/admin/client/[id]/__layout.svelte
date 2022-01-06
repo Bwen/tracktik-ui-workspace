@@ -33,17 +33,17 @@
     import type { Link as LinkType } from '$lib/@types/Link.type';
 	import { t } from '$lib/i18n';
 	
+	export let client: any = {};
 	let urlPrefix = '/portal/admin/client';
 	let topTabItems: LinkType[] = [
-        {text: $t('common.overview'), href: `${urlPrefix}`},
+        {text: $t('common.overview'), href: `${urlPrefix}/${client.id}`},
         {text: $t('common.edit'), href: `${urlPrefix}/departement`},
-        {text: $t('page.employee.mid-tabs.patrol'), href: `${urlPrefix}/skills`},
-        {text: $t('page.employee.mid-tabs.timesheets'), href: `${urlPrefix}/audit`},
-        {text: $t('page.employee.mid-tabs.skills'), href: `${urlPrefix}/audit`},
-        {text: $t('page.employee.mid-tabs.schedules'), href: `${urlPrefix}/audit`},
+        {text: $t('page.employee.top-tabs.patrol'), href: `${urlPrefix}/skills`},
+        {text: $t('page.employee.top-tabs.timesheets'), href: `${urlPrefix}/audit`},
+        {text: $t('page.employee.top-tabs.skills'), href: `${urlPrefix}/audit`},
+        {text: $t('page.employee.top-tabs.schedules'), href: `${urlPrefix}/audit`},
     ];
 
-	export let client: any = {};
 	setContext('current-profile', client);
 </script>
 

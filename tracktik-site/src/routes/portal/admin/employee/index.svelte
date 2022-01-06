@@ -6,6 +6,7 @@
     import { session } from '$app/stores';
     import { pageState, getTableDataColumns, getFiltersFieldset } from '$lib/stores/page/employee.list';
     import ProfileTooltip from '$lib/components/ProfileTooltip.svelte';
+    import { showProfileToolTip } from '$lib/js/utils';
 
     let isLoading = false;
     let columns = getTableDataColumns($session);
@@ -85,22 +86,10 @@
     
     let tooltipProfile = null;
     function onCellEnter(event) {
-        const td = event.detail.target;
-        const tr = event.detail.row;
-        if (td.classList.contains('cell-avatar')) {
-            const tdRect = td.getBoundingClientRect();
-            const id = tr.id.replace('row-', '');
-            tooltipProfile = employees.find(entry => id == entry.id);
-
-            let tooltipMarkup = document.querySelector('.page-employee-list .wrapper-profile-tooltip');
-            const top = (tdRect.top + window.scrollY) - 50;
-            const left = (tdRect.left + window.scrollX + tdRect.width + 10);
-            tooltipMarkup.style.top = top + 'px';
-            tooltipMarkup.style.left = left + 'px';
-        }
+        tooltipProfile = showProfileToolTip(event, employees, 'cell-avatar', '.page-employee-list .wrapper-profile-tooltip');
     }
 
-    function onCellLeave(event) {
+    function onCellLeave() {
         tooltipProfile = null;
     }
 
@@ -134,22 +123,8 @@
 </div></div>
 
 <style lang="css">
-    .page-employee-list :global(td) {
-        position: relative;
-    }
-
-    .page-employee-list .filters :global(form),
-    .page-employee-list .filters :global(fieldset) {
-        display: flex;
-    }
-
-    .page-employee-list :global(.wrapper-table-data) {
-        font-size: .75em;
-    }
-
-    .page-employee-list :global(.cell-avatar) {
-        padding: 0;
-        width: 28px;
+    .content  {
+        width: 100%;
     }
 
     .page-employee-list :global(.cell-checkbox) {

@@ -1,0 +1,16 @@
+
+.side-bar-content {
+    color: $content-body-text;
+    background-color: $content-bg;
+    border: 1px solid #FFF;
+    border: 1px 1px 0 0;
+    box-shadow: $content-shadow;
+
+    a.active, a:hover {
+        color: $menu-selected-text;
+        background-color: $content-border-light;
+        border-left: 4px solid $menu-selected-border;
+        margin-left: -4px;
+        transition: all .15s ease-in-out;
+    }
+}

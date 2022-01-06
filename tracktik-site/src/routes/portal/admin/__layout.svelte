@@ -55,16 +55,4 @@
 </div>
 
 <style lang="css">
-	.layout-admin {
-		display: flex;
-		min-height: 100%;
-		width: 100%;
-	}
-    
-	.layout-admin-content {
-		display: flex;
-        flex-direction: column;
-		min-height: 100%;
-		width: 100%;
-	}
 </style>

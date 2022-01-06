@@ -103,7 +103,29 @@
 				"skills": "Skills & Attributes",
 				"audit": "Audit Log"
 			},
-			"mid-tabs": {
+			"content-menu": {
+				"related": "Related",
+				"extra-info": "Extra Info.",
+                "assigned-sites": "Assigned Sites",
+                "site-bans": "Site Bans",
+                "emergency": "Emergency Contacts",
+                "notes-on-employee": "Notes on Employee",
+                "notes-by-employee": "Notes by Employee",
+                "documents": "Documents",
+                "availabilities": "Availabilities",
+                "exception": "Work Exception",
+                "history": "History"
+			},
+			"action-items": {
+				"change-password": "Change Password",
+				"force-change-password": "Force Change Password",
+				"snap-picture": "Snap Picture",
+				"terminate": "Terminate",
+				"id-card": "ID Card",
+				"tracks": "Tracks",
+				"hr-profile": "HR Profile"
+			},
+			"top-tabs": {
 				"patrol": "Security & Patrol",
 				"timesheets": "Time Sheets",
 				"skills": "Skill & Attributes",

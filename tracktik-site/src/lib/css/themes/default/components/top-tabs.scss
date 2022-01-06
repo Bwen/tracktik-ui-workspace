@@ -1,5 +1,5 @@
 
-.sub-menu {
+.top-tabs {
     color: $menu-text;
     background-color: $menu-bg;
     border-top: 1px solid $menu-border;
@@ -12,14 +12,18 @@
                 color: $menu-text;
             }
 
+            a.active, a:hover {
+                color: $menu-selected-text;
+                border-top: 3px solid $menu-selected-border;
+            }
+
             a.active {
                 color: $content-body-text;
                 background-color: $content-bg;
                 border-bottom: 1px solid $content-border;
             }
 
-            a:hover {
-                color: $menu-selected-text;
+            a:hover:not(.active) {
                 background-color: $menu-selected-bg;
                 transition: all .25s ease-in-out;
             }

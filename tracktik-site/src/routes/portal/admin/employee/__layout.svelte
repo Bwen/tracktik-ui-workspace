@@ -9,8 +9,6 @@
 
 <style lang="css">
 	.layout-employee {
-		display: flex;
 		width: 100%;
-        flex-direction: column;
 	}
 </style>

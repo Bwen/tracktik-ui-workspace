@@ -4,6 +4,10 @@
     border-bottom: 1px solid $content-border;
     font-size: .75em;
 
+    form, fieldset {
+        display: flex;
+    }
+
     form {
         border-top: 1px solid $content-border-light;
 

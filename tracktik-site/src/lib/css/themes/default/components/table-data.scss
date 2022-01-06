@@ -1,6 +1,7 @@
 
 .wrapper-table-data {
     border-bottom: 1px solid $content-border;
+    font-size: .75em;
 
     table {
         border-collapse: collapse;
@@ -35,8 +36,15 @@
                 }
 
                 td {
+                    position: relative;
                     padding: 6px;
                     border: 1px solid $content-border;
+
+                    &.cell-avatar {
+                        padding: 0;
+                        width: 28px;
+                    }
+                
                     a {
                         color: darken($button-primary-bg, 5%);
                         font-weight: bold;

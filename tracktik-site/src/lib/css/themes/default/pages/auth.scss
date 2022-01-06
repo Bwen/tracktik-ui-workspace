@@ -1,12 +1,7 @@
 
-html, body, main, #svelte {
-    height: 100vh;
-    width: 100%;
-}
-
 .layout-auth {
-    margin-top: -50px;
     height: 100%;
+    justify-items: center;
 }
 
 .form-login .wrapper-form {

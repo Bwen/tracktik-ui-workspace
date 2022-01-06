@@ -6,6 +6,7 @@
     import { session } from '$app/stores';
     import { pageState, getTableDataColumns, getFiltersFieldset } from '$lib/stores/page/client.list';
     import ProfileTooltip from '$lib/components/ProfileTooltip.svelte';
+    import { showProfileToolTip } from '$lib/js/utils';
 
     let isLoading = false;
     let columns = getTableDataColumns($session);
@@ -81,22 +82,10 @@
 
     let tooltipProfile = null;
     function onCellEnter(event) {
-        const td = event.detail.target;
-        const tr = event.detail.row;
-        if (td.classList.contains('cell-avatar')) {
-            const tdRect = td.getBoundingClientRect();
-            const id = tr.id.replace('row-', '');
-            tooltipProfile = clients.find(entry => id == entry.id);
-
-            let tooltipMarkup = document.querySelector('.page-client-list .wrapper-profile-tooltip');
-            const top = (tdRect.top + window.scrollY) - 50;
-            const left = (tdRect.left + window.scrollX + tdRect.width + 10);
-            tooltipMarkup.style.top = top + 'px';
-            tooltipMarkup.style.left = left + 'px';
-        }
+        tooltipProfile = showProfileToolTip(event, clients, 'cell-avatar', '.page-client-list .wrapper-profile-tooltip');
     }
 
-    function onCellLeave(event) {
+    function onCellLeave() {
         tooltipProfile = null;
     }
 
@@ -130,6 +119,10 @@
 </div></div>
 
 <style lang="css">
+    .content  {
+        width: 100%;
+    }
+
     .page-client-list :global(td) {
         position: relative;
     }
