@@ -6,7 +6,10 @@
     export let exclude: string;
     export let active: boolean;
 
+    let markup;
     function handleClickOutside(event) {
+        event.stopPropagation();
+
         const wrapperSelect = event.target.closest(exclude);
         if (wrapperSelect) {
             return;
@@ -17,15 +20,18 @@
 
     $: {
         if (browser) {
+            const form = markup ? markup.closest('form') : undefined;
             if (active) {
+                if (form) form.addEventListener('click', handleClickOutside);
                 window.addEventListener('click', handleClickOutside);
             } else {
+                if (form) form.removeEventListener('click', handleClickOutside);
                 window.removeEventListener('click', handleClickOutside);
             }
         }
     }
 </script>
 
-<div class="click-outside">
+<div class="click-outside" bind:this={markup}>
     <slot />
 </div>

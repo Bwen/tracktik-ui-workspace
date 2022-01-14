@@ -2,8 +2,8 @@
 .wrapper-client-type {
     .client-type {
         font-weight: 400;
-        color: $button-primary-text;
-        border-radius: $border-radius;
+        color: rgb(var(--button-primary-text));
+        border-radius: var(--border-radius);
         padding: 4px 6px;
         display: block;
         text-align: center;

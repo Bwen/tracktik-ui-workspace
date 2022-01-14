@@ -17,7 +17,7 @@
             return;
         }
 
-        if (event.detail.hyperlink.id === 'menu-bars') {
+        if ('menu-bars' === event.detail.hyperlink.id) {
             document.querySelector('.app-header .center').classList.toggle('mobile-hover');
             return;
         }

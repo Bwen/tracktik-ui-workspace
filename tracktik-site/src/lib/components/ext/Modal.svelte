@@ -1,23 +1,26 @@
 <script lang="ts">
+    import { modal as modalComponent } from '$lib/stores/modal';
+
     let active;
-    let modal;
-    
+    modalComponent.subscribe((value) => {
+        if (value) active = true;
+    });
+
     function handleKeydown(event){
         if(event.key=="Escape") {
-            close();
+            active = false;
         } 
     }
 
-    export function open() {
-        if (active)  return;
-
-        active = true;
-        document.body.appendChild(modal);
-    }
-
-    export function close() {
-        if (!active)  return;
-
+    function onModalClick(event) {
+        let modalContent = event.target.closest('.wrapper-content');
+        if (modalContent) {
+            event.stopPropagation();
+            return;
+        }
+        
+        event.stopPropagation();
+        event.preventDefault();
         active = false;
     }
 </script>
@@ -28,7 +31,7 @@
             overflow: hidden;
         }
 
-        #svelte {
+        #svelte-main {
             -webkit-filter: blur(2.5px);
             -moz-filter: blur(2.5px);
             -o-filter: blur(2.5px);
@@ -40,12 +43,10 @@
 </svelte:head>
 <svelte:window on:keydown={handleKeydown} />
 
-<div class="overlay-modal" class:active bind:this={modal} on:click={()=>close()}>
-    <div class="wrapper-modal" on:click|stopPropagation={()=>{}}>
-        <div class="wrapper-content"><div class="content">
-            <slot />
-        </div></div>
-    </div>
+<div class="overlay-modal" class:active on:mouseup={onModalClick}>
+    <div class="wrapper-modal"><div class="wrapper-content"><div class="content">
+        {#if $modalComponent}<svelte:component this={$modalComponent} />{/if}
+    </div></div></div>
 </div>
 
 <style lang="css">

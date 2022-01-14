@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { filterMenuItemsBySession } from '$lib/js/utils';
+    import { filterMenuItemsBySession, filterLinkProps } from '$lib/js/utils';
     import type { MenuItem } from '$lib/@types/MenuItem.type';
     import type { Link as LinkType } from '$lib/@types/Link.type';
     import Link from '$components/ext/Link.svelte';
@@ -9,7 +9,7 @@
 
     export let menuItems: MenuItem = [];
 
-    filterMenuItemsBySession(menuItems, $session);
+    menuItems = filterMenuItemsBySession(menuItems, $session);
     let hovers = [];
 
     let minimized = $pref.state.sideBar ?? false;
@@ -39,15 +39,15 @@
             {#if item.subItems}
             <ul class="sub-items" class:open={hovers[item.href]}>
             {#each item.subItems as subItem}
-                <li  on:mouseover={() => hovers[item.href] = true} on:mouseout={() => hovers[item.href] = false}><Link 
-                    {...subItem} 
+                <li on:mouseover={() => hovers[item.href] = true} on:mouseout={() => hovers[item.href] = false}><Link 
+                    {...filterLinkProps(subItem)} 
                     css="{$page.path.startsWith(subItem.href) ? 'active' : ''}" 
                 /></li>
             {/each}
             </ul>
             {/if}
             <Link  on:mouseover={() => hovers[item.href] = true} on:mouseout={() => hovers[item.href] = false}
-                {...item} 
+                {...filterLinkProps(item)} 
                 css="{$page.path.startsWith(item.href) ? 'active' : ''}" 
             />
         </li>

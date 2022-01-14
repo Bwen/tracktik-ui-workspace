@@ -1,12 +1,12 @@
 
 .wrapper-autocomplete {
     ul {
-        background-color: $form-ele-bg;
-        box-shadow: $content-shadow;
-        border-radius: 0 0 $border-radius $border-radius;
+        background-color: rgb(var(--form-ele-bg));
+        box-shadow: rgb(var(--content-shadow));
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
 
         a:hover {
-            background-color: $button-primary-bg-light;
+            background-color: rgb(var(--button-primary-bg-light));
         }
     }
 }

@@ -1,4 +1,5 @@
 <script type="ts">
+    import { modal as modalComponent } from '$lib/stores/modal';
     import TableData from '$components/ext/TableData.svelte';
     import Form from '$lib/components/ext/form/Form.svelte';
 	import { request, METHODS } from '$lib/js/restClient';
@@ -7,6 +8,10 @@
     import { showProfileToolTip } from '$lib/js/utils';
     import { browser } from '$app/env';
     import { session } from '$app/stores';
+    import { faPlus } from '@fortawesome/free-solid-svg-icons';
+    import ContentToolbar from '$components/ContentToolbar.svelte';
+    import AssignSiteForm from '$components/form/AssignSite.svelte';
+	import { t } from '$lib/i18n';
     
     let columns = getTableDataColumns($session);
     let filterFields = [];
@@ -22,7 +27,6 @@
     let isLoading = false;
     async function fetchAssignments() {
         let restFilters = JSON.parse(JSON.stringify(filters));
-        console.log(restFilters);
         isLoading = true;
         let res = await request('/employee-account-assignments', METHODS.GET, {
             'include': 'account,account.region,account.address',
@@ -58,6 +62,16 @@
         await fetchAssignments();
     }
 
+    const toolbarItems = [
+        {id: 'assign-to-site', text: $t('page.employee.account-assignment.assign-to-site'), icon: faPlus},
+    ];
+
+    function toolbarClick(event) {
+        if ('assign-to-site' === event.detail.id) {
+            $modalComponent = AssignSiteForm;
+        }
+    }
+
     let tooltipProfile = null;
     function onCellEnter(event) {
         tooltipProfile = showProfileToolTip(event, assignments, 'cell-avatar', '.wrapper-account-assignment .wrapper-profile-tooltip');
@@ -74,6 +88,7 @@
 
 <div class="wrapper-account-assignment">
     <ProfileTooltip profile={tooltipProfile} active={Boolean(tooltipProfile)} />
+    <ContentToolbar items={toolbarItems} on:item-click={toolbarClick} />
     <div class="filters"><Form fieldsets={filterFields} on:change={onFilterChange}><div slot="submit"></div></Form></div>
     <TableData
         isLoading={isLoading}

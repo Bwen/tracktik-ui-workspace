@@ -2,7 +2,7 @@
 .wrapper-table-data {
     div.wrapper-pagination {
         padding: 4px 0 2px 0;
-        border-top: 1px solid $content-border-light;
+        border-top: 1px solid rgb(var(--content-border-light));
 
         .per-page {
             .input-select {
@@ -24,7 +24,7 @@
 
             a.current,
             a:hover {
-                background-color: $button-primary-bg-light;
+                background-color: rgb(var(--button-primary-bg-light));
             }
         }
     }

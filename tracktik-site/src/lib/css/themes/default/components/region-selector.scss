@@ -1,7 +1,7 @@
 
 .wrapper-region-selector {
-    background-color: $menu-bg-dark;
-    color: darken($menu-text-dark, 15%);
+    background-color: rgb(var(--menu-bg-dark));
+    color: rgb(var(--menu-text-dark));
 
     .wrapper-autocomplete {
         input {
@@ -16,7 +16,7 @@
 
         .click-outside {
             ul {
-                background-color: $menu-bg-dark;
+                background-color: rgb(var(--menu-bg-dark));
                 opacity: .9;
                 font-size: .7em;
                 margin-top: 8px;
@@ -24,10 +24,10 @@
                 li {
                     opacity: 1;
                     margin-left: 2.5em;
-                    background-color: $menu-bg-dark;
+                    background-color: rgb(var(--menu-bg-dark));
 
                     a:hover {
-                        background-color: $menu-bg;
+                        background-color: rgb(var(--menu-bg));
                     }
                 }
             }

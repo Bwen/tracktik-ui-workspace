@@ -1,15 +1,15 @@
 
 .overlay-modal {
     .wrapper-modal {
-        box-shadow: $content-shadow;
-        border: 1px solid $content-border;
-        border-radius: $border-radius;
-        background-color: $content-bg;
+        box-shadow: rgb(var(--content-shadow));
+        border: 1px solid rgb(var(--content-border));
+        border-radius: var(--border-radius);
+        background-color: rgb(var(--content-bg));
 
         header {
             font-weight: bolder;
             padding: .5em;
-            border-bottom: 1px solid $content-border;
+            border-bottom: 1px solid rgb(var(--content-border));
 
             svg {
                 margin-right: .5em;
@@ -20,7 +20,8 @@
             padding: 0;
             border: 0;
             .content {
-                border-radius: $border-radius;
+                margin: 0;
+                border-radius: var(--border-radius);
             }
         }
     }

@@ -1,17 +1,17 @@
 
 .side-bar {
-    color: $menu-text;
-    background-color: $menu-bg;
-    border-right: 1px solid $menu-border;
+    color: rgb(var(--menu-text));
+    background-color: rgb(var(--menu-bg));
+    border-right: 1px solid rgba(var(--menu-border), 0.19);
 
     ul {
-        border-bottom: 1px solid $menu-border;
+        border-bottom: 1px solid rgba(var(--menu-border), 0.19);
 
         li {
-            border-top: 1px solid $menu-border;
+            border-top: 1px solid rgba(var(--menu-border), 0.19);
 
             a {
-                color: $menu-text;
+                color: rgba(var(--menu-text), 85%);
                 .text {
                     margin-top: .5em;
                 }
@@ -19,21 +19,21 @@
 
             a.active,
             a:hover {
-                color: $menu-selected-text;
-                background-color: $menu-selected-bg;
-                border-left: 6px solid $menu-selected-border;
+                color: rgb(var(--menu-selected-text));
+                background-color: rgba(var(--menu-selected-bg), 0.19);
+                border-left: 6px solid rgb(var(--menu-selected-border));
                 transition: all .25s ease-in-out;
             }
 
             ul {
-                background-color: $menu-bg;
-                box-shadow: $content-shadow;
-                border: 1px solid $menu-border;
+                background-color: rgb(var(--menu-bg));
+                box-shadow: rgb(var(--content-shadow));
+                border: 1px solid rgba(var(--menu-border), 0.19);
                 border-top: none;
 
                 li {
                     a {
-                        background-color: $menu-bg;
+                        background-color: rgb(var(--menu-bg));
                         .text {
                             margin: 0;
                         }
@@ -41,7 +41,7 @@
 
                     a.active,
                     a:hover {
-                        background-color: $menu-selected-bg;
+                        background-color: rgba(var(--menu-selected-bg), 0.19);
                     }
                 }
             }

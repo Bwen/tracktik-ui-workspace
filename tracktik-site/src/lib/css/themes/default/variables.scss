@@ -1,67 +1,101 @@
 
-$content-body-text: #3f3f3f;
-$content-body-bg: #ededed;
+&:root {
+    --content-body-text: 63, 63, 63;
+    --content-body-bg: 237, 237, 237;
 
-$content-bg: #FAFAFA;
-$content-border: #DDD;
-$content-border-light: #FFF;
-$content-shadow: 
-    0 3px 1px -2px rgb(0 0 0 / 20%), 
-    0 2px 2px 0 rgb(0 0 0 / 14%), 
-    0 1px 5px 0 rgb(0 0 0 / 12%)
-;
+    --content-bg: 237, 237, 237;
+    --content-bg-light: 255, 255, 255;
+    --content-border: 221, 221, 221;
+    --content-border-light: 255, 255, 255;
+    --content-shadow: 
+        0 3px 1px -2px rgb(0 0 0 / 20%), 
+        0 2px 2px 0 rgb(0 0 0 / 14%), 
+        0 1px 5px 0 rgb(0 0 0 / 12%)
+    ;
 
-$menu-text: #f5f5f5;
-$menu-bg: #393F51;
-$menu-bg-dark: #2A2E3C;
-$menu-text-dark: #BBB;
-$menu-border: #ffffff30;
-$menu-selected-bg: rgba(0, 0, 0, 0.19);
-$menu-selected-text: rgb(221, 120, 125);
-$menu-selected-border: rgb(193, 22, 30);
+    --menu-text: 245, 245, 245;
+    --menu-bg: 57, 63, 81;
+    --menu-bg-dark: 42, 46, 60;
+    --menu-bg-light: 234, 234, 234;
+    --menu-text-dark: 187, 187, 187;
+    --menu-border: 255, 255, 255;
+    --menu-selected-bg: 0, 0, 0;
+    --menu-selected-text: 221, 120, 125;
+    --menu-selected-border: 193, 22, 30;
 
-$form-ele-text: #858585;
-$form-ele-bg: #fdfdfd;
-$form-ele-shadow: 0 0 0 2px #ebebeb;
-$form-ele-border: #d7d7d7;
+    --form-ele-text: 133, 133, 133;
+    --form-ele-bg: 253, 253, 253;
+    --form-ele-shadow: 235, 235, 235;
+    --form-ele-border: 215, 215, 215;
 
-$form-ele-disabled-bg: #CCC;
-$form-ele-disabled-text: #AAA;
-$form-ele-disabled-border: #BBB;
+    --form-ele-disabled-bg: 204, 204, 204;
+    --form-ele-disabled-text: 170, 170, 170;
+    --form-ele-disabled-border: 187, 187, 187;
 
-$button-primary-text: #fff;
-$button-primary-bg: #4786b8;
-$button-primary-bg-light: #a8d8ff;
-$button-primary-bg-hover: #3b91d8;
-$button-primary-border: #3e76af;
+    --button-primary-text: 255, 255, 255;
+    --button-primary-bg: 71, 134, 184;
+    --button-primary-bg-light: 168, 216, 255;
+    --button-primary-bg-hover: 59, 145, 216;
+    --button-primary-border: 62, 118, 175;
 
-$border-radius: 3px;
+    --border-radius: 3px;
 
-$loading-border: #66bb6a;
-$loading-bg: #c5e1a5;
-$loading-bg-light: #4caf50;
+    --loading-border: 102, 187, 106;
+    --loading-bg: 197, 225, 165;
+    --loading-bg-light: 76, 175, 80;
 
-$success-text: #f0ffdf;
-$success-icon: #cbfa96;
-$success-bg: rgba(102, 187, 106, .85);
-$success-border: #c8ff8a;
+    --success-text: 240, 255, 223;
+    --success-icon: 203, 250, 150;
+    --success-bg: 102, 187, 106;
+    --success-border: 200, 255, 138;
 
-$warning-text: #ffe8cd;
-$warning-icon: #ffcd6f;
-$warning-bg: rgba(175, 106, 26, .85);
-$warning-border: #ffab4b;
+    --warning-text: 255, 232, 205;
+    --warning-icon: 255, 205, 111;
+    --warning-bg: 175, 106, 26;
+    --warning-border: 255, 171, 75;
 
-$error-text: #ffe1eb;
-$error-text-dark: darken($error-text, 50%);
-$error-icon: #ff7c8d;
-$error-bg: rgba(129, 21, 57, .85);
-$error-border: #e91e63;
+    --error-text: 255, 225, 235;
+    --error-text-dark: 230, 81, 81;
+    --error-icon: 255, 124, 141;
+    --error-bg: 129, 21, 57;
+    --error-border: 233, 30, 99;
 
-$info-text: #c4ddff;
-$info-icon: #71c6ff;
-$info-bg: rgba(33, 100, 189, .85);
-$info-border: #76c8ff;
-
-[theme^='default-dark'] {
-    $content: #000;
+    --info-text: 196, 221, 255;
+    --info-icon: 113, 198, 255;
+    --info-bg: 33, 100, 189;
+    --info-border: 118, 200, 255;
 }
+
+/*
+&[theme='default-dark']:root {
+    --content-body-text: rgb(var(--content-body-text));
+    --content-body-bg: rgb(var(--content-body-bg));
+    
+    --content-bg: rgb(var(--content-bg));
+    --content-border: rgb(var(--content-border));
+    --content-border-light: rgb(var(--content-border-light));
+
+    --menu-text: rgb(var(--menu-text));
+    --menu-bg: #393F51;
+    --menu-bg-dark: #2A2E3C;
+    --menu-bg-light: rgb(var(--menu-bg-light));
+    --menu-text-dark: rgb(var(--menu-text-dark));
+    --menu-selected-text: rgb(var(--menu-selected-text));
+    --menu-selected-border: rgb(var(--menu-selected-border));
+    
+    --form-ele-text: rgb(var(--form-ele-text));
+    --form-ele-bg: rgb(var(--form-ele-bg));
+    --form-ele-shadow: rgb(var(--form-ele-shadow));
+    --form-ele-border: rgb(var(--form-ele-border));
+    
+    --form-ele-disabled-bg: rgb(var(--form-ele-disabled-bg));
+    --form-ele-disabled-text: rgb(var(--form-ele-disabled-text));
+    --form-ele-disabled-border: rgb(var(--form-ele-disabled-border));
+    
+    --button-primary-text: rgb(var(--button-primary-text));
+    --button-primary-bg: rgb(var(--button-primary-bg));
+    --button-primary-bg-light: rgb(var(--button-primary-bg-light));
+    --button-primary-bg-hover: rgb(var(--button-primary-bg-hover));
+    --button-primary-border: rgb(var(--button-primary-border));
+}
+*/

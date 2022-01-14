@@ -10,14 +10,14 @@
         input {
             width: 13em;
             padding: 8px;
-            box-shadow: $form-ele-shadow;
+            box-shadow: 0 0 0 2px rgb(var(--form-ele-shadow));
         }
     }
 
     [type="submit"] {
         width: 14em;
         padding: 8px;
-        box-shadow: $form-ele-shadow;
+        box-shadow: 0 0 0 2px rgb(var(--form-ele-shadow));
     }
 
     .wrapper-field .wrapper-select {
@@ -26,7 +26,7 @@
         }
 
         ul {
-            background-color: $form-ele-bg;
+            background-color: rgb(var(--form-ele-bg));
         }
     }
 }
@@ -37,12 +37,12 @@
         input {
             width: 13em;
             padding: 8px;
-            box-shadow: $form-ele-shadow;
+            box-shadow: 0 0 0 2px rgb(var(--form-ele-shadow));
         }
 
         [type="submit"] {
             padding: 8px;
-            box-shadow: $form-ele-shadow;
+            box-shadow: 0 0 0 2px rgb(var(--form-ele-shadow));
         }
     
         .wrapper-field {

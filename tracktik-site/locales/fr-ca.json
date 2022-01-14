@@ -1,5 +1,11 @@
 {
 	"common": {
+		"calendar": {
+			"short": {
+				"months": ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"],
+				"days": ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"]
+			}
+		},
 		"form": {
 			"submit": "Soumettre",
 			"errors": {
@@ -23,6 +29,11 @@
 		"company": "Compagnie",
 		"address": "Adresse",
 		"city": "Ville",
+		"account": "Compte",
+		"startDate": "Date de début",
+		"endDate": "Date de fin",
+		"active": "Active",
+		"inactive": "Inactif",
 		"mainContact": "Contact principal",
 		"filters": {
 			"department": "Filtrer par Département",
@@ -104,6 +115,12 @@
 		},
 		"employee": {
 			"title": "Employés",
+			"account-assignment": {
+				"search-account": "Rechercher un compte",
+				"startedOn": "Date de début",
+				"startedOnTooltip": "La date à laquelle l'employé est affecté au site.",
+				"assign-to-site": "Attribuer un Site"
+			},
 			"sub-menu": {
 				"departments": "Départements",
 				"skills": "Compétences et attributs",

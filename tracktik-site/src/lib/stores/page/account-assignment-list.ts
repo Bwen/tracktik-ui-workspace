@@ -4,7 +4,6 @@ import type { Fieldset, Field } from '$form';
 import Avatar from '$components/Avatar.svelte';
 import { t } from '$lib/i18n';
 import { getRegionOptions } from '$lib/js/utils';
-import { EmployeesItem } from '@rest/models/EmployeesItem';
 import { get, writable } from 'svelte/store';
 import type { PageState } from '$lib/@types/PageState.type';
 const $t = get(t);
@@ -47,9 +46,9 @@ export function getTableDataColumns(session) {
                 {name: 'img', key: 'account.avatar'},
             ]
         },
-        {text: 'Account', css: 'cell-account', key: 'account.name'},
-        {text: 'Start Date', css: 'cell-start-date', key: 'startedOn'},
-        {text: 'End', css: 'cell-end-date', key: 'endedOn'},
+        {text: $t('common.account'), css: 'cell-account', key: 'account.name'},
+        {text: $t('common.startDate'), css: 'cell-start-date', key: 'startedOn'},
+        {text: $t('common.endDate'), css: 'cell-end-date', key: 'endedOn'},
     ]);
 
     return columns;
@@ -88,11 +87,11 @@ export async function getFiltersFieldset(session): Promise<Fieldset[]> {
                 value: valueStatus,
                 options: [
                     {
-                        text: 'Active',
+                        text: $t('common.active'),
                         value: 'true',
                     },
                     {
-                        text: 'Inactive',
+                        text: $t('common.inactive'),
                         value: 'false',
                     }
                 ],

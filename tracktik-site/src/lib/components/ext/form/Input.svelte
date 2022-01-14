@@ -30,9 +30,12 @@
         input.disabled = disable;
     }
 
+    function onKeyup(event) {
+        dispatch('keyup', event.target.value);
+    }
+
     function onInput(event) {
         dispatch('input', event.target.value);
-
     }
 </script>
 
@@ -44,6 +47,7 @@
         on:input={onInput}
         on:focus
         on:blur
+        on:keyup={onKeyup}
         {...commonAttributes}
     />
 </div>

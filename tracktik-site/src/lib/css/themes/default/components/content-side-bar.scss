@@ -1,0 +1,16 @@
+
+.content-side-bar {
+    color: rgb(var(--content-body-text));
+    background-color: rgba(var(--content-bg-light), 90%);
+    border: 1px solid #FFF;
+    border: 1px 1px 0 0;
+    box-shadow: rgb(var(--content-shadow));
+
+    a.active, a:hover {
+        color: rgb(var(--menu-selected-text));
+        background-color: rgb(var(--content-border-light));
+        border-left: 4px solid rgb(var(--menu-selected-border));
+        margin-left: -4px;
+        transition: all .15s ease-in-out;
+    }
+}

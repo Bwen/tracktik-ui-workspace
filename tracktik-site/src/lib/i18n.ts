@@ -1,4 +1,5 @@
 import {
+    json as jsonFn,
     t as tFn,
     time as timeFn,
     date as dateFn,
@@ -22,6 +23,7 @@ export async function init(session): Promise<void> {
     await waitLocale();
 }
 
+export const json = jsonFn;
 export const locale = currentLocale;
 export const t = tFn;
 export const time = timeFn;

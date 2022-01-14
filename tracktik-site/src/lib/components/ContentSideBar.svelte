@@ -1,17 +1,30 @@
 <script lang="ts">
+    import type { Link as LinkType } from '$lib/@types/Link.type';
+    import {createEventDispatcher} from "svelte";
     import Link from '$components/ext/Link.svelte';
 
-    export let items = [];
+    const dispatch = createEventDispatcher();
+    function onLinkClick(event) {
+        dispatch('item-click', event.detail.hyperlink);
+    }
+
+    type ContentSideBarItem = {
+        label?: string;
+        links: LinkType[];
+    };
+
+    export let items: ContentSideBarItem[] = [];
+    export let itemSelected = null;
 </script>
 
 {#if items.length}
-<div class="wrapper-side-bar-content"><div class="side-bar-content">
+<div class="wrapper-content-side-bar"><div class="content-side-bar">
     <ul>
         {#each items as item}
             <li>
                 {#if item.label}<i>{item.label}</i>{/if}
                 <ul>{#each item.links as link}
-                    <li><Link>{link.text}</Link></li>
+                    <li><Link on:link-click={onLinkClick} {...link} css={link.id === itemSelected ? 'active' : ''}/></li>
                 {/each}</ul>
             </li>
         {/each}
@@ -20,7 +33,7 @@
 {/if}
 
 <style lang="scss">
-    .side-bar-content {
+    .content-side-bar {
         padding-top: .5em;
         padding-left: .5em;
         ul, ul li {

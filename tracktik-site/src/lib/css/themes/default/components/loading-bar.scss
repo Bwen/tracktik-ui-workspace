@@ -1,18 +1,18 @@
 
 .wrapper-loading {
-    border: 1px solid $loading-border;
-    border-radius: $border-radius;
+    border: 1px solid rgb(var(--loading-border));
+    border-radius: var(--border-radius);
     
     .bar {
-        background-color: $loading-bg;
+        background-color: rgb(var(--loading-bg));
 
         .inner-bar {
             background:
-                $loading-bg
+                rgb(var(--loading-bg))
                 linear-gradient(
                     90deg,
-                    $loading-bg 0%,
-                    $loading-bg-light 100%
+                    rgb(var(--loading-bg)) 0%,
+                    rgb(var(--loading-bg-light)) 100%
                 )
             ;
         }

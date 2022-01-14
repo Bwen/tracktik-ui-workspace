@@ -11,6 +11,7 @@
     import Input from './Input.svelte';
     import Select from './Select.svelte';
     import Autocomplete from './Autocomplete.svelte';
+    import CalendarMonth from '../CalendarMonth.svelte';
     import LoadingBar from '$components/ext/LoadingBar.svelte';
 
     export let isLoading: boolean = false;
@@ -27,6 +28,10 @@
         dispatch('submit', {formId, fieldsets: sanitizedFieldsets});
     }
 
+    function onKeyup(field) {
+        dispatch('keyup', {field});
+    }
+
     function onValueChange(field: Field) {
         dispatch('change', {field});
     }
@@ -41,6 +46,8 @@
                 return Select;
             case FieldType.AUTOCOMPLETE:
                 return Autocomplete;
+            case FieldType.CALENDAR:
+                return CalendarMonth;
             default:
             case FieldType.TEXT:
             case FieldType.PASSWORD:
@@ -53,21 +60,27 @@
         delete props.validators;
 
         switch (field.type) {
+            case FieldType.CALENDAR:
             case FieldType.SWITCH:
             case FieldType.BUTTON:
             case FieldType.SELECT:
+                delete props.isLoading;
             case FieldType.AUTOCOMPLETE:
                 delete props.type;
                 break;
             default:
             case FieldType.TEXT:
+                delete props.isLoading;
                 props.type = 'text';
                 break;
             case FieldType.PASSWORD:
+                delete props.isLoading;
                 props.type = 'password';
                 break;
         }
 
+        delete props.tooltip;
+        delete props.label;
         return props;
     }
 
@@ -117,6 +130,10 @@
                         {#if field.label}<label for="{field.id}" {...getTooltipAttribute(field)}>{field.label}</label>{/if}
                         <svelte:component
                             this={getComponentForField(field)}
+                            on:keyup={(event) => {
+                                field.value = event.detail;
+                                onKeyup(field);
+                            }}
                             on:input={(event) => {
                                 field.value = event.detail;
                                 onValueChange(field);

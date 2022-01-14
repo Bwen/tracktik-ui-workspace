@@ -9,13 +9,13 @@ body, #svelte, main {
 }
 
 .wrapper-content {
-    border-top: 1px solid $content-border-light;
+    border-top: 1px solid rgb(var(--content-border-light));
 
     .content {
         margin: 15px;
-        border: $content-border;
-        background-color: $content-bg;
-        box-shadow: $content-shadow;
+        border: rgb(var(--content-border));
+        background-color: rgba(var(--content-bg-light), .65);
+        box-shadow: rgb(var(--content-shadow));
     }
 }
 

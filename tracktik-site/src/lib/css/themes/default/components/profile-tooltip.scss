@@ -1,13 +1,13 @@
 
 .wrapper-profile-tooltip {
-    border: $content-border;
-    background-color: $content-bg;
-    box-shadow: $content-shadow;
+    border: rgb(var(--content-border));
+    background-color: rgb(var(--content-bg));
+    box-shadow: rgb(var(--content-shadow));
 
     header {
-        color: $menu-text;
-        background-color: $menu-bg;
-        border-top: 1px solid $menu-border;
+        color: rgb(var(--menu-text));
+        background-color: rgb(var(--menu-bg));
+        border-top: 1px solid rgba(var(--menu-border), 0.19);
         padding: .25em;
     }
 

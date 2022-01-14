@@ -1,0 +1,22 @@
+
+.wrapper-content-toolbar {
+    border-top: 1px solid rgb(var(--content-border-light));
+    border-bottom: 1px solid rgb(var(--content-border));
+    font-size: .75em;
+
+    a { 
+        border-right: 1px solid rgb(var(--content-border));
+        &:hover {
+            color: rgb(var(--menu-selected-text));
+            background-color: rgb(var(--menu-bg-light));
+        }
+
+        .icon {
+            padding-right: .5em;
+        }
+    }
+
+    .wrapper-link {
+
+    }
+}

@@ -1,10 +1,10 @@
 
 .wrapper-address {
     a {
-        color: lighten($button-primary-bg-hover, 15%);
+        color: rgb(var(--button-primary-bg-hover));
     }
 
     a:hover {
-        color: $button-primary-bg;
+        color: rgb(var(--button-primary-bg));
     }
 }

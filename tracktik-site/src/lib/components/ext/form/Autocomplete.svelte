@@ -7,6 +7,7 @@
     import type { SelectOptions } from '$lib/@types/form.type';
     import Input from '$lib/components/ext/form/Input.svelte';
     import Link from '$lib/components/ext/Link.svelte';
+    import LoadingBar from '$components/ext/LoadingBar.svelte';
 	import { onMount } from 'svelte';
 
     import { createEventDispatcher } from "svelte";
@@ -23,6 +24,7 @@
     export let css = '';
     export let data = {};
     export let disabled = false;
+    export let isLoading = false;
 
     let selectedReset = false;
     let optionsOpen = false;
@@ -59,6 +61,8 @@
     }
 
     function onSearch(event) {
+        event.stopPropagation();
+
         reset();
         optionsOpen = true;
     }
@@ -72,13 +76,25 @@
         searchInput.setValue('');
     }
 
+    function onKeyup(event) {
+        event.stopPropagation();
+
+        dispatch('keyup', searchInput.getValue());
+    }
+
     function onReset(event) {
+        event.stopPropagation();
+
         reset();
         formInput.value = '';
+        dispatch('keyup', '');
         dispatch('input', formInput.value);
     }
 
     function onSelectOption (event) {
+        event.stopPropagation();
+        event.preventDefault();
+
         const option = event.target.closest('a');
         const value = option.getAttribute('data-value');
         selectValue(value);
@@ -106,6 +122,8 @@
     }
 
     function checkValue(event) {
+        event.stopPropagation();
+
         if (formInput.value) {
             selectValue(formInput.value);
         }
@@ -120,11 +138,13 @@
     <div {...commonAttributes}>
         <input type="hidden" name="{name}" value="{value}" bind:this={formInput}/>
         <a class="selectedReset" class:active={selectedReset} on:click={onReset}><Fa icon={faTimes} /></a>
+        <LoadingBar isLoading={isLoading} />
         <Input
             bind:this={searchInput}
             on:focus={onSearch}
             on:blur={checkValue}
             on:input={onFilterOptions}
+            on:keyup={onKeyup}
             disabled={disabled ? 'disabled' : ''}
             placeholder="{placeholder ?? ''}"
             icon={ icon ? icon : faSearch}
@@ -134,7 +154,7 @@
             {#each filteredOptions as option, i}
                 <li style="{option.indent ? 'padding-left: ' + (1 * option.indent) + 'em;' : ''}">
                     <Link
-                        on:mousedown={onSelectOption}
+                        on:mouseup={onSelectOption}
                         data={{value: option.value}}
                         icon={option.icon}
                     >{option.text}</Link>
@@ -201,6 +221,23 @@
     }
 
     .wrapper-autocomplete .selectedReset.active {
+        display: block;
+    }
+
+    .wrapper-autocomplete > div :global(.wrapper-loading) {
+        z-index: 5;
+        position: absolute;
+        display: none;
+        left: 1px;
+        top: 1px;
+        padding: 0;
+        margin: 0;
+        height: 2px;
+        width: 99%;
+        border: 0;
+    }
+
+    .wrapper-autocomplete > div :global(.wrapper-loading.active) {
         display: block;
     }
 

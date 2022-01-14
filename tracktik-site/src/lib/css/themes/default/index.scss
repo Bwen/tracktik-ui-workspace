@@ -8,8 +8,8 @@
     html, body, #svelte, main {
         margin: 0;
         padding: 0;
-        background-color: $content-body-bg;
-        color: $content-body-text;
+        background-color: rgb(var(--content-body-bg));
+        color: rgb(var(--content-body-text));
     }
 
     a:hover {

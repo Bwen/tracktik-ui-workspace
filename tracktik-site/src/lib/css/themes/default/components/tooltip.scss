@@ -13,9 +13,9 @@
     width: 200px;
     padding: 10px;
     z-index: 999;
-    border-radius: $border-radius;
-    background-color: $menu-bg-dark;
-    color: $menu-text-dark;
+    border-radius: var(--border-radius);
+    background-color: rgb(var(--menu-bg-dark));
+    color: rgb(var(--menu-text-dark));
     opacity: 0;
     display: none;
 }

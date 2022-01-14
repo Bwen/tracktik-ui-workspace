@@ -45,12 +45,6 @@
     }
 
     let wrapperSnackbar;
-	onMount(() => {
-        if (!browser || !wrapperSnackbar) return;
-
-        document.body.appendChild(wrapperSnackbar);
-    });
-
     function showItem(item) {
         if (!browser) return;
 

@@ -1,7 +1,7 @@
 
 .filters {
-    border-top: 1px solid $content-border;
-    border-bottom: 1px solid $content-border;
+    border-top: 1px solid rgb(var(--content-border-light));
+    border-bottom: 1px solid rgb(var(--content-border));
     font-size: .75em;
 
     form, fieldset {
@@ -9,8 +9,6 @@
     }
 
     form {
-        border-top: 1px solid $content-border-light;
-
         .wrapper-fieldset fieldset div.wrapper-field {
             padding: 8px 0 4px 8px;
         }

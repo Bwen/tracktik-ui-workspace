@@ -6,35 +6,35 @@
             color: #FFF;
             background-color: rgba(0, 0, 0, .75);
             border: 1px solid #DDD;
-            border-radius: $border-radius;
-            box-shadow: $content-shadow;
+            border-radius: var(--border-radius);
+            box-shadow: rgb(var(--content-shadow));
 
             &.info {
-                .icon { color: $info-icon; }
-                color: $info-text;
-                background-color: $info-bg;
-                border: 2px solid $info-border;
+                .icon { color: rgb(var(--info-icon)); }
+                color: rgb(var(--info-text));
+                background-color: rgba(var(--info-bg), .85);
+                border: 2px solid rgb(var(--info-border));
             }
 
             &.success {
-                .icon { color: $success-icon; }
-                color: $success-text;
-                background-color: $success-bg;
-                border: 2px solid $success-border;
+                .icon { color: rgb(var(--success-icon)); }
+                color: rgb(var(--success-text));
+                background-color: rgba(var(--success-bg), .85);
+                border: 2px solid rgb(var(--success-border));
             }
 
             &.warning {
-                .icon { color: $warning-icon; }
-                color: $warning-text;
-                background-color: $warning-bg;
-                border: 2px solid $warning-border;
+                .icon { color: rgb(var(--warning-icon)); }
+                color: rgb(var(--warning-text));
+                background-color: rgba(var(--warning-bg), .85);
+                border: 2px solid rgb(var(--warning-border));
             }
 
             &.error {
-                .icon { color: $error-icon; }
-                color: $error-text;
-                background-color: $error-bg;
-                border: 2px solid $error-border;
+                .icon { color: rgb(var(--error-icon)); }
+                color: rgb(var(--error-text));
+                background-color: rgba(var(--error-bg), .85);
+                border: 2px solid rgb(var(--error-border));
             }
         }
     }

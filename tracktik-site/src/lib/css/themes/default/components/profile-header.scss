@@ -1,12 +1,12 @@
 
 .wrapper-header-profile {
-    border-top: 1px solid $menu-border;
-    background-color: $menu-bg-dark;
-    color: darken($menu-text, 25%);
+    border-top: 1px solid rgba(var(--menu-border), 0.19);
+    background-color: rgb(var(--menu-bg-dark));
+    color: rgba(var(--menu-text), 85%);
 
     img {
-        border: 1px solid darken($menu-text, 10%);
-        border-radius: $border-radius;
+        border: rgb(var(--menu-text));
+        border-radius: var(--border-radius);
     }
 
     .wrapper-phone {
@@ -23,14 +23,14 @@
 
     .profile-actions a {
         font-weight: 500;
-        color: $button-primary-text;
-        background-color: $button-primary-bg;
-        border: 1px solid $button-primary-border;
-        box-shadow: $content-shadow;
-        border-radius: $border-radius;
+        color: rgb(var(--button-primary-text));
+        background-color: rgb(var(--button-primary-bg));
+        border: 1px solid rgb(var(--button-primary-border));
+        box-shadow: rgb(var(--content-shadow));
+        border-radius: var(--border-radius);
 
         &:hover {
-            background-color: $button-primary-bg-hover;
+            background-color: rgb(var(--button-primary-bg-hover));
         }
     }
 }

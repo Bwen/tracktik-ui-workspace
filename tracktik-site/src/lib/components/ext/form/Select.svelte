@@ -6,6 +6,7 @@
     import Link from '$components/ext/Link.svelte';
     import ClickOutside from '$components/ext/ClickOutside.svelte';
     import { createEventDispatcher, onMount } from "svelte";
+    import { browser } from "$app/env";
 
     const dispatch = createEventDispatcher();
     export let value: any = '';
@@ -32,7 +33,7 @@
         setValue(value);
     });
 
-    function setValue(value: string) {
+    export function setValue(value: string) {
         valueText = '';
         options.forEach(option => {
             if (value && value == option.value) {
@@ -67,7 +68,7 @@
 
 <div class="wrapper-select" class:open={optionsOpen === true}>
     <div {...commonAttributes}>
-        <input type="hidden" name="{name}" value="{value}" bind:this={formInput}/>
+        <input type="hidden" name="{name}" value="{value}" bind:this={formInput} />
         <span class="selected-arrow" on:mousedown={!disabled ? toggleOptions : undefined}><Fa icon={faAngleUp} /></span>
         <div class="input-select" class:disabled={disabled} on:mousedown={!disabled ? toggleOptions : undefined}>
             {#if valueText}
@@ -133,7 +134,7 @@
         overflow: hidden;
         position: absolute;
         display: none;
-        margin-top: -.25em;
+        margin-top: 0;
         max-height: 15em;
         white-space: nowrap;
     }

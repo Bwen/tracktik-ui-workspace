@@ -1,26 +1,26 @@
 
 .sub-menu {
-    color: $menu-text;
-    background-color: $menu-bg;
-    border-top: 1px solid $menu-border;
+    color: rgb(var(--menu-text));
+    background-color: rgb(var(--menu-bg));
+    border-top: 1px solid rgba(var(--menu-border), 0.19);
 
     ul {
         li {
-            border-right: 1px solid $menu-border;
+            border-right: 1px solid rgba(var(--menu-border), 0.19);
 
             a {
-                color: $menu-text;
+                color: rgb(var(--menu-text));
             }
 
             a.active {
-                color: $content-body-text;
-                background-color: $content-bg;
-                border-bottom: 1px solid $content-border;
+                color: rgb(var(--content-body-text));
+                background-color: rgb(var(--content-bg));
+                border-bottom: 1px solid rgb(var(--content-border));
             }
 
             a:hover {
-                color: $menu-selected-text;
-                background-color: $menu-selected-bg;
+                color: rgb(var(--menu-selected-text));
+                background-color: rgba(var(--menu-selected-bg), 0.19);
                 transition: all .25s ease-in-out;
             }
         }

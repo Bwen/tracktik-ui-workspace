@@ -1,5 +1,11 @@
 {
 	"common": {
+		"calendar": {
+			"short": {
+				"months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"],
+				"days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+			}
+		},
 		"form": {
 			"submit": "Submit",
 			"errors": {
@@ -23,6 +29,11 @@
 		"company": "Company",
 		"address": "Address",
 		"city": "City",
+		"account": "Account",
+		"startDate": "Start Date",
+		"endDate": "End Date",
+		"active": "Active",
+		"inactive": "Inactive",
 		"mainContact": "Main Contact",
 		"filters": {
 			"department": "Filter By Department",
@@ -98,6 +109,12 @@
 		},
 		"employee": {
 			"title": "Employees",
+			"account-assignment": {
+				"search-account": "Search for an account",
+				"startedOn": "Start Date",
+				"startedOnTooltip": "The date where the employee is assigned to the site.",
+				"assign-to-site": "Assign to Site"
+			},
 			"sub-menu": {
 				"departments": "Departments",
 				"skills": "Skills & Attributes",

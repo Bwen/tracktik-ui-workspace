@@ -2,6 +2,7 @@ import type { MenuItem } from '$lib/@types/MenuItem.type';
 import { getCountryByAlpha2, getSubdivisionByCode } from '$lib/js/riso';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import type { CountryCode } from 'libphonenumber-js';
+import { request, METHODS } from '$lib/js/restClient';
 
 export function filterMenuItemsBySession(items: MenuItem[], session: any): MenuItem[] {
     let permissions = session.auth.permissions;
@@ -21,16 +22,12 @@ function filterMenuItems(items: MenuItem[], permissions: any, modules: any): Men
         if (Object.hasOwnProperty.call(item, 'acl')) {
             if (permissions.indexOf(item.acl) === -1) {
                 items.splice(i, 1);
-            } else {
-                delete items[i].acl;
             }
         } 
 
         if (Object.hasOwnProperty.call(item, 'module') && modules) {
             if (modules.indexOf(item.module) === -1) {
                 items.splice(i, 1);
-            } else {
-                delete items[i].module;
             }
         }
 
@@ -42,6 +39,18 @@ function filterMenuItems(items: MenuItem[], permissions: any, modules: any): Men
     return items;
 }
 
+export function filterLinkProps(props) {
+    const properties = ['icon', 'icon_hover', 'unicode', 'subtext', 'text', 'href', 'id', 'css', 'title', 'data'];
+    let linkProps = {};
+    for (let i=0; i < properties.length; i++) {
+        const prop = properties[i];
+        if (Object.hasOwnProperty.call(props, prop)) {
+            linkProps[prop] = props[prop];
+        }
+    }
+
+    return linkProps;
+}
 
 export function replaceMarkers(raw: string, item: any) {
     if (typeof raw !== 'string') {
@@ -81,6 +90,30 @@ export function getItemValue(key: string, item: any) {
     }
 
     return value;
+}
+
+export async function getAccountOptions(keyword: string = '') {
+    let accountOptions = [];
+    let options = {limit: 20};
+    if (keyword) {
+        options['q'] = keyword;
+    }
+
+    const res = await request('/accounts', METHODS.GET, options);
+    if (res.ok) {
+        const result = await res.json();
+
+        for (let i=0; i < result.data.length; i++) {
+            const account = result.data[i];
+
+            accountOptions.push({
+                value: account.id,
+                text: account.name,
+            });
+        }
+    }
+
+    return accountOptions;
 }
 
 export function getRegionOptions(regions) {

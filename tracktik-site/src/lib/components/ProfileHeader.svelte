@@ -55,7 +55,7 @@
         minimizeProps.icon_hover = minimized ? faArrowDown : faArrowUp;
     }
 
-    export let actionItems = [];
+    export let actionItems: LinkType[] = [];
     function onActionClick(event) {
         if (!event.detail.hyperlink.id) {
             return;

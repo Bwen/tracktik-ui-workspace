@@ -6,6 +6,7 @@
     export let value: string | number | boolean = '';
     export let name = '';
     export let disabled = '';
+    export let id = '';
 
     let checked = false;
     $: {

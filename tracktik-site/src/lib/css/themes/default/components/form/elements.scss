@@ -2,17 +2,17 @@
 .wrapper-select .input-select,
 fieldset input {
     width: 11em;
-    color: $form-ele-text;
-    background-color: $form-ele-bg;
-    border: 1px solid $form-ele-border;
-    border-radius: $border-radius;
+    color: rgb(var(--form-ele-text));
+    background-color: rgb(var(--form-ele-bg));
+    border: 1px solid rgb(var(--form-ele-border));
+    border-radius: var(--border-radius);
     outline: none;
 }
 
 .wrapper-switch .switch::after {
-    background-color: $button-primary-bg-light;
-    border-radius: $border-radius;
-    border: 1px solid $button-primary-border;
+    background-color: rgb(var(--button-primary-bg-light));
+    border-radius: var(--border-radius);
+    border: 1px solid rgb(var(--button-primary-border));
 }
 
 .wrapper-switch input[disabled],
@@ -20,14 +20,14 @@ fieldset input {
 .wrapper-button button[disabled],
 .wrapper-select .input-select.disabled,
 fieldset input[disabled] {
-    color: $form-ele-disabled-text;
-    background-color: $form-ele-disabled-bg;
-    border: 1px solid $form-ele-disabled-border;
+    color: rgb(var(--form-ele-disabled-text));
+    background-color: rgb(var(--form-ele-disabled-bg));
+    border: 1px solid rgb(var(--form-ele-disabled-border));
     box-shadow: none;
 }
 
 .wrapper-switch input:checked + .switch {
-    background-color: $success-bg;
+    background-color: rgba(var(--success-bg), .85);
 }
 
 .wrapper-switch .switch,
@@ -35,11 +35,11 @@ fieldset input[disabled] {
 [type="submit"] {
     padding: 8px;
     font-weight: bold;
-    color: $button-primary-text;
-    background-color: $button-primary-bg;
-    border: 1px solid $button-primary-border;
-    //box-shadow: $form-ele-shadow;
-    border-radius: $border-radius;
+    color: rgb(var(--button-primary-text));
+    background-color: rgb(var(--button-primary-bg));
+    border: 1px solid rgb(var(--button-primary-border));
+    //box-shadow: 0 0 0 2px rgb(var(--form-ele-shadow));
+    border-radius: var(--border-radius);
     cursor: pointer;
 }
 
@@ -61,5 +61,5 @@ fieldset input[disabled] {
 .wrapper-switch .switch:hover,
 .wrapper-button button:hover,
 [type="submit"]:hover:not([disabled]) {
-    background-color: $button-primary-bg-hover;
+    background-color: rgb(var(--button-primary-bg-hover));
 }

@@ -1,0 +1,24 @@
+.wrapper-calendar {
+    .wrapper-select {
+        font-size: .85em;
+        font-weight: normal;
+        margin: .25em;
+
+        .input-select[class*="s-"] {
+            width: 2.5em;
+            margin: 0;
+            padding: .1em 2em .1em .5em;
+        }
+
+        .selected-arrow[class*="s-"] {
+            padding: .15em .55em;
+        }
+
+        &.open .click-outside {
+            ul, a {
+                margin: 0;
+                min-width: 4.45em;
+            }
+        }
+    }
+}

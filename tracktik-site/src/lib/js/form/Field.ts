@@ -14,6 +14,7 @@ export enum FieldType {
     PASSWORD = 'Password',
     SELECT = 'Select',
     AUTOCOMPLETE = 'Autocomplete',
+    CALENDAR = 'Date',
 };
 
 
@@ -33,4 +34,5 @@ export type Field = {
     validators?: FieldValidator[];
     includeChildsInSearch?: boolean;
     allowReset?: boolean;
+    isLoading?: boolean;
 };

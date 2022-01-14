@@ -10,6 +10,7 @@
 	import '$lib/js/media-theme';
 	import '$lib/css/sanitize.css';
 	import '$lib/css/themes/default/index.scss';
+    import { modal as modalComponent } from '$lib/stores/modal';
 
 	import Cookies from 'js-cookie';
 	import AppHeader from '$components/AppHeader.svelte';
@@ -22,7 +23,6 @@
 	import { t } from '$lib/i18n';
     import type { Link as LinkType } from '$lib/@types/Link.type';
 
-	let uiSettingModal;
 	let rightItems: LinkType[] = [
 		{icon: faCog, icon_hover: faCogs, title: 'UI Settings', id: 'ui-settings'},
 		{icon: faLightbulbDark, icon_hover: faLightbulb, title: 'Light/Dark mode', id: 'theme-mode'},
@@ -55,21 +55,33 @@
 			location.reload();
 		}
 
-		
         if ('ui-settings' === event.detail.hyperlink.id) {
-			uiSettingModal.open();
+			$modalComponent = UiSettings;
+		}
+
+		if ('theme-mode' === event.detail.hyperlink.id) {
+			let currentTheme = document.documentElement.getAttribute('theme');
+            let changeTo = `${currentTheme}-dark`;
+            if (currentTheme.match(/-dark/)) {
+                changeTo = currentTheme.replace(/-dark/, '');
+            }
+
+            document.documentElement.setAttribute('theme', changeTo);
+            localStorage.setItem('theme', changeTo);
 		}
 	}
 </script>
 
 <svelte:head><title>{$t('page.layout.title')}</title></svelte:head>
-<AppHeader logoItem={logoItem} rightItems={rightItems} on:item-click={onItemClick} />
-<main>
-	<slot />
-</main>
+<div id="svelte-main">
+	<AppHeader logoItem={logoItem} rightItems={rightItems} on:item-click={onItemClick} />
+	<main>
+		<slot />
+	</main>
+</div>
 
 <Snackbar />
-<Modal bind:this={uiSettingModal}><UiSettings /></Modal>
+<Modal />
 
 <style lang="css">
 	:global(.app-header) {

@@ -16,16 +16,14 @@
         &.error {
             .wrapper-input {
                 .wrapper-select .input-select,
-                input[type="email"],
-                input[type="password"],
-                input[type="text"] {
-                    border: 1px solid $error-text-dark;
+                input {
+                    border: 1px solid rgb(var(--error-text-dark));
                 }
             }
 
             div.error {
                 font-size: .8em;
-                color: $error-text-dark;
+                color: rgb(var(--error-text-dark));
             }
         }
     }
