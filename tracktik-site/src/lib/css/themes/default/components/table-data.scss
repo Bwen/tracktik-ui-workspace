@@ -18,9 +18,9 @@
         tbody {
             tr {
                 background-color: rgb(var(--content-border-light));
-                
+
                 &:nth-child(even) {
-                    background-color: rgba(var(--content-border-light), 75%);
+                    background-color: rgba(var(--content-border-light), 5%);
                 }
 
                 &:hover,
@@ -42,7 +42,7 @@
                         padding: 0;
                         width: 28px;
                     }
-                
+
                     a {
                         color: rgb(var(--button-primary-bg));
                         font-weight: bold;
