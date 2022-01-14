@@ -1,6 +1,5 @@
 //import adapter from '@sveltejs/adapter-auto';
-//import adapter from '@sveltejs/adapter-node';
-import vercel from '@sveltejs/adapter-vercel';
+import adapter from '@sveltejs/adapter-node';
 import autoPreprocess from 'svelte-preprocess';
 import path from 'path';
 
@@ -13,7 +12,7 @@ const config = {
 	preprocess: autoPreprocess(),
 
 	kit: {
-		adapter: vercel(),
+		adapter: adapter({ out: '.svelte-kit/build' }),
 
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',
