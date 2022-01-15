@@ -2,21 +2,21 @@ import { browser } from '$app/env';
 
 /** @type {import('@sveltejs/kit').Handle} */
 export default async function ({ request, resolve }) {
-    if (['/rest', '/session'].indexOf(request.path) !== -1) {
+    if (['/rest', '/session'].indexOf(request.url.pathname) !== -1) {
         return await resolve(request);
     }
 
-    if (browser && ['/auth/setup', '/auth'].indexOf(request.path) === -1 && (!request.locals.auth || !request.locals.auth.user)) {
+    if (browser && ['/auth/setup', '/auth'].indexOf(request.url.pathname) === -1 && (!request.locals.auth || !request.locals.auth.user)) {
         return { status: 401 };
     }
 
     // If no portal domains redirect to auth/setup
-	if (request.path !== '/auth/setup' && (!request.locals.portal || !request.locals.portal.url)) {
+	if (request.url.pathname !== '/auth/setup' && (!request.locals.portal || !request.locals.portal.url)) {
         return { headers: { Location: '/auth/setup' }, status: 302 };
     }
 
     // If no user session (not logged in) redirect to login
-	if (['/auth/setup', '/auth'].indexOf(request.path) === -1 && (!request.locals.auth || !request.locals.auth.user)) {
+	if (['/auth/setup', '/auth'].indexOf(request.url.pathname) === -1 && (!request.locals.auth || !request.locals.auth.user)) {
         return { headers: { Location: '/auth' }, status: 302 };
     }
 
@@ -24,7 +24,7 @@ export default async function ({ request, resolve }) {
     if (request.locals.auth && request.locals.auth.auth) {
         let portal = request.locals.auth.auth.portal;
         let regex = new RegExp(`^/portal/${portal}`)
-        if (!request.path.match(regex)) {
+        if (!request.url.pathname.match(regex)) {
             return { headers: { Location: `/portal/${portal}` }, status: 302 };
         }
     }

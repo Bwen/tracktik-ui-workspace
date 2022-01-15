@@ -41,7 +41,7 @@
     {#if centerItems.length}
         <nav class="center">
             <div class="menu-bars"><Link {...menuBarItem} on:link-click={onItemClick} /></div>
-            <div class="center-items">{#if centerItems.length}{#each centerItems as item}<Link {...item} on:link-click={onItemClick} css={$page.path === item.href ? 'active' : ''} />{/each}{/if}</div>
+            <div class="center-items">{#if centerItems.length}{#each centerItems as item}<Link {...item} on:link-click={onItemClick} css={$page.url.pathname === item.href ? 'active' : ''} />{/each}{/if}</div>
         </nav>
     {/if}
 

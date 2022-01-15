@@ -11,7 +11,7 @@
 <section class="top-tabs">
     <ul>
     {#each tabItems as item}
-        <li><Link {...item} css="{$page.path.startsWith(item.href) ? 'active' : ''}" /></li>
+        <li><Link {...item} css="{$page.url.pathname.startsWith(item.href) ? 'active' : ''}" /></li>
     {/each}
     </ul>
 </section>

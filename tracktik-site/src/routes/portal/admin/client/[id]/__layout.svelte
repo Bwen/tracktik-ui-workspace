@@ -2,15 +2,15 @@
 	import { request, METHODS } from '$lib/js/restClient';
 
 	/** @type {import('@sveltejs/kit').Load} */
-	export async function load({ page, fetch, session, stuff }) {
-		let client = await fetchClient(page.params.id, session.portal.url, fetch);
+	export async function load({ params, fetch, session, stuff }) {
+		let client = await fetchClient(params.id, session.portal.url, fetch);
 		return {
 			props: {
 				client,
 			},
 		}
 	}
-	
+
     async function fetchClient(id: number, domain: string, fetch) {
 		let client = {};
         let res = await request(`/clients/${id}`, METHODS.GET, {
@@ -32,7 +32,7 @@
 	import ProfileHeader from '$lib/components/ProfileHeader.svelte';
     import type { Link as LinkType } from '$lib/@types/Link.type';
 	import { t } from '$lib/i18n';
-	
+
 	export let client: any = {};
 	let urlPrefix = '/portal/admin/client';
 	let topTabItems: LinkType[] = [

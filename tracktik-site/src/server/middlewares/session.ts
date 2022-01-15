@@ -48,7 +48,7 @@ export default async function ({ request, resolve }) {
 
 	const response = await resolve(request);
 
-    if (request.path === '/rest') {
+    if (request.url.pathname === '/rest') {
         // If we are retrieving the portal details, we save it in the session
         if (response.status === 200 && request.headers['rest-path'] === '/about') {
             request.locals.redis.set(KEY_PORTAL, response.body, 'EX', SESSION_REDIS_TTL);

@@ -39,16 +39,16 @@
             {#if item.subItems}
             <ul class="sub-items" class:open={hovers[item.href]}>
             {#each item.subItems as subItem}
-                <li on:mouseover={() => hovers[item.href] = true} on:mouseout={() => hovers[item.href] = false}><Link 
-                    {...filterLinkProps(subItem)} 
-                    css="{$page.path.startsWith(subItem.href) ? 'active' : ''}" 
+                <li on:mouseover={() => hovers[item.href] = true} on:mouseout={() => hovers[item.href] = false}><Link
+                    {...filterLinkProps(subItem)}
+                    css="{$page.url.pathname.startsWith(subItem.href) ? 'active' : ''}"
                 /></li>
             {/each}
             </ul>
             {/if}
             <Link  on:mouseover={() => hovers[item.href] = true} on:mouseout={() => hovers[item.href] = false}
-                {...filterLinkProps(item)} 
-                css="{$page.path.startsWith(item.href) ? 'active' : ''}" 
+                {...filterLinkProps(item)}
+                css="{$page.url.pathname.startsWith(item.href) ? 'active' : ''}"
             />
         </li>
     {/each}
@@ -87,7 +87,7 @@
             font-size: .85em;
             text-decoration: none;
         }
-        
+
         li :global(.icon) {
             font-size: 1.5em;
         }
@@ -130,7 +130,7 @@
         :global(.wrapper-link > .icon) {
             font-size: 1em;
         }
-        
+
         .logged-user {
             padding: 0;
             display: flex;
