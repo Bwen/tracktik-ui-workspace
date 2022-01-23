@@ -15,7 +15,7 @@ body, #svelte, main {
         margin: 15px;
         border: rgb(var(--content-border));
         background-color: rgba(var(--content-bg-light), .65);
-        box-shadow: rgb(var(--content-shadow));
+        box-shadow: var(--content-shadow);
     }
 }
 

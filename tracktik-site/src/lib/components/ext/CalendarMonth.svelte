@@ -2,10 +2,15 @@
     import type { SelectOptions } from '$lib/@types/form.type';
     import { getMonthWeeks } from '$lib/js/calendar';
     import { faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+    import {createEventDispatcher} from "svelte";
     import Select from './form/Select.svelte';
     import Link from './Link.svelte';
 	import { t, json } from '$lib/i18n';
+
+    const dispatch = createEventDispatcher();
     
+    export let name = "";
+    export let isPicker = false;
     export let targetDate = new Date();
 
     // For some reason when you start from login to the calender we get 42 entries... So err.. splice it?
@@ -38,9 +43,11 @@
         let month = targetDate.getMonth() - 1;
         if (month >= 0) {
             targetDate = new Date(targetDate.setMonth(month));
+            dispatch('change-month', targetDate);
         } else {
             targetDate.setFullYear(targetDate.getFullYear() - 1);
             targetDate.setMonth(11);
+            dispatch('change-year', targetDate);
         }
 
         yearDropdown.setValue(targetDate.getFullYear());
@@ -52,9 +59,11 @@
         let month = targetDate.getMonth() + 1;
         if (month <= 11) {
             targetDate.setMonth(month);
+            dispatch('change-month', targetDate);
         } else {
             targetDate.setFullYear(targetDate.getFullYear() + 1);
             targetDate.setMonth(0);
+            dispatch('change-year', targetDate);
         }
 
         yearDropdown.setValue(targetDate.getFullYear());
@@ -98,7 +107,9 @@
 
 </script>
 
-<div class="wrapper-calendar"><table class="calender-month">
+<div class="wrapper-calendar">
+    {#if isPicker}<input type="hidden" name={name} />{/if}
+<table class="calender-month">
     <thead>
         <tr class="nav">
             <th><Link icon={faAngleLeft} on:link-click={onDecreaseMonth} /></th>
@@ -112,14 +123,14 @@
         {#each dayNames as day}
             <th>{day}</th>
         {/each}
-        </tr
-    ></thead>
+        </tr>
+    </thead>
     <tbody>
     {#each weeks as days}
         <tr>
-            {#each days as day}
+        {#each days as day}
             <td data-date={getDateValue(day)}>{day ? day : ''}</td>
-            {/each}
+        {/each}
         </tr>
     {/each}
     </tbody>

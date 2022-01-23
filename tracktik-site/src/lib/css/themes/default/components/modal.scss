@@ -1,7 +1,7 @@
 
 .overlay-modal {
     .wrapper-modal {
-        box-shadow: rgb(var(--content-shadow));
+        box-shadow: var(--content-shadow);
         border: 1px solid rgb(var(--content-border));
         border-radius: var(--border-radius);
         background-color: rgb(var(--content-bg));

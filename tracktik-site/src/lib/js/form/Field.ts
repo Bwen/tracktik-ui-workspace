@@ -35,4 +35,5 @@ export type Field = {
     includeChildsInSearch?: boolean;
     allowReset?: boolean;
     isLoading?: boolean;
+    isPicker?: boolean;
 };

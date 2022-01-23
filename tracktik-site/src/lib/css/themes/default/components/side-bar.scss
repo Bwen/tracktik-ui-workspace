@@ -27,7 +27,7 @@
 
             ul {
                 background-color: rgb(var(--menu-bg));
-                box-shadow: rgb(var(--content-shadow));
+                box-shadow: var(--content-shadow);
                 border: 1px solid rgba(var(--menu-border), 0.19);
                 border-top: none;
 

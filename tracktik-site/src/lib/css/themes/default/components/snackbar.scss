@@ -7,7 +7,7 @@
             background-color: rgba(0, 0, 0, .75);
             border: 1px solid #DDD;
             border-radius: var(--border-radius);
-            box-shadow: rgb(var(--content-shadow));
+            box-shadow: var(--content-shadow);
 
             &.info {
                 .icon { color: rgb(var(--info-icon)); }

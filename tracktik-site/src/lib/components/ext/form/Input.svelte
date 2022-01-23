@@ -29,6 +29,9 @@
     export function disable(disable: boolean): void {
         input.disabled = disable;
     }
+    export function blur() {
+        input.blur();
+    }
 
     function onKeyup(event) {
         dispatch('keyup', event.target.value);

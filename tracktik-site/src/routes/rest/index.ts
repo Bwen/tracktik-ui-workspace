@@ -35,8 +35,11 @@ export async function post({ locals, body, headers }) {
         options.headers['TTC-Region-Filter'] = locals['rest-region-filter'];
     }
 
-    let url = new URL(`https://${domain}/rest/v1${path}`);
+    if (headers['http_x_forwarded_for']) {
+        options.headers['http_x_forwarded_for'] = headers['http_x_forwarded_for'];
+    }
 
+    let url = new URL(`https://${domain}/rest/v1${path}`);
     if (Object.keys(body).length !== 0) {
         if (['OPTION','HEAD','GET'].indexOf(method) !== -1) {
             url.search = new URLSearchParams(body).toString();

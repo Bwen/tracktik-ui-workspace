@@ -1,3 +1,6 @@
+import { get } from  'svelte/store';
+import { clientIp } from '$lib/stores/clientIp';
+
 enum METHODS {
     GET = 'GET',
     POST = 'POST',
@@ -16,6 +19,11 @@ async function request(path: string, method: METHODS = METHODS.GET, params: obje
             'rest-method': method.toUpperCase(),
             ...restHeaders,
         };
+
+        let ip = get(clientIp);
+        if (ip) {
+            headers['HTTP_X_FORWARDED_FOR'] = ip;
+        }
 
         let sfetch = svelteFetch || fetch;
         let res = await sfetch('/rest', {

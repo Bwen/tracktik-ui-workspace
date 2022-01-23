@@ -1,4 +1,5 @@
 <script type="ts">
+    import { onDestroy } from 'svelte';
     import { modal as modalComponent } from '$lib/stores/modal';
     import TableData from '$components/ext/TableData.svelte';
     import Form from '$lib/components/ext/form/Form.svelte';
@@ -84,6 +85,10 @@
     if (browser) {
         (async () => await fetchAssignments())();
     }
+    
+    onDestroy(() => {
+		$modalComponent = undefined;
+	});
 </script>
 
 <div class="wrapper-account-assignment">

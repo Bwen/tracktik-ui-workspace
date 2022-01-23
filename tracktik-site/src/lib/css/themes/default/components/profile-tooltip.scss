@@ -2,7 +2,7 @@
 .wrapper-profile-tooltip {
     border: rgb(var(--content-border));
     background-color: rgb(var(--content-bg));
-    box-shadow: rgb(var(--content-shadow));
+    box-shadow: var(--content-shadow);
 
     header {
         color: rgb(var(--menu-text));

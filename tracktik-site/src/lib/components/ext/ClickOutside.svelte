@@ -10,8 +10,8 @@
     function handleClickOutside(event) {
         event.stopPropagation();
 
-        const wrapperSelect = event.target.closest(exclude);
-        if (wrapperSelect) {
+        const excludeElement = event.target.closest(exclude);
+        if (excludeElement) {
             return;
         }
 

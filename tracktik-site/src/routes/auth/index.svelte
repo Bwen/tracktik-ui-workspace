@@ -2,6 +2,7 @@
 	import { fly } from 'svelte/transition';
 	import { goto } from '$app/navigation';
 	import { session } from '$app/stores';
+	import { clientIp } from '$lib/stores/clientIp';
 
 	import { t, locale } from '$lib/i18n';
     import type { Fieldset } from '$form';
@@ -46,9 +47,16 @@
 		try {
 			isLoading = true;
 			fieldsets = await form.validateFieldsets();
+
 			if (form.hasErrors()) {
 				isLoading = false;
 				return;
+			}
+
+			let ipResponse = await fetch('https://api.ipify.org?format=json');
+			if (ipResponse.ok) {
+				const { ip } = await ipResponse.json();
+				$clientIp = ip;
 			}
 
 			let res = await request('/auth', METHODS.POST, { username, password, language });

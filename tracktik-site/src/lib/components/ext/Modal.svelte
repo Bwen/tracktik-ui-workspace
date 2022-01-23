@@ -1,9 +1,14 @@
 <script lang="ts">
     import { modal as modalComponent } from '$lib/stores/modal';
 
-    let active;
+    let active = false;
     modalComponent.subscribe((value) => {
-        if (value) active = true;
+        if (!value) {
+            active = false;
+            return;
+        }
+
+        active = true;
     });
 
     function handleKeydown(event){
@@ -15,11 +20,9 @@
     function onModalClick(event) {
         let modalContent = event.target.closest('.wrapper-content');
         if (modalContent) {
-            event.stopPropagation();
             return;
         }
         
-        event.stopPropagation();
         event.preventDefault();
         active = false;
     }

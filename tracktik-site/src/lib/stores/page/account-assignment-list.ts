@@ -70,7 +70,7 @@ export async function getFiltersFieldset(session): Promise<Fieldset[]> {
         let fields: Field[] = [];
         if (session.auth.scopes.regions.length > 1) {
             fields.push({
-                name: 'region',
+                name: 'account.region.id',
                 type: FieldType.AUTOCOMPLETE,
                 placeholder: $t('common.filters.region'),
                 value: valueRegion,

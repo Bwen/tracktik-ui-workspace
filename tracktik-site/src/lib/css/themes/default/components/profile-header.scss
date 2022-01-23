@@ -26,7 +26,7 @@
         color: rgb(var(--button-primary-text));
         background-color: rgb(var(--button-primary-bg));
         border: 1px solid rgb(var(--button-primary-border));
-        box-shadow: rgb(var(--content-shadow));
+        box-shadow: var(--content-shadow);
         border-radius: var(--border-radius);
 
         &:hover {

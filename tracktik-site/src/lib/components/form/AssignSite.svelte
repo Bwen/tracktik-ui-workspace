@@ -20,6 +20,7 @@
                 name: 'startedOn',
                 label: $t('page.employee.account-assignment.startedOn'),
                 type: FieldType.CALENDAR,
+                isPicker: true,
                 options: [],
                 tooltip: $t('page.employee.account-assignment.startedOnTooltip'),
             },
@@ -29,10 +30,10 @@
     (async () => fieldsets[0].fields[0].options = await getAccountOptions())();
 
     async function onFormKeyup(event) {
-        let { field } = event.detail;
-        if ('account' === field.name && ('' === field.value || field.value.length > 3)) {
+        let { field, value } = event.detail;
+        if ('account' === field.name && ('' === value || value.length > 3)) {
             fieldsets[0].fields[0].isLoading = true;
-            fieldsets[0].fields[0].options = await getAccountOptions(field.value);
+            fieldsets[0].fields[0].options = await getAccountOptions(value);
             fieldsets[0].fields[0].isLoading = false;
         }
     }

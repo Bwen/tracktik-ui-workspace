@@ -61,8 +61,6 @@
     }
 
     function onSearch(event) {
-        event.stopPropagation();
-
         reset();
         optionsOpen = true;
     }
@@ -83,22 +81,18 @@
     }
 
     function onReset(event) {
-        event.stopPropagation();
-
         reset();
         formInput.value = '';
-        dispatch('keyup', '');
+        dispatch('keyup', formInput.value);
         dispatch('input', formInput.value);
     }
 
     function onSelectOption (event) {
-        event.stopPropagation();
-        event.preventDefault();
-
         const option = event.target.closest('a');
         const value = option.getAttribute('data-value');
         selectValue(value);
 
+        searchInput.blur();
         dispatch('input', formInput.value);
     }
 
@@ -122,9 +116,7 @@
     }
 
     function checkValue(event) {
-        event.stopPropagation();
-
-        if (formInput.value) {
+        if (formInput.value && !searchInput.getValue()) {
             selectValue(formInput.value);
         }
     }
@@ -174,7 +166,7 @@
     .wrapper-autocomplete.open ul {
         display: block;
         height: auto;
-        z-index: 100;
+        z-index: 75;
         overflow-x: hidden;
         overflow-y: auto;
     }

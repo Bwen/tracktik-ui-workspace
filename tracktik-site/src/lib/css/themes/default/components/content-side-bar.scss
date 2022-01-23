@@ -4,7 +4,7 @@
     background-color: rgba(var(--content-bg-light), 90%);
     border: 1px solid #FFF;
     border: 1px 1px 0 0;
-    box-shadow: rgb(var(--content-shadow));
+    box-shadow: var(--content-shadow);
 
     a.active, a:hover {
         color: rgb(var(--menu-selected-text));

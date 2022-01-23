@@ -38,11 +38,12 @@
             display: flex;
         }
 
-        :global(.wrapper-autocomplete ul) {
+        :global(.wrapper-autocomplete.open ul) {
             left: 0;
             top: 2.15em;
             width: 100%;
             border: 0;
+            z-index: 100;
         }
 
         :global(.wrapper-autocomplete input) {

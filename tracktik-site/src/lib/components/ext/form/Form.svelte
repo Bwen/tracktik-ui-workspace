@@ -28,8 +28,8 @@
         dispatch('submit', {formId, fieldsets: sanitizedFieldsets});
     }
 
-    function onKeyup(field) {
-        dispatch('keyup', {field});
+    function onKeyup(field, value) {
+        dispatch('keyup', {field, value});
     }
 
     function onValueChange(field: Field) {
@@ -57,13 +57,13 @@
 
     function getComponentProps(field: Field) {
         let props = JSON.parse(JSON.stringify(field));
-        delete props.validators;
 
         switch (field.type) {
-            case FieldType.CALENDAR:
             case FieldType.SWITCH:
             case FieldType.BUTTON:
             case FieldType.SELECT:
+                delete props.isPicker;
+            case FieldType.CALENDAR:
                 delete props.isLoading;
             case FieldType.AUTOCOMPLETE:
                 delete props.type;
@@ -71,14 +71,17 @@
             default:
             case FieldType.TEXT:
                 delete props.isLoading;
+                delete props.isPicker;
                 props.type = 'text';
                 break;
             case FieldType.PASSWORD:
                 delete props.isLoading;
+                delete props.isPicker;
                 props.type = 'password';
                 break;
         }
 
+        delete props.validators;
         delete props.tooltip;
         delete props.label;
         return props;
@@ -131,8 +134,7 @@
                         <svelte:component
                             this={getComponentForField(field)}
                             on:keyup={(event) => {
-                                field.value = event.detail;
-                                onKeyup(field);
+                                onKeyup(field, event.detail);
                             }}
                             on:input={(event) => {
                                 field.value = event.detail;
