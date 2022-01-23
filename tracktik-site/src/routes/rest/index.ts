@@ -35,8 +35,8 @@ export async function post({ locals, body, headers }) {
         options.headers['TTC-Region-Filter'] = locals['rest-region-filter'];
     }
 
-    if (headers['http_x_forwarded_for']) {
-        options.headers['http_x_forwarded_for'] = headers['http_x_forwarded_for'];
+    if (headers['rest_forwarded_for']) {
+        options.headers['HTTP_X_FORWARDED_FOR'] = headers['rest_forwarded_for'];
     }
 
     let url = new URL(`https://${domain}/rest/v1${path}`);

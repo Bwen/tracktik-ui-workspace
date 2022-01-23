@@ -22,7 +22,7 @@ async function request(path: string, method: METHODS = METHODS.GET, params: obje
 
         let ip = get(clientIp);
         if (ip) {
-            headers['HTTP_X_FORWARDED_FOR'] = ip;
+            headers['rest_forwarded_for'] = ip;
         }
 
         let sfetch = svelteFetch || fetch;
@@ -31,7 +31,7 @@ async function request(path: string, method: METHODS = METHODS.GET, params: obje
             method: 'POST',
             body: JSON.stringify(params),
         });
-        
+
         if (res.status === 401 && '/auth' !== path) {
             location.reload();
         }
