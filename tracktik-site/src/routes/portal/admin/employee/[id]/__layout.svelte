@@ -3,7 +3,7 @@
 
 	/** @type {import('@sveltejs/kit').Load} */
 	export async function load({ params, fetch, session, stuff }) {
-		let employee = await fetchEmployee(params.id, session.portal.url, fetch);
+		let employee = await fetchEmployee(params.id, session.portal.url);
 		return {
 			props: {
 				employee,
@@ -11,11 +11,11 @@
 		}
 	}
 
-    async function fetchEmployee(id: number, domain: string, fetch) {
+    async function fetchEmployee(id: number, domain: string) {
 		let employee = {};
         let res = await request(`/employees/${id}`, METHODS.GET, {
             'include': 'region,region.address,address,username,lastLoggedInOn',
-        }, '', fetch);
+        });
 
         if (res.ok) {
             let result = await res.json();

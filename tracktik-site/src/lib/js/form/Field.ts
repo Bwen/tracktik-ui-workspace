@@ -36,4 +36,5 @@ export type Field = {
     allowReset?: boolean;
     isLoading?: boolean;
     isPicker?: boolean;
+    autocomplete?: string;
 };

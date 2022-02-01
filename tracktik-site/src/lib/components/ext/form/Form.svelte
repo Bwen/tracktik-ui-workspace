@@ -67,6 +67,7 @@
                 delete props.isLoading;
             case FieldType.AUTOCOMPLETE:
                 delete props.type;
+                delete props.autocomplete;
                 break;
             default:
             case FieldType.TEXT:

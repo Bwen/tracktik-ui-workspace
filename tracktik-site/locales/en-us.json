@@ -71,6 +71,11 @@
 		},
 		"ui-controls": {
 			"title": "UI Controls",
+			"datalab-showId": {
+				"label": "DataLab Section Ids",
+				"tooltip": "Outlines the DataLab sections and show their folder id",
+				"success": "DataLab Outlines <strong>{state}</strong>"
+			},
 			"page-state": {
 				"label": "Page States",
 				"tooltip": "All page states will be cleared, such as amount of entries per data table, data table filters, etc.",

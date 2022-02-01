@@ -5,11 +5,19 @@
     import { SnackType, addSnack } from '$lib/stores/snack-bar';
     import { pref } from '$lib/stores/cache';
     import { Fieldset, FieldType } from '$form';
+    import { showId } from '$lib/stores/dataLab';
     import { t } from '$lib/i18n';
 
     let filterFields: Fieldset[] = [
         {
             fields: [
+                {
+                    id: 'datalab-showId',
+                    name: 'datalab-showId',
+                    label: $t('page.ui-controls.datalab-showId.label'),
+                    type: FieldType.SWITCH,
+                    tooltip: $t('page.ui-controls.datalab-showId.tooltip'),
+                },
                 {
                     id: 'page-state',
                     name: $t('common.purge'),
@@ -50,6 +58,10 @@
             $pref.debug.ssr = field.value ? true : false;
             let state = field.value ? $t('common.enabled') : $t('common.disabled');
             addSnack({text: $t('page.ui-controls.ssr.success', {values: {state}}), type: SnackType.Success});
+        } else if ('datalab-showId' === field.id) {
+            $showId = field.value ? true : false;
+            let state = field.value ? $t('common.enabled') : $t('common.disabled');
+            addSnack({text: $t('page.ui-controls.datalab-showId.success', {values: {state}}), type: SnackType.Success});
         }
     }
 

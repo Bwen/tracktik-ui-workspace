@@ -71,6 +71,11 @@
 		},
 		"ui-controls": {
 			"title": "UI Controls",
+			"datalab-showId": {
+				"label": "ID de section DataLab",
+				"tooltip": "Décrit les sections DataLab et affiche leur identifiant de dossier",
+				"success": "Aperçus DataLab <strong>{state}</strong>"
+			},
 			"page-state": {
 				"label": "États des pages",
 				"tooltip": "Tous les états de page seront effacés, tels que le nombre d'entrées par table de données, les filtres de table de données, etc.",

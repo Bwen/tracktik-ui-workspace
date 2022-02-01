@@ -1,0 +1,76 @@
+[
+    {
+        "widgetType": "SingleCounterWidget",
+        "name": "Active Employees",
+        "title": "Active Employees",
+        "status": "DRAFT",
+        "description": "",
+        "category": null,
+        "configs": {
+            "is": "SingleCounterWidget",
+            "title": "Active Employees",
+            "dataSet": {
+                "filters": {
+                    "filters": [
+                        {
+                            "value": "ACTIVE",
+                            "operator": "IN",
+                            "attribute": "status"
+                        }
+                    ]
+                },
+                "measure": {
+                    "alias": "Count",
+                    "format": "ROUND_0",
+                    "attribute": "id",
+                    "operation": "COUNT"
+                },
+                "resource": "employees",
+                "contextFilters": {}
+            },
+            "options": {
+                "icon": "supervisor_account",
+                "color": "#2196f3"
+            },
+            "category": "my-insights-category|"
+        },
+        "grantSource": ""
+    },
+    {
+        "widgetType": "SingleCounterWidget",
+        "name": "Clocked-In Employees",
+        "title": "Clocked-In Employees",
+        "status": "DRAFT",
+        "description": "",
+        "category": null,
+        "configs": {
+            "is": "SingleCounterWidget",
+            "title": "Clocked-In Employees",
+            "dataSet": {
+                "filters": {
+                    "filters": [
+                        {
+                            "value": "OPEN",
+                            "operator": "IN",
+                            "attribute": "status"
+                        }
+                    ]
+                },
+                "measure": {
+                    "alias": "Count",
+                    "format": "ROUND_0",
+                    "attribute": "id",
+                    "operation": "COUNT"
+                },
+                "resource": "work-sessions",
+                "contextFilters": {}
+            },
+            "options": {
+                "icon": "alarm_on",
+                "color": "#009688"
+            },
+            "category": "my-insights-category|"
+        },
+        "grantSource": ""
+    }
+]

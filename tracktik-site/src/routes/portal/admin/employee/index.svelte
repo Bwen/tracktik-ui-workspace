@@ -7,6 +7,7 @@
     import { pageState, getTableDataColumns, getFiltersFieldset } from '$lib/stores/page/employee.list';
     import ProfileTooltip from '$lib/components/ProfileTooltip.svelte';
     import { showProfileToolTip } from '$lib/js/utils';
+    import Section from '$dataLab/Section.svelte';
 
     let isLoading = false;
     let columns = getTableDataColumns($session);
@@ -102,8 +103,9 @@
     }
 </script>
 
-<div class="wrapper-content"><div class="content">
-    <div class="page-employee-list">
+<div class="wrapper-content">
+    <Section id="ttui-employee-list" />
+    <div class="content"><div class="page-employee-list">
         <ProfileTooltip profile={tooltipProfile} active={Boolean(tooltipProfile)} />
         <div class="filters"><Form fieldsets={filterFields} on:change={onFilterChange}><div slot="submit"></div></Form></div>
         <TableData 
@@ -119,12 +121,12 @@
             on:cell-leave={onCellLeave}
             uid="id"
         />
-    </div>
-</div></div>
+    </div></div>
+</div>
 
 <style lang="css">
-    .content  {
-        width: 100%;
+    .wrapper-content {
+        flex-direction: column;
     }
 
     .page-employee-list :global(.cell-checkbox) {

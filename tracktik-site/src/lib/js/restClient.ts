@@ -1,5 +1,6 @@
 import { get } from  'svelte/store';
 import { clientIp } from '$lib/stores/clientIp';
+import { browser } from '$app/env';
 
 enum METHODS {
     GET = 'GET',
@@ -11,7 +12,7 @@ enum METHODS {
     HEAD = 'HEAD',
 };
 
-async function request(path: string, method: METHODS = METHODS.GET, params: object = {}, restHeaders = {}, svelteFetch = undefined) {
+async function request(path: string, method: METHODS = METHODS.GET, params: object = {}, restHeaders = {}) {
     try {
         let headers = {
             'Content-Type': 'application/json',
@@ -20,21 +21,30 @@ async function request(path: string, method: METHODS = METHODS.GET, params: obje
             ...restHeaders,
         };
 
-        let ip = get(clientIp);
+        const ip = get(clientIp);
         if (ip) {
             headers['HTTP_X_FORWARDED_FOR'] = ip;
         }
 
-        let sfetch = svelteFetch || fetch;
-        let res = await sfetch('/rest', {
+        let url = '/rest';
+        if (!browser) {
+            const host = process.env["CLIENT_HOST"];
+            const protocol = process.env["CLIENT_PROTOCOL"];
+            url = `${protocol}//${host}/rest`;
+        }
+
+        let res = await fetch(url, {
             headers,
             method: 'POST',
             body: JSON.stringify(params),
         });
         
         if (res.status === 401 && '/auth' !== path) {
-            location.reload();
+            if (browser) {
+                location.reload();
+            }
         }
+
 
         return res;
     } catch (err) {

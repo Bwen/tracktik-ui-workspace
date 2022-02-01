@@ -27,6 +27,8 @@
 			"$lib/*": ["src/lib/*"],
 			"$components": ["src/lib/components"],
 			"$components/*": ["src/lib/components/*"],
+			"$dataLab": ["src/lib/DataLab"],
+			"$dataLab/*": ["src/lib/DataLab/*"],
 			"$stores": ["src/lib/stores"],
 			"$stores/*": ["src/lib/stores/*"],
 			"$form": ["src/lib/js/form"],

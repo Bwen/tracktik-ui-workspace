@@ -23,6 +23,7 @@ const config = {
 				alias: {
 					$lib: path.resolve('./src/lib'),
 					$components: path.resolve('./src/lib/components'),
+					$dataLab: path.resolve('./src/lib/DataLab'),
 					$stores: path.resolve('./src/lib/stores'),
 					$locales: path.resolve('./locales'),
 					$form: path.resolve('./src/lib/js/form'),

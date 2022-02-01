@@ -19,6 +19,11 @@ body, #svelte, main {
     }
 }
 
+.wrapper-datalab-section {
+    margin: 15px;
+    margin-bottom: 0;
+}
+
 [class^="layout-"] {
     display: flex;
     flex-direction: column;

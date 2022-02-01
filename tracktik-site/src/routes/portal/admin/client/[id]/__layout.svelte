@@ -3,7 +3,7 @@
 
 	/** @type {import('@sveltejs/kit').Load} */
 	export async function load({ params, fetch, session, stuff }) {
-		let client = await fetchClient(params.id, session.portal.url, fetch);
+		let client = await fetchClient(params.id, session.portal.url);
 		return {
 			props: {
 				client,
@@ -11,11 +11,11 @@
 		}
 	}
 
-    async function fetchClient(id: number, domain: string, fetch) {
+    async function fetchClient(id: number, domain: string) {
 		let client = {};
         let res = await request(`/clients/${id}`, METHODS.GET, {
             'include': 'region,region.address,address',
-        }, '', fetch);
+        });
 
         if (res.ok) {
             let result = await res.json();
