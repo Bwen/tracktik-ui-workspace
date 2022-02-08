@@ -9,6 +9,7 @@ export type SelectOptions = {
 
 export enum FieldType {
     SWITCH = 'Switch',
+    CHECKBOX = 'Checkbox',
     BUTTON = 'Button',
     TEXT = 'Input',
     PASSWORD = 'Password',
@@ -25,6 +26,7 @@ export type Field = {
     tooltip?: string;
     type: FieldType;
     value?: string | number | boolean;
+    initial_value?: string | number | boolean;
     error?: string;
     placeholder?: string;
     icon?: IconDefinition;
@@ -36,4 +38,6 @@ export type Field = {
     allowReset?: boolean;
     isLoading?: boolean;
     isPicker?: boolean;
+    checked?: boolean;
+    autocomplete?: string;
 };

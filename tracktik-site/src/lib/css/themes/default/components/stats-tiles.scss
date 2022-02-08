@@ -1,0 +1,61 @@
+
+.wrapper-content {
+    .stats {
+        margin: 15px;
+        margin-bottom: 0;
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        z-index: 1;
+
+        .wrapper-stat-tile {
+            position: relative;
+            border-radius: var(--border-radius);
+            min-width: 150px;
+            padding: 0 .5em;
+
+            &.table-data-count {
+                color: rgba(var(--success-text), 1);
+                background-color: rgba(var(--success-bg), .85);
+            }
+
+            &.single-count {
+                color: rgba(var(--info-text), 1);
+                background-color: rgba(var(--info-bg), .65);
+            }
+
+            .svelte-fa {
+                position: absolute;
+                padding-left: 4px;
+                font-size: 4em;
+                z-index: 1;
+                opacity: .15;
+            }
+
+            label {
+                position: absolute;
+                font-size: .85em;
+                color: rgba(0,0,0,.65);
+                white-space: nowrap;
+                font-weight: bolder;
+                top: -.65em;
+                min-width: 150px;
+                text-align: center;
+            }
+
+            div {
+                z-index: 50;
+                font-size: 3em;
+                font-weight: bolder;
+                text-align: center;
+            }
+
+            .wrapper-loading {
+                position: absolute;
+                height: 100%;
+                top: 0;
+                opacity: .25;
+            }
+        }
+    }
+}

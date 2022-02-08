@@ -132,11 +132,6 @@
         display: flex;
     }
 
-    .page-client-list :global(.cell-avatar) {
-        padding: 0;
-        width: 28px;
-    }
-
     .page-client-list :global(.wrapper-table-data) {
         font-size: .75em;
     }

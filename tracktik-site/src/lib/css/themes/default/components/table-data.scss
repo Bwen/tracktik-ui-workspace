@@ -9,7 +9,7 @@
         thead {
             tr:nth-child(1) th {
                 font-weight: 500;
-                box-shadow: var(--content-border-light);
+                box-shadow: 0 0px 0 1px rgb(var(--content-border-light)) inset;
                 border-right: 1px solid rgb(var(--content-border));
                 padding: 3px;
             }
@@ -40,7 +40,7 @@
 
                     &.cell-avatar {
                         padding: 0;
-                        width: 28px;
+                        width: 36px;
                     }
 
                     a {

@@ -17,7 +17,10 @@ export default async function ({ request, resolve }) {
     if (cookies['rest-session-id']) {
         request.locals.sessionId = cookies['rest-session-id'];
     }
-    
+
+    process.env["CLIENT_HOST"] = request.url.host;
+    process.env["CLIENT_PROTOCOL"] = request.url.protocol;
+
     const KEY_PORTAL = `${request.locals.sessionId}:portal`;
     const KEY_AUTH = `${request.locals.sessionId}:auth`;
     const KEY_LOCALE = `${request.locals.sessionId}:locale`;

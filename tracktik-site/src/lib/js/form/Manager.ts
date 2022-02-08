@@ -78,6 +78,18 @@ export class Manager {
         return this;
     }
 
+    setFieldValue(name: string, value: string): Manager {
+        this.fieldsets.forEach(fieldset => {
+            fieldset.fields.forEach(field => {
+                if (field.name == name) {
+                    field.value = value;
+                }
+            });
+        });
+
+        return this;
+    }
+
     setFieldError(name: string, error: string): Manager {
         this.fieldsets.forEach(fieldset => {
             fieldset.fields.forEach(field => {

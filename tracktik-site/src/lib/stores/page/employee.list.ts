@@ -208,7 +208,27 @@ export async function getFiltersFieldset(session): Promise<Fieldset[]> {
             placeholder: $t('common.filters.keyword'),
         });
 
-        resolve([{fields}]);
+        let fieldsets = [{fields}];
+        fieldsets.push({
+            fields: [
+                {
+                    id: 'employee-list-filter-clocked-in',
+                    name: 'clockedIn',
+                    type: FieldType.CHECKBOX,
+                    value: 1,
+                    label: 'Clocked-in'
+                },
+                {
+                    id: 'employee-list-filter-inactive',
+                    name: 'inactive',
+                    type: FieldType.CHECKBOX,
+                    value: 1,
+                    label: 'Inactive'
+                }
+            ]
+        });
+
+        resolve(fieldsets);
     });
 }
 

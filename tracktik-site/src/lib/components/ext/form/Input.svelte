@@ -14,8 +14,10 @@
     export let css = '';
     export let disabled = '';
     export let data = {};
+    export let autocomplete = '';
     let commonAttributes = {};
     $: commonAttributes = parseAttributes({id, disabled, css, data, name, value, placeholder});
+
     let input;
     export function setValue(value: string): void {
         input.value = value;
@@ -51,6 +53,7 @@
         on:focus
         on:blur
         on:keyup={onKeyup}
+        autocomplete={autocomplete}
         {...commonAttributes}
     />
 </div>

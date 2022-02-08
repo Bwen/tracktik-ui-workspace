@@ -35,6 +35,7 @@
     $: {
         commonAttributes = parseAttributes({id, css, data});
         filteredOptions = options;
+        selectValue(value);
     }
 
     function onFilterOptions() {
@@ -97,6 +98,10 @@
     }
 
     function selectValue(value) {
+        if (!searchInput || !formInput) {
+            return;
+        }
+
         if (!value) {
             selectedReset = false;
             optionsOpen = false;
@@ -139,7 +144,7 @@
             on:keyup={onKeyup}
             disabled={disabled ? 'disabled' : ''}
             placeholder="{placeholder ?? ''}"
-            icon={ icon ? icon : faSearch}
+            icon={icon ? icon : faSearch}
         />
         <ClickOutside on:click-outside={toggleOptions} exclude=".wrapper-autocomplete" active={optionsOpen}>
             <ul>

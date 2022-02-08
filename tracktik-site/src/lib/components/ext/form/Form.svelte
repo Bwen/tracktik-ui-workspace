@@ -6,6 +6,7 @@
     import { v4 as uuidv4 } from 'uuid';
     import { createEventDispatcher } from 'svelte';
 
+    import Checkbox from './Checkbox.svelte';
     import Switch from './Switch.svelte';
     import Button from './Button.svelte';
     import Input from './Input.svelte';
@@ -40,6 +41,8 @@
         switch (field.type) {
             case FieldType.SWITCH:
                 return Switch;
+            case FieldType.CHECKBOX:
+                return Checkbox;
             case FieldType.BUTTON:
                 return Button;
             case FieldType.SELECT:
@@ -59,6 +62,7 @@
         let props = JSON.parse(JSON.stringify(field));
 
         switch (field.type) {
+            case FieldType.CHECKBOX:
             case FieldType.SWITCH:
             case FieldType.BUTTON:
             case FieldType.SELECT:
@@ -67,6 +71,7 @@
                 delete props.isLoading;
             case FieldType.AUTOCOMPLETE:
                 delete props.type;
+                delete props.autocomplete;
                 break;
             default:
             case FieldType.TEXT:
@@ -81,6 +86,7 @@
                 break;
         }
 
+        delete props.initial_value;
         delete props.validators;
         delete props.tooltip;
         delete props.label;
@@ -100,6 +106,10 @@
                 let sanitizedField = field;
                 if (!field.id) {
                     sanitizedField.id = formId +':'+ field.name;
+                }
+                
+                if (!field.initial_value) {
+                    field.initial_value = field.value;
                 }
 
                 fset.fields.push(sanitizedField);
@@ -133,11 +143,13 @@
                         {#if field.label}<label for="{field.id}" {...getTooltipAttribute(field)}>{field.label}</label>{/if}
                         <svelte:component
                             this={getComponentForField(field)}
-                            on:keyup={(event) => {
-                                onKeyup(field, event.detail);
-                            }}
+                            on:keyup={(event) => onKeyup(field, event.detail)}
                             on:input={(event) => {
                                 field.value = event.detail;
+                                if (field.type === FieldType.CHECKBOX) {
+                                    field.value = event.detail.value;
+                                    field.checked = event.detail.checked;
+                                }
                                 onValueChange(field);
                             }}
                             disabled={isLoading}
@@ -149,11 +161,11 @@
                 {/each}
             </fieldset>
         </div>
+        {#if error}<div class="error">{error}</div>{/if}
+        {/each}
         <slot name="submit">
             <button type="submit" on:click={onSubmit} class:disabled={isLoading} disabled={isLoading}>{$t('common.form.submit')}</button>
         </slot>
-        {#if error}<div class="error">{error}</div>{/if}
-        {/each}
     </form>
 </div>
 

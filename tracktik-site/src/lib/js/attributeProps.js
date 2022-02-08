@@ -7,7 +7,7 @@ function parse(props) {
     }
 
     for (const [key, value] of Object.entries(props)) {
-        if (!value || ['data', 'css'].indexOf(key) !== -1) {
+        if (key !== 'value' && (!value || ['data', 'css'].indexOf(key) !== -1)) {
             continue;
         }
 

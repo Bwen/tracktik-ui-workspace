@@ -5,6 +5,7 @@ import {
     date as dateFn,
     locale as currentLocale,
     init as i18nInit,
+    number as n,
     register,
     waitLocale,
 } from 'svelte-i18n';
@@ -23,6 +24,7 @@ export async function init(session): Promise<void> {
     await waitLocale();
 }
 
+export const number = n;
 export const json = jsonFn;
 export const locale = currentLocale;
 export const t = tFn;

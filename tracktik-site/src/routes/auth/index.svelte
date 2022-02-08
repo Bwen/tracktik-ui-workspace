@@ -17,8 +17,22 @@
 	let isLoading = false;
 	let fieldsets: Fieldset[] = [{
 		fields: [
-			{name: 'username', type: FieldType.TEXT, value: '', placeholder: $t('page.auth.enter_username'), validators: [isNotBlank]},
-			{name: 'password', type: FieldType.PASSWORD, value: '', placeholder: $t('page.auth.enter_password'), validators: [isNotBlank]},
+			{
+				name: 'username', 
+				type: FieldType.TEXT, 
+				value: '', 
+				placeholder: $t('page.auth.enter_username'), 
+				autocomplete: 'username',
+				validators: [isNotBlank]
+			},
+			{
+				name: 'password', 
+				type: FieldType.PASSWORD, 
+				value: '', 
+				placeholder: $t('page.auth.enter_password'), 
+				autocomplete: 'current-password',
+				validators: [isNotBlank]
+			},
 			{
 				name: 'locale',
 				type: FieldType.SELECT,

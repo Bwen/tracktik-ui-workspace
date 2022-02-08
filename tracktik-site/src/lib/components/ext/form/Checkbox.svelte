@@ -1,8 +1,24 @@
 <script lang="ts">
+    import { createEventDispatcher } from "svelte";
+
+    const dispatch = createEventDispatcher();
     export let name: string;
     export let value: string;
+    export let id: string = '';
+    export let checked: boolean = false;
+
+    function onInput(event) {
+        const {checked, value} = event.target;
+        dispatch('input', {checked, value});
+    }
 </script>
 
-<div class="wrapper-checkbox">
-    <input type="checkbox" name="{name}" value="{value}" />
-</div>
+<span class="wrapper-checkbox">
+    <input type="checkbox" 
+        on:input={onInput} 
+        id="{id}" 
+        name="{name}" 
+        value="{value}" 
+        checked={checked}
+    />
+</span>

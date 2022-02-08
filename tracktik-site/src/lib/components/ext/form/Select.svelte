@@ -27,6 +27,7 @@
         if (allowReset) {
             options.unshift({text: '- Reset -', value: undefined});
         }
+        setValue(value);
     }
  
     onMount(() => {
@@ -34,6 +35,10 @@
     });
 
     export function setValue(value: string) {
+        if (!formInput) {
+            return;
+        }
+        
         valueText = '';
         options.forEach(option => {
             if (value && value == option.value) {
