@@ -2,8 +2,8 @@
 	import { request, METHODS } from '$lib/js/restClient';
 
 	/** @type {import('@sveltejs/kit').Load} */
-	export async function load({ params, fetch, session, stuff }) {
-		let employee = await fetchEmployee(params.id, session.portal.url, fetch);
+	export async function load({ params, session }) {
+		let employee = await fetchEmployee(params.id, session.id);
 		return {
 			props: {
 				employee,
@@ -11,11 +11,11 @@
 		}
 	}
 
-    async function fetchEmployee(id: number, domain: string, fetch) {
+    async function fetchEmployee(id: number, sessionId: string) {
 		let employee = {};
         let res = await request(`/employees/${id}`, METHODS.GET, {
             'include': 'region,region.address,address,username,lastLoggedInOn',
-        }, '', fetch);
+        }, {'rest-session-id': sessionId});
 
         if (res.ok) {
             let result = await res.json();
@@ -56,7 +56,6 @@
 
 	function onActionClick(event) {
 		const actionId = event.detail.hyperlink.id;
-		console.log(actionId);
 	}
 </script>
 

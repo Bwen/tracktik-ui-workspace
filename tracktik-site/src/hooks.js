@@ -31,5 +31,6 @@ export async function getSession({ locals }) {
     }
 
     session.locale = locals.locale;
+    session.id = locals.sessionId;
     return session;
 }

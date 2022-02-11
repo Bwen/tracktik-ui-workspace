@@ -18,6 +18,10 @@ export default async function ({ request, resolve }) {
         request.locals.sessionId = cookies['rest-session-id'];
     }
 
+    if (request.headers['rest-session-id']) {
+        request.locals.sessionId = request.headers['rest-session-id'];
+    }
+
     process.env["CLIENT_HOST"] = request.url.host;
     process.env["CLIENT_PROTOCOL"] = request.url.protocol;
 

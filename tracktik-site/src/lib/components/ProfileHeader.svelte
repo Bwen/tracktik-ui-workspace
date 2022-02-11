@@ -9,13 +9,14 @@
     import TextIcon from '$lib/components/ext/TextIcon.svelte';
     import type { EmployeesItem } from '@rest/models/EmployeesItem';
     import type { ClientsItem } from '@rest/models/ClientsItem';
+    import type { ZonesItem } from '@rest/models/ZonesItem';
     import Address from '$components/ext/Address.svelte';
     import { getAddressProps, getPhoneProps } from '$lib/js/utils';
     import {t, date, time} from '$lib/i18n';
     import {createEventDispatcher} from "svelte";
     const dispatch = createEventDispatcher();
 
-    const profile: EmployeesItem | ClientsItem = getContext('current-profile');
+    const profile: EmployeesItem | ClientsItem | ZonesItem = getContext('current-profile');
     if (typeof profile.address !== 'object') {
         throw new Error('Component ProfileHeader requires an AddressesItem sub-object');
     }

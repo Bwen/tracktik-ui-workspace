@@ -4,7 +4,7 @@
     import { browser } from '$app/env';
     import Form from '$lib/components/ext/form/Form.svelte';
     import { session } from '$app/stores';
-    import { pageState, getTableDataColumns, getFiltersFieldset } from '$lib/stores/page/client.list';
+    import { pageState, getTableDataColumns, getFiltersFieldset } from '$lib/stores/page/zone.list';
     import ProfileTooltip from '$lib/components/ProfileTooltip.svelte';
     import { showProfileToolTip } from '$lib/js/utils';
     import { faUsers, faUserClock, faStopwatch } from '@fortawesome/free-solid-svg-icons';
@@ -28,7 +28,7 @@
         let restFilters = JSON.parse(JSON.stringify(filters));
 
         isLoading = true;
-        let res = await request('/clients', METHODS.GET, {
+        let res = await request('/zones', METHODS.GET, {
             'include': 'region,region.address,address',
             'limit': perPage,
             'offset': offset,
@@ -47,15 +47,13 @@
 
     function resetFilters() {
         filterFields[0].fields[0].value = '';
-        filterFields[0].fields[1].value = '';
-        filterFields[0].fields[2].value = 'ACTIVE';
-        filterFields[0].fields[3].value = '';
+        filterFields[0].fields[1].value = 'ACTIVE';
+        filterFields[0].fields[2].value = '';
         filterFields[1].fields[0].checked = false;
         filterFields[1].fields[1].checked = false;
         filterFields = filterFields;
         
         filters['status'] = 'ACTIVE';
-        delete filters['zone'];
         delete filters['q'];
         delete filters['region'];
         delete filters['clockedIn'];
@@ -136,7 +134,7 @@
     }
 
     async function fetchCount(filters) {
-        let res = await request('/clients', METHODS.GET, {status: 'ACTIVE', include: 'id', limit: 1, ...filters});
+        let res = await request('/zones', METHODS.GET, {status: 'ACTIVE', include: 'id', limit: 1, ...filters});
         if (!res.ok) {
             return 0;
         }
@@ -145,28 +143,19 @@
         return result.meta.count;
     }
 
-    let tooltipProfile = null;
-    function onCellEnter(event) {
-        tooltipProfile = showProfileToolTip(event, clients, 'cell-avatar', '.page-client-list .wrapper-profile-tooltip');
-    }
-
-    function onCellLeave() {
-        tooltipProfile = null;
-    }
-
     if (browser) {
         session.subscribe(async () => {
             fetchClients();
             fetchActive();
-            fetchInactive();
-            fetchClockIn();
+            //fetchInactive();
+            //fetchClockIn();
         });
 
         (async () => {
             fetchClients();
             fetchActive();
-            fetchInactive();
-            fetchClockIn();
+            //fetchInactive();
+            //fetchClockIn();
         })();
     }
 </script>
@@ -174,12 +163,11 @@
 <div class="wrapper-content">
     <div class="stats">
         <TableDataCountTile count={totalEntries} />
-        <SingleCountTile icon={faUsers} on:link-click={onClickActive} count={countActive} isLoading={isLoadingActive} text="Active Clients" />
-        <SingleCountTile icon={faStopwatch} on:link-click={onClickInactive} count={countInactive} isLoading={isLoadingInactive} text="Inactive Clients" />
-        <SingleCountTile icon={faUserClock} on:link-click={onClickClockIn} count={countClockIn} isLoading={isLoadingClockIn} text="Clocked-In Clients" />
+        <SingleCountTile icon={faUsers} on:link-click={onClickActive} count={countActive} isLoading={isLoadingActive} text="Active Zones" />
+        <SingleCountTile icon={faStopwatch} on:link-click={onClickInactive} count={countInactive} isLoading={isLoadingInactive} text="Inactive Zones" />
+        <SingleCountTile icon={faUserClock} on:link-click={onClickClockIn} count={countClockIn} isLoading={isLoadingClockIn} text="Clocked-In Zones" />
     </div>
-    <div class="content"><div class="page-client-list">
-        <ProfileTooltip profile={tooltipProfile} active={Boolean(tooltipProfile)} />
+    <div class="content"><div class="page-zone-list">
         <div class="filters"><Form fieldsets={filterFields} on:change={onFilterChange}><div slot="submit"></div></Form></div>
         <TableData 
             columns={columns}
@@ -190,8 +178,6 @@
             totalEntries={totalEntries}
             on:page-change={onPageChange}
             on:per-page-change={onPerPageChange}
-            on:cell-enter={onCellEnter}
-            on:cell-leave={onCellLeave}
             uid="id"
         />
     </div>
@@ -203,45 +189,45 @@
         flex-direction: column;
     }
 
-    .page-client-list :global(.filters form) {
+    .page-zone-list :global(.filters form) {
         display: flex;
         flex-direction: column;
     }
 
-    .page-client-list :global(.filters .wrapper-checkbox) {
+    .page-zone-list :global(.filters .wrapper-checkbox) {
         float: left;
     }
 
-    .page-client-list :global(td) {
+    .page-zone-list :global(td) {
         position: relative;
     }
 
-    .page-client-list .filters :global(form),
-    .page-client-list .filters :global(fieldset) {
+    .page-zone-list .filters :global(form),
+    .page-zone-list .filters :global(fieldset) {
         display: flex;
     }
 
-    .page-client-list :global(.wrapper-table-data) {
+    .page-zone-list :global(.wrapper-table-data) {
         font-size: .75em;
     }
 
-    .page-client-list :global(.cell-checkbox) {
+    .page-zone-list :global(.cell-checkbox) {
         width: 1%;
     }
 
-    .page-client-list :global(.cell-uid) {
+    .page-zone-list :global(.cell-uid) {
         width: 5%;
     }
 
-    .page-client-list :global(.cell-phone) {
+    .page-zone-list :global(.cell-phone) {
         width: 10%;
     }
 
-    .page-client-list :global(.cell-region) {
+    .page-zone-list :global(.cell-region) {
         width: 15%;
     }
 
-    .page-client-list :global(td.cell-phone) {
+    .page-zone-list :global(td.cell-phone) {
         text-align: center;
     }
 </style>

@@ -6,6 +6,7 @@
     export let value: string;
     export let id: string = '';
     export let checked: boolean = false;
+    export let disabled = '';
 
     function onInput(event) {
         const {checked, value} = event.target;
@@ -20,5 +21,6 @@
         name="{name}" 
         value="{value}" 
         checked={checked}
+        disabled={disabled ? true : false}
     />
 </span>

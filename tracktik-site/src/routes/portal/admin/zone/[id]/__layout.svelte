@@ -3,26 +3,26 @@
 
 	/** @type {import('@sveltejs/kit').Load} */
 	export async function load({ params, session }) {
-		let client = await fetchClient(params.id, session.id);
+		let zone = await fetchClient(params.id, session.id);
 		return {
 			props: {
-				client,
+				zone,
 			},
 		}
 	}
 
     async function fetchClient(id: number, sessionId: string) {
-		let client = {};
-        let res = await request(`/clients/${id}`, METHODS.GET, {
+		let zone = {};
+        let res = await request(`/zones/${id}`, METHODS.GET, {
             'include': 'region,region.address,address',
         }, {'rest-session-id': sessionId});
 
         if (res.ok) {
             let result = await res.json();
-			client = result.data;
+			zone = result.data;
         }
 
-        return client;
+        return zone;
     }
 </script>
 <script lang="ts">
@@ -33,10 +33,10 @@
     import type { Link as LinkType } from '$lib/@types/Link.type';
 	import { t } from '$lib/i18n';
 
-	export let client: any = {};
-	let urlPrefix = '/portal/admin/client';
+	export let zone: any = {};
+	let urlPrefix = '/portal/admin/zone';
 	let topTabItems: LinkType[] = [
-        {text: $t('common.overview'), href: `${urlPrefix}/${client.id}`},
+        {text: $t('common.overview'), href: `${urlPrefix}/${zone.id}`},
         {text: $t('common.edit'), href: `${urlPrefix}/departement`},
         {text: $t('page.employee.top-tabs.patrol'), href: `${urlPrefix}/skills`},
         {text: $t('page.employee.top-tabs.timesheets'), href: `${urlPrefix}/audit`},
@@ -44,11 +44,11 @@
         {text: $t('page.employee.top-tabs.schedules'), href: `${urlPrefix}/audit`},
     ];
 
-	setContext('current-profile', client);
+	setContext('current-profile', zone);
 </script>
 
 <svelte:head><title>{$t('page.client.title')} - {$t('page.admin.title')}</title></svelte:head>
-<div class="layout-client-profile">
+<div class="layout-zone-profile">
 	<ProfileHeader />
 	<TopTabs tabItems={topTabItems} />
 	<div class="wrapper-content" transition:fade={{duration: 300}}><div class="content">

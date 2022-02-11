@@ -6,14 +6,14 @@ import Checkbox from '$components/ext/form/Checkbox.svelte';
 import UID from '$components/UID.svelte';
 import Avatar from '$components/Avatar.svelte';
 import Link from '$components/ext/Link.svelte';
-import { faPhone } from "@fortawesome/free-solid-svg-icons";
-import { t } from '$lib/i18n';
 import { getRegionOptions } from '$lib/js/utils';
 import { EmployeesItem } from '@rest/models/EmployeesItem';
 import { get, writable } from 'svelte/store';
 import type { PageState } from '$lib/@types/PageState.type';
 import type {ColumnDefinition} from '$lib/@types/TableData.type';
 import { departments, zones } from '../cache';
+import { faPhone, faUsers, faUserClock, faStopwatch } from "@fortawesome/free-solid-svg-icons";
+import { t } from '$lib/i18n';
 
 const $t = get(t);
 
@@ -45,6 +45,35 @@ pageState.subscribe(value => {
 
     return undefined;
 });
+
+export function getCounters() {
+    return {
+        active: {
+            count: 0,
+            isLoading: false,
+            filter: {},
+            field: null,
+            icon: faUsers,
+            text: 'Active Employees',
+        },
+        inactive: {
+            count: 0,
+            isLoading: false,
+            filter: {inactive: true},
+            field: [1,1],
+            icon: faStopwatch,
+            text: 'Inactive Employees',
+        },
+        clockedIn: {
+            count: 0,
+            isLoading: false,
+            filter: {clockedIn: true},
+            field: [1,0],
+            icon: faUserClock,
+            text: 'Clocked-In Employees',
+        },
+    };
+}
 
 export function getTableDataColumns(session) {
     let columns: ColumnDefinition[] = [
@@ -152,12 +181,16 @@ export async function getFiltersFieldset(session): Promise<Fieldset[]> {
         let valueDepartment = '';
         let valueRegion = '';
         let valueKeyword = '';
+        let checkedInactive = false;
+        let checkedClockedIn = false;
         if ($pageState && $pageState.filters) {
             valueStatus = $pageState.filters.status ?? '';
             valueZone = $pageState.filters.forAllAccountAssignments.zone ?? '';
             valueDepartment = $pageState.filters.forAllAccountAssignments.department ?? '';
             valueRegion = $pageState.filters.region ?? '';
             valueKeyword = $pageState.filters.q ?? '';
+            checkedInactive = $pageState.filters.inactive ?? false;
+            checkedClockedIn = $pageState.filters.clockedIn ?? false;
         }
         let fields: Field[] = [];
         let zoneOptions = await getZoneOptions(session.auth.scopes.regions);
@@ -216,14 +249,16 @@ export async function getFiltersFieldset(session): Promise<Fieldset[]> {
                     name: 'clockedIn',
                     type: FieldType.CHECKBOX,
                     value: 1,
-                    label: 'Clocked-in'
+                    label: 'Clocked-in',
+                    checked: checkedClockedIn,
                 },
                 {
                     id: 'employee-list-filter-inactive',
                     name: 'inactive',
                     type: FieldType.CHECKBOX,
                     value: 1,
-                    label: 'Inactive'
+                    label: 'Inactive',
+                    checked: checkedInactive,
                 }
             ]
         });

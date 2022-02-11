@@ -4,13 +4,12 @@
     import { browser } from '$app/env';
     import Form from '$lib/components/ext/form/Form.svelte';
     import { session } from '$app/stores';
-    import { pageState, getTableDataColumns, getFiltersFieldset } from '$lib/stores/page/employee.list';
+    import { pageState, getTableDataColumns, getFiltersFieldset, getCounters } from '$lib/stores/page/employee.list';
     import ProfileTooltip from '$lib/components/ProfileTooltip.svelte';
     import { showProfileToolTip } from '$lib/js/utils';
-    import { faUsers, faUserClock, faStopwatch } from '@fortawesome/free-solid-svg-icons';
     import TableDataCountTile from '$components/stats/TableDataCountTile.svelte';
     import SingleCountTile from '$components/stats/SingleCountTile.svelte';
-import { FieldType } from '$lib/js/form';
+    import { FieldType } from '$lib/js/form';
 
     let isLoading = false;
     let columns = getTableDataColumns($session);
@@ -20,14 +19,9 @@ import { FieldType } from '$lib/js/form';
 
     let employees = [];
     let totalEntries = 0;
-    let perPage = $pageState.tableData.perPage;
-    let offset = $pageState.tableData.offset;
-    let filters = $pageState.filters;
-    async function fetchEmployees() {
-        $pageState.filters = filters;
-
-        let forAllAccountAssignments = filters.forAllAccountAssignments;
-        let restFilters = JSON.parse(JSON.stringify(filters));
+    async function fetchEntries() {
+        let forAllAccountAssignments = $pageState.filters.forAllAccountAssignments;
+        let restFilters = JSON.parse(JSON.stringify($pageState.filters));
         delete restFilters['forAllAccountAssignments'];
 
         if (forAllAccountAssignments.zone && forAllAccountAssignments.department) {
@@ -41,15 +35,15 @@ import { FieldType } from '$lib/js/form';
         isLoading = true;
         let res = await request('/employees', METHODS.GET, {
             'include': 'region,region.address,address,username',
-            'limit': perPage,
-            'offset': offset,
+            'limit': $pageState.tableData.perPage,
+            'offset': $pageState.tableData.offset,
             ...restFilters,
         });
 
         if (res.ok) {
             let result = await res.json();
             totalEntries = result.meta.count;
-            offset = result.meta.offset;
+            $pageState.tableData.offset = result.meta.offset;
             employees = result.data;
         }
 
@@ -66,85 +60,51 @@ import { FieldType } from '$lib/js/form';
         filterFields[1].fields[1].checked = false;
         filterFields = filterFields;
         
-        filters['status'] = 'ACTIVE';
-        filters.forAllAccountAssignments['zone'] = undefined;
-        filters.forAllAccountAssignments['department'] = undefined;
-        delete filters['q'];
-        delete filters['region'];
-        delete filters['clockedIn'];
-        delete filters['inactive'];
+        $pageState.filters['status'] = 'ACTIVE';
+        $pageState.filters.forAllAccountAssignments['zone'] = undefined;
+        $pageState.filters.forAllAccountAssignments['department'] = undefined;
+        delete $pageState.filters['q'];
+        delete $pageState.filters['region'];
+        delete $pageState.filters['clockedIn'];
+        delete $pageState.filters['inactive'];
     }
 
-    let isLoadingAE = false;
-    let countAE = 0;
-    async function fetchAE() {
-        isLoadingAE = true;
-        let res = await request('/employees', METHODS.GET, {status: 'ACTIVE', include: 'id', limit: 1});
-        if (res.ok) {
-            let result = await res.json();
-            countAE = result.meta.count;
+    const counters = getCounters();
+    function onClickCounter(type) {
+        resetFilters();
+        Object.assign($pageState.filters, counters[type].filter);
+        if (counters[type].field) {
+            const index = counters[type].field;
+            filterFields[index[0]].fields[index[1]].checked = true;
+        }
+
+        fetchEntries();
+    }
+
+    async function fetchCounter(type) {
+        counters[type].isLoading = true;
+        counters[type].count = await fetchCount(counters[type].filter);
+        counters[type].isLoading = false;
+    }
+
+    async function fetchCount(filters) {
+        let res = await request('/employees', METHODS.GET, {status: 'ACTIVE', include: 'id', limit: 1, ...filters});
+        if (!res.ok) {
+            return 0;
         }
         
-        isLoadingAE = false;
-    }
-
-    function onClickAE() {
-        resetFilters();
-        fetchEmployees();
-    }
-
-    let isLoadingClockIn = false;
-    let countClockIn = 0;
-    async function fetchClockInCount() {
-        isLoadingClockIn = true;
-        let res = await request('/employees', METHODS.GET, {status: 'ACTIVE', include: 'id', clockedIn: true, limit: 1});
-        if (res.ok) {
-            let result = await res.json();
-            countClockIn = result.meta.count;
-        }
-        
-        isLoadingClockIn = false;
-    }
-
-    function onClickClockIn() {
-        resetFilters();
-        filterFields[1].fields[0].checked = true;
-        filters['clockedIn'] = true;
-
-        fetchEmployees();
-    }
-
-    let isLoadingInactive = false;
-    let countInactive = 0;
-    async function fetchInactiveCount() {
-        isLoadingInactive = true;
-        let res = await request('/employees', METHODS.GET, {status: 'ACTIVE', include: 'id', inactive: true, limit: 1});
-        if (res.ok) {
-            let result = await res.json();
-            countInactive = result.meta.count;
-        }
-        
-        isLoadingInactive = false;
-    }
-
-    function onClickInactive() {
-        resetFilters();
-        filterFields[1].fields[1].checked = true;
-        filters['inactive'] = true;
-
-        fetchEmployees();
+        let result = await res.json();
+        return result.meta.count;
     }
 
     async function onPerPageChange(event) {
-        perPage = event.detail.perPage;
-        $pageState.tableData.perPage = perPage;
-        await fetchEmployees();
+        $pageState.tableData.perPage = event.detail.perPage;
+        await fetchEntries();
     }
 
     async function onPageChange(event) {
-        offset = event.detail.pageNumber * perPage;
-        $pageState.tableData.offset = offset;
-        await fetchEmployees();
+        $pageState.tableData.offset = event.detail.pageNumber * $pageState.tableData.perPage;
+        await fetchEntries();
     }
 
     async function onFilterChange(event) {
@@ -155,15 +115,15 @@ import { FieldType } from '$lib/js/form';
         }
 
         if (['department', 'zone'].indexOf(name) !== -1) {
-            filters.forAllAccountAssignments[name] = field.value ?? undefined;
+            $pageState.filters.forAllAccountAssignments[name] = field.value ?? undefined;
         } else {
-            filters[name] = field.value;
+            $pageState.filters[name] = field.value;
             if (!field.value || (field.type === FieldType.CHECKBOX && !field.checked)) {
-                delete filters[name];
+                delete $pageState.filters[name];
             }
         }
 
-        await fetchEmployees();
+        await fetchEntries();
     }
     
     let tooltipProfile = null;
@@ -177,25 +137,31 @@ import { FieldType } from '$lib/js/form';
 
     if (browser) {
         session.subscribe(() => {
-            fetchEmployees();
-            fetchAE();
-            fetchClockInCount();
-            fetchInactiveCount();
+            fetchEntries();
+            for (let type in counters) {
+                fetchCounter(type);
+            }
         });
     }
 
-    fetchEmployees();
-    fetchAE();
-    fetchClockInCount();
-    fetchInactiveCount();
+    fetchEntries();
+    for (let type in counters) {
+        fetchCounter(type);
+    }
 </script>
 
 <div class="wrapper-content">
     <div class="stats">
         <TableDataCountTile count={totalEntries} />
-        <SingleCountTile icon={faUsers} on:link-click={onClickAE} count={countAE} isLoading={isLoadingAE} text="Active Employees" />
-        <SingleCountTile icon={faStopwatch} on:link-click={onClickInactive} count={countInactive} isLoading={isLoadingInactive} text="Inactive Employees" />
-        <SingleCountTile icon={faUserClock} on:link-click={onClickClockIn} count={countClockIn} isLoading={isLoadingClockIn} text="Clocked-In Employees" />
+        {#each Object.entries(counters) as [type, counter]}
+        <SingleCountTile 
+            icon={counter.icon} 
+            on:link-click={() => onClickCounter(type)} 
+            count={counter.count} 
+            isLoading={counter.isLoading}
+            text={counter.text} 
+        />
+        {/each}
     </div>
     <div class="content"><div class="page-employee-list">
         <ProfileTooltip profile={tooltipProfile} active={Boolean(tooltipProfile)} />
@@ -204,8 +170,8 @@ import { FieldType } from '$lib/js/form';
             columns={columns}
             entries={employees}
             isLoading={isLoading}
-            perPage={perPage}
-            offset={offset}
+            perPage={$pageState.tableData.perPage}
+            offset={$pageState.tableData.offset}
             totalEntries={totalEntries}
             on:page-change={onPageChange}
             on:per-page-change={onPerPageChange}
