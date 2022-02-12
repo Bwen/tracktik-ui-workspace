@@ -18,13 +18,14 @@
     export let isLoading: boolean = false;
     export let error: string = '';
     export let fieldsets: Fieldset[] = [];
+    export let submitText: string = $t('common.form.submit');
 
     let formId = uuidv4();
     let sanitizedFieldsets: Fieldset[] = [];
     $: sanitizedFieldsets = sanitizeFieldsets(fieldsets);
 
     const dispatch = createEventDispatcher();
-    function onSubmit(event) {
+    export function onSubmit(event) {
         event.preventDefault();
         dispatch('submit', {formId, fieldsets: sanitizedFieldsets});
     }
@@ -164,7 +165,7 @@
         {#if error}<div class="error">{error}</div>{/if}
         {/each}
         <slot name="submit">
-            <button type="submit" on:click={onSubmit} class:disabled={isLoading} disabled={isLoading}>{$t('common.form.submit')}</button>
+            <button type="submit" on:click={onSubmit} class:disabled={isLoading} disabled={isLoading}>{submitText}</button>
         </slot>
     </form>
 </div>

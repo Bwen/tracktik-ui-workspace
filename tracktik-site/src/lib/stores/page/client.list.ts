@@ -7,13 +7,13 @@ import UID from '$components/UID.svelte';
 import Link from '$components/ext/Link.svelte';
 import Avatar from '$components/Avatar.svelte';
 import ClientType from '$components/ClientType.svelte';
-import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { t } from '$lib/i18n';
 import { getRegionOptions } from '$lib/js/utils';
 import { ClientsItem } from '@rest/models/ClientsItem';
 import { get, writable } from 'svelte/store';
 import type { PageState } from '$lib/@types/PageState.type';
 import type {ColumnDefinition} from '$lib/@types/TableData.type';
+import { faPhone, faUsers, faUserClock, faStopwatch } from "@fortawesome/free-solid-svg-icons";
 import { zones } from '../cache';
 
 const $t = get(t);
@@ -46,6 +46,35 @@ pageState.subscribe(value => {
 
     return undefined;
 });
+
+export function getCounters() {
+    return {
+        active: {
+            count: 0,
+            isLoading: false,
+            filter: {},
+            field: null,
+            icon: faUsers,
+            text: 'Active Clients',
+        },
+        inactive: {
+            count: 0,
+            isLoading: false,
+            filter: {inactive: true},
+            field: [1,1],
+            icon: faStopwatch,
+            text: 'Inactive Clients',
+        },
+        clockedIn: {
+            count: 0,
+            isLoading: false,
+            filter: {clockedIn: true},
+            field: [1,0],
+            icon: faUserClock,
+            text: 'Clocked-In Clients',
+        },
+    };
+}
 
 export function getTableDataColumns(session) {
     let columns: ColumnDefinition[] = [

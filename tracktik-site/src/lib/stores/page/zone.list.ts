@@ -1,18 +1,16 @@
 import { browser } from '$app/env';
 import { FieldType } from '$form';
 import type { Fieldset, Field } from '$form';
-import Phone from '$components/ext/Phone.svelte';
 import Checkbox from '$components/ext/form/Checkbox.svelte';
 import UID from '$components/UID.svelte';
 import Link from '$components/ext/Link.svelte';
-import Avatar from '$components/Avatar.svelte';
-import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { t } from '$lib/i18n';
 import { getRegionOptions } from '$lib/js/utils';
 import { ZonesItem } from '@rest/models/ZonesItem';
 import { get, writable } from 'svelte/store';
 import type { PageState } from '$lib/@types/PageState.type';
 import type {ColumnDefinition} from '$lib/@types/TableData.type';
+import { faUsers, faUserClock, faStopwatch } from "@fortawesome/free-solid-svg-icons";
 
 const $t = get(t);
 
@@ -44,6 +42,35 @@ pageState.subscribe(value => {
 
     return undefined;
 });
+
+export function getCounters() {
+    return {
+        active: {
+            count: 0,
+            isLoading: false,
+            filter: {},
+            field: null,
+            icon: faUsers,
+            text: 'Active Zones',
+        },
+        //inactive: {
+        //    count: 0,
+        //    isLoading: false,
+        //    filter: {inactive: true},
+        //    field: [1,1],
+        //    icon: faStopwatch,
+        //    text: 'Inactive Clients',
+        //},
+        //clockedIn: {
+        //    count: 0,
+        //    isLoading: false,
+        //    filter: {clockedIn: true},
+        //    field: [1,0],
+        //    icon: faUserClock,
+        //    text: 'Clocked-In Clients',
+        //},
+    };
+}
 
 export function getTableDataColumns(session) {
     let columns: ColumnDefinition[] = [
@@ -139,29 +166,27 @@ export async function getFiltersFieldset(session): Promise<Fieldset[]> {
         });
 
         let fieldsets = [{fields}];
-        fieldsets.push({
-            fields: [
-                {
-                    id: 'client-list-filter-clocked-in',
-                    name: 'clockedIn',
-                    type: FieldType.CHECKBOX,
-                    value: 1,
-                    label: 'Clocked-in',
-                    checked: checkedClockedIn,
-                },
-                {
-                    id: 'client-list-filter-inactive',
-                    name: 'inactive',
-                    type: FieldType.CHECKBOX,
-                    value: 1,
-                    label: 'Inactive',
-                    checked: checkedInactive,
-                }
-            ]
-        });
+        //fieldsets.push({
+        //    fields: [
+        //        {
+        //            id: 'client-list-filter-clocked-in',
+        //            name: 'clockedIn',
+        //            type: FieldType.CHECKBOX,
+        //            value: 1,
+        //            label: 'Clocked-in',
+        //            checked: checkedClockedIn,
+        //        },
+        //        {
+        //            id: 'client-list-filter-inactive',
+        //            name: 'inactive',
+        //            type: FieldType.CHECKBOX,
+        //            value: 1,
+        //            label: 'Inactive',
+        //            checked: checkedInactive,
+        //        }
+        //    ]
+        //});
 
         resolve(fieldsets);
     });
 }
-
-

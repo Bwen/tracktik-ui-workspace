@@ -104,6 +104,7 @@
         display: inline-block;
         position: relative;
         user-select: none;
+        text-align: left;
     }
     .wrapper-select.open div :global(ul) {
         display: block;

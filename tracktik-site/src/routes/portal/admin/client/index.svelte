@@ -1,49 +1,12 @@
 <script lang="ts">
-	import { request, METHODS } from '$lib/js/restClient';
-    import TableData from '$components/ext/TableData.svelte';
-    import { browser } from '$app/env';
-    import Form from '$lib/components/ext/form/Form.svelte';
+    import EntityList from '$components/views/EntityList.svelte';
+    import { pageState, getTableDataColumns, getFiltersFieldset, getCounters } from '$lib/stores/page/client.list';
     import { session } from '$app/stores';
-    import { pageState, getTableDataColumns, getFiltersFieldset } from '$lib/stores/page/client.list';
-    import ProfileTooltip from '$lib/components/ProfileTooltip.svelte';
-    import { showProfileToolTip } from '$lib/js/utils';
-    import { faUsers, faUserClock, faStopwatch } from '@fortawesome/free-solid-svg-icons';
-    import TableDataCountTile from '$components/stats/TableDataCountTile.svelte';
-    import SingleCountTile from '$components/stats/SingleCountTile.svelte';
-    import { FieldType } from '$lib/js/form';
-
-    let isLoading = false;
-    let columns = getTableDataColumns($session);
     
+    const counters = getCounters();
+    const columns = getTableDataColumns($session);
     let filterFields = [];
     (async () => filterFields = await getFiltersFieldset($session))();
-
-    let clients = [];
-    let totalEntries = 0;
-    let perPage = $pageState.tableData.perPage;
-    let offset = $pageState.tableData.offset;
-    let filters = $pageState.filters;
-    async function fetchClients() {
-        $pageState.filters = filters;
-        let restFilters = JSON.parse(JSON.stringify(filters));
-
-        isLoading = true;
-        let res = await request('/clients', METHODS.GET, {
-            'include': 'region,region.address,address',
-            'limit': perPage,
-            'offset': offset,
-            ...restFilters,
-        });
-
-        if (res.ok) {
-            let result = await res.json();
-            totalEntries = result.meta.count;
-            offset = result.meta.offset;
-            clients = result.data;
-        }
-
-        isLoading= false;
-    }
 
     function resetFilters() {
         filterFields[0].fields[0].value = '';
@@ -54,194 +17,24 @@
         filterFields[1].fields[1].checked = false;
         filterFields = filterFields;
         
-        filters['status'] = 'ACTIVE';
-        delete filters['zone'];
-        delete filters['q'];
-        delete filters['region'];
-        delete filters['clockedIn'];
-        delete filters['inactive'];
-    }
-
-    async function onPerPageChange(event) {
-        perPage = event.detail.perPage;
-        $pageState.tableData.perPage = perPage;
-        await fetchClients();
-    }
-
-    async function onPageChange(event) {
-        offset = event.detail.pageNumber * perPage;
-        $pageState.tableData.offset = offset;
-        await fetchClients();
-    }
-
-    async function onFilterChange(event) {
-        offset = 0;
-        const field = event.detail.field;
-        let name = field.name;
-        if (name === 'q' && field.value.length !== 0 && field.value.length < 4) {
-            return;
-        }
-
-        filters[name] = field.value;
-        if (!field.value || (field.type === FieldType.CHECKBOX && !field.checked)) {
-            delete filters[field.name];
-        }
-
-        await fetchClients();
-    }
-
-    let isLoadingActive = false;
-    let countActive = 0;
-    async function fetchActive() {
-        isLoadingActive = true;
-        countActive = await fetchCount({});
-        isLoadingActive = false;
-    }
-
-    function onClickActive() {
-        resetFilters();
-        fetchClients();
-    }
-
-    let isLoadingClockIn = false;
-    let countClockIn = 0;
-    async function fetchClockIn() {
-        isLoadingClockIn = true;
-        countClockIn = await fetchCount({clockedIn: true});
-        isLoadingClockIn = false;
-    }
-
-    function onClickClockIn() {
-        resetFilters();
-        filterFields[1].fields[0].checked = true;
-        filters['clockedIn'] = true;
-
-        fetchClients();
-    }
-
-    let isLoadingInactive = false;
-    let countInactive = 0;
-    async function fetchInactive() {
-        isLoadingInactive = true;
-        countInactive = await fetchCount({inactive: true});
-        isLoadingInactive = false;
-    }
-
-    function onClickInactive() {
-        resetFilters();
-        filterFields[1].fields[1].checked = true;
-        filters['inactive'] = true;
-
-        fetchClients();
-    }
-
-    async function fetchCount(filters) {
-        let res = await request('/clients', METHODS.GET, {status: 'ACTIVE', include: 'id', limit: 1, ...filters});
-        if (!res.ok) {
-            return 0;
-        }
-        
-        let result = await res.json();
-        return result.meta.count;
-    }
-
-    let tooltipProfile = null;
-    function onCellEnter(event) {
-        tooltipProfile = showProfileToolTip(event, clients, 'cell-avatar', '.page-client-list .wrapper-profile-tooltip');
-    }
-
-    function onCellLeave() {
-        tooltipProfile = null;
-    }
-
-    if (browser) {
-        session.subscribe(async () => {
-            fetchClients();
-            fetchActive();
-            fetchInactive();
-            fetchClockIn();
-        });
-
-        (async () => {
-            fetchClients();
-            fetchActive();
-            fetchInactive();
-            fetchClockIn();
-        })();
+        $pageState.filters['status'] = 'ACTIVE';
+        delete $pageState.filters['zone'];
+        delete $pageState.filters['q'];
+        delete $pageState.filters['region'];
+        delete $pageState.filters['clockedIn'];
+        delete $pageState.filters['inactive'];
     }
 </script>
 
-<div class="wrapper-content">
-    <div class="stats">
-        <TableDataCountTile count={totalEntries} />
-        <SingleCountTile icon={faUsers} on:link-click={onClickActive} count={countActive} isLoading={isLoadingActive} text="Active Clients" />
-        <SingleCountTile icon={faStopwatch} on:link-click={onClickInactive} count={countInactive} isLoading={isLoadingInactive} text="Inactive Clients" />
-        <SingleCountTile icon={faUserClock} on:link-click={onClickClockIn} count={countClockIn} isLoading={isLoadingClockIn} text="Clocked-In Clients" />
-    </div>
-    <div class="content"><div class="page-client-list">
-        <ProfileTooltip profile={tooltipProfile} active={Boolean(tooltipProfile)} />
-        <div class="filters"><Form fieldsets={filterFields} on:change={onFilterChange}><div slot="submit"></div></Form></div>
-        <TableData 
-            columns={columns}
-            entries={clients}
-            isLoading={isLoading}
-            perPage={perPage}
-            offset={offset}
-            totalEntries={totalEntries}
-            on:page-change={onPageChange}
-            on:per-page-change={onPerPageChange}
-            on:cell-enter={onCellEnter}
-            on:cell-leave={onCellLeave}
-            uid="id"
-        />
-    </div>
-</div></div>
+<EntityList
+    id='client'
+    restInclude='region,region.address,address'
+    counters={counters}
+    columns={columns}
+    filterFields={filterFields}
+    pageState={pageState}
+    resetFilters={resetFilters}
+/>
 
 <style lang="css">
-    .wrapper-content {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .page-client-list :global(.filters form) {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .page-client-list :global(.filters .wrapper-checkbox) {
-        float: left;
-    }
-
-    .page-client-list :global(td) {
-        position: relative;
-    }
-
-    .page-client-list .filters :global(form),
-    .page-client-list .filters :global(fieldset) {
-        display: flex;
-    }
-
-    .page-client-list :global(.wrapper-table-data) {
-        font-size: .75em;
-    }
-
-    .page-client-list :global(.cell-checkbox) {
-        width: 1%;
-    }
-
-    .page-client-list :global(.cell-uid) {
-        width: 5%;
-    }
-
-    .page-client-list :global(.cell-phone) {
-        width: 10%;
-    }
-
-    .page-client-list :global(.cell-region) {
-        width: 15%;
-    }
-
-    .page-client-list :global(td.cell-phone) {
-        text-align: center;
-    }
 </style>

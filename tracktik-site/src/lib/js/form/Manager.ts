@@ -26,6 +26,10 @@ export class Manager {
 
     getField(name: string): Field {
         let foundField = undefined;
+        if (!this.fieldsets) {
+            return undefined;
+        }
+
         this.fieldsets.forEach(fieldset => {
             fieldset.fields.forEach(field => {
                 if (field.name == name) {
