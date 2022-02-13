@@ -1,13 +1,6 @@
 
 .wrapper-content {
     .stats {
-        margin: 15px;
-        margin-bottom: 0;
-        display: flex;
-        flex-direction: row;
-        gap: 15px;
-        z-index: 1;
-
         .wrapper-stat-tile {
             position: relative;
             border-radius: var(--border-radius);

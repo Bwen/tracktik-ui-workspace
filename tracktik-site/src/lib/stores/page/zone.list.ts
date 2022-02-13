@@ -1,7 +1,6 @@
 import { browser } from '$app/env';
 import { FieldType } from '$form';
 import type { Fieldset, Field } from '$form';
-import Checkbox from '$components/ext/form/Checkbox.svelte';
 import UID from '$components/UID.svelte';
 import Link from '$components/ext/Link.svelte';
 import { t } from '$lib/i18n';
@@ -73,15 +72,7 @@ export function getCounters() {
 }
 
 export function getTableDataColumns(session) {
-    let columns: ColumnDefinition[] = [
-        {css: "cell-checkbox",
-            component: Checkbox, 
-            componentProps: [
-                {name: 'value', key: 'id'},
-                {name: 'name', raw: 'employeIds'},
-            ]
-        },
-    ];
+    let columns: ColumnDefinition[] = [];
 
     if (session.auth.scopes.regions.length > 1) {
         columns.push({css: 'cell-region', key: 'region.name', text: $t('common.region')});

@@ -3,15 +3,40 @@
     border-bottom: 1px solid rgb(var(--content-border));
     font-size: .75em;
 
+    table.selectable-rows {
+        tbody {
+            tr {
+                &:hover,
+                &.selected {
+                    background-color: rgba(var(--button-primary-bg-light), 15%);
+                }
+
+                &:hover:nth-child(even),
+                &.selected:nth-child(even) {
+                    background-color: rgba(var(--button-primary-bg-light), 30%);
+                }
+            }
+        }
+    }
+
     table {
         border-collapse: collapse;
+
+        thead tr:nth-child(1) th.cell-checkbox,
+        tbody tr td.cell-checkbox {
+            width: 18px;
+
+            [type="checkbox"] {
+                margin: 0;
+            }
+        }
 
         thead {
             tr:nth-child(1) th {
                 font-weight: 500;
-                box-shadow: 0 0px 0 1px rgb(var(--content-border-light)) inset;
+                box-shadow: 0 1px 0 rgb(var(--content-border-light)) inset;
                 border-right: 1px solid rgb(var(--content-border));
-                padding: 3px;
+                padding: 6px;
             }
         }
 
@@ -21,16 +46,6 @@
 
                 &:nth-child(even) {
                     background-color: rgba(var(--content-border-light), 10%);
-                }
-
-                &:hover,
-                &.selected {
-                    background-color: rgba(var(--button-primary-bg-light), 15%);
-                }
-
-                &:hover:nth-child(even),
-                &.selected:nth-child(even) {
-                    background-color: rgba(var(--button-primary-bg-light), 30%);
                 }
 
                 td {

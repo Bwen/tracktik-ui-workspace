@@ -35,12 +35,21 @@
 		"active": "Active",
 		"inactive": "Inactif",
 		"mainContact": "Contact principal",
+		"clocked-in": "Pointé",
 		"filters": {
 			"department": "Filtrer par Département",
 			"zone": "Filtrer par Zone",
 			"status": "Filtrer par Statut",
 			"region": "Filtrer par Region",
 			"keyword": "Tapez pour Filtrer"
+		},
+		"filtered-entries": "Entrées filtrées",
+		"statuses": {
+			"ACTIVE": "Active",
+			"BANNED": "Banni",
+			"INACTIVE": "Inactif",
+			"TERMINATED": "Résilié",
+			"CLOSED": "Fermé"
 		}
 	},
 	"clientType": {
@@ -111,6 +120,13 @@
 				"timesheets": "Feuilles de temps",
 				"skills": "Compétences et attributs",
 				"schedules": "Horaires"
+			},
+			"list": {
+				"counters": {
+					"active": "Clients actifs",
+					"inactive": "Clients inactifs",
+					"clocked": "Clients pointés"
+				}
 			}
 		},
 		"employee": {
@@ -153,6 +169,23 @@
 				"timesheets": "Feuilles de temps",
 				"skills": "Compétences et attributs",
 				"schedules": "Horaires"
+			},
+			"list": {
+				"region": "Région",
+				"name": "Nom",
+				"title": "Titre",
+				"phone": "Téléphone",
+				"actions": {
+					"add-employee": "Ajouter un employé",
+					"import-employees": "Importer des employés",
+					"bulk-action": "Changement en masse"
+				},
+				"warning-import": "Nécessite au moins une entrée sélectionnée",
+				"counters": {
+					"active": "Employés actifs",
+					"inactive": "Employés inactifs",
+					"clocked": "Employés pointés"
+				}
 			}
 		},
 		"index": {

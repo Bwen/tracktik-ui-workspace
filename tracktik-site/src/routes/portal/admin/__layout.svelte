@@ -55,4 +55,20 @@
 </div>
 
 <style lang="css">
+    .layout-admin {
+        flex-direction: row;
+    }
+    
+    :global([class^="layout-"]) {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        flex-grow: 1;
+        align-items: stretch;
+    }
+
+    :global([class*="-content"]) {
+        display: flex;
+        flex-grow: 1;
+    }
 </style>

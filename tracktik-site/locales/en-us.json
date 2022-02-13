@@ -35,12 +35,21 @@
 		"active": "Active",
 		"inactive": "Inactive",
 		"mainContact": "Main Contact",
+		"clocked-in": "Clocked-in",
 		"filters": {
 			"department": "Filter By Department",
 			"zone": "Filter by Zone",
 			"status": "Filter by Status",
 			"region": "Filter by Region",
 			"keyword": "Type to Filter"
+		},
+		"filtered-entries": "Filtered Entries",
+		"statuses": {
+			"ACTIVE": "Active",
+			"BANNED": "Banned",
+			"INACTIVE": "Inactive",
+			"TERMINATED": "Terminated",
+			"CLOSED": "Closed"
 		}
 	},
 	"clientType": {
@@ -105,6 +114,13 @@
 			"title": "Clients",
 			"sub-menu": {
 				"zones": "Zones (Groups)"
+			},
+			"list": {
+				"counters": {
+					"active": "Active Clients",
+					"inactive": "Inactive Clients",
+					"clocked": "Clocked-In Clients"
+				}
 			}
 		},
 		"employee": {
@@ -152,7 +168,18 @@
 				"region": "Region",
 				"name": "Name",
 				"title": "Title",
-				"phone": "Phone"
+				"phone": "Phone",
+				"actions": {
+					"add-employee": "Add Employee",
+					"import-employees": "Import Employees",
+					"bulk-action": "Bulk Change"
+				},
+				"warning-import": "Requires at least one entry selected",
+				"counters": {
+					"active": "Active Employees",
+					"inactive": "Inactive Employees",
+					"clocked": "Clocked-In Employees"
+				}
 			}
 		},
 		"index": {

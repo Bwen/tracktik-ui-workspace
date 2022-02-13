@@ -2,7 +2,6 @@ import { browser } from '$app/env';
 import { FieldType } from '$form';
 import type { Fieldset, Field } from '$form';
 import Phone from '$components/ext/Phone.svelte';
-import Checkbox from '$components/ext/form/Checkbox.svelte';
 import UID from '$components/UID.svelte';
 import Avatar from '$components/Avatar.svelte';
 import Link from '$components/ext/Link.svelte';
@@ -54,7 +53,7 @@ export function getCounters() {
             filter: {},
             field: null,
             icon: faUsers,
-            text: 'Active Employees',
+            text: $t('page.employee.list.counters.active'),
         },
         inactive: {
             count: 0,
@@ -62,7 +61,7 @@ export function getCounters() {
             filter: {inactive: true},
             field: [1,1],
             icon: faStopwatch,
-            text: 'Inactive Employees',
+            text: $t('page.employee.list.counters.inactive'),
         },
         clockedIn: {
             count: 0,
@@ -70,21 +69,13 @@ export function getCounters() {
             filter: {clockedIn: true},
             field: [1,0],
             icon: faUserClock,
-            text: 'Clocked-In Employees',
+            text: $t('page.employee.list.counters.clocked'),
         },
     };
 }
 
 export function getTableDataColumns(session) {
-    let columns: ColumnDefinition[] = [
-        {css: "cell-checkbox",
-            component: Checkbox, 
-            componentProps: [
-                {name: 'value', key: 'id'},
-                {name: 'name', raw: 'employeIds'},
-            ]
-        },
-    ];
+    let columns: ColumnDefinition[] = [];
 
     if (session.auth.scopes.regions.length > 1) {
         columns.push({css: 'cell-region', key: 'region.name', text: $t('common.region')});
@@ -163,7 +154,7 @@ function getStatusOptions() {
     let statusOptions = [];
     for (const status in EmployeesItem.status) {
         statusOptions.push({
-            text: status,
+            text: $t(`common.statuses.${status}`),
             value: status,
         });
     }
@@ -249,7 +240,7 @@ export async function getFiltersFieldset(session): Promise<Fieldset[]> {
                     name: 'clockedIn',
                     type: FieldType.CHECKBOX,
                     value: 1,
-                    label: 'Clocked-in',
+                    label: $t('common.clocked-in'),
                     checked: checkedClockedIn,
                 },
                 {
@@ -257,7 +248,7 @@ export async function getFiltersFieldset(session): Promise<Fieldset[]> {
                     name: 'inactive',
                     type: FieldType.CHECKBOX,
                     value: 1,
-                    label: 'Inactive',
+                    label: $t('common.inactive'),
                     checked: checkedInactive,
                 }
             ]

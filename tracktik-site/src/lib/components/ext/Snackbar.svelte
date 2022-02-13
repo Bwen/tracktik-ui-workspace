@@ -136,8 +136,8 @@
         opacity: 0;
         transform: translateY(150px);
         transition:
-            opacity .5s ease-in-out,
-            transform .5s ease-in-out
+            opacity .25s ease-out,
+            transform .25s ease-out
         ;
     }
 
@@ -145,8 +145,8 @@
         opacity: 1;
         transform: translateY(0px);
         transition: 
-            opacity .5s ease-in-out,
-            transform .5s ease-in-out
+            opacity .25s ease-out,
+            transform .25s ease-out
         ;
     }
 </style>

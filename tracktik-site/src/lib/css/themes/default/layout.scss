@@ -19,23 +19,6 @@ body, #svelte, main {
     }
 }
 
-[class^="layout-"] {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    flex-grow: 1;
-    align-items: stretch;
-}
-
-[class*="-content"] {
-    display: flex;
-    flex-grow: 1;
-}
-
-.layout-admin {
-    flex-direction: row;
-}
-
 .layout-auth {
     align-items: center;
 }

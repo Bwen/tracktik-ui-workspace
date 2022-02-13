@@ -9,7 +9,7 @@
 <div class="wrapper-stat-tile table-data-count">
     <Fa icon={faList} />
     <div>{$number(count)}</div>
-    <label>Filtered Entries</label>
+    <label>{$t('common.filtered-entries')}</label>
 </div>
 
 <style lang="scss">

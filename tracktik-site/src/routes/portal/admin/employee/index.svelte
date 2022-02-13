@@ -2,6 +2,10 @@
     import EntityList from '$components/views/EntityList.svelte';
     import { pageState, getTableDataColumns, getFiltersFieldset, getCounters } from '$lib/stores/page/employee.list';
     import { session } from '$app/stores';
+	import { t } from '$lib/i18n';
+    import { SnackType, addSnack } from '$lib/stores/snack-bar';
+    import { faUsersCog, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+    import { faElevator } from '@fortawesome/free-solid-svg-icons/faElevator';
     
     const counters = getCounters();
     const columns = getTableDataColumns($session);
@@ -27,6 +31,20 @@
         delete $pageState.filters['inactive'];
     }
 
+    let actions = [
+        {id: 'add-employee', text: $t('page.employee.list.actions.add-employee'), icon: faUserPlus},
+        {id: 'import-employees', text: $t('page.employee.list.actions.import-employees'), icon: faElevator},
+        {id: 'bulk-action', text: $t('page.employee.list.actions.bulk-action'), icon: faUsersCog},
+    ];
+
+    function onActionClick(event) {
+        if (event.detail.hyperlink.id === 'bulk-action') {
+            let checkboxes = document.querySelectorAll('.table-data input[name="entityIds"]:checked');
+            if (!checkboxes.length) {
+                addSnack({text: $t('page.employee.list.warning-import'), type: SnackType.Warning});
+            }
+        }
+    }
 </script>
 
 <EntityList
@@ -37,6 +55,9 @@
     filterFields={filterFields}
     pageState={pageState}
     resetFilters={resetFilters}
+    selectableRows={true}
+    actions={actions}
+    on:action-click={onActionClick}
 />
 
 <style lang="css">

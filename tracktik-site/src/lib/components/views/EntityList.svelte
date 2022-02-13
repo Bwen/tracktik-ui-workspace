@@ -9,6 +9,7 @@
     import TableDataCountTile from '$components/stats/TableDataCountTile.svelte';
     import SingleCountTile from '$components/stats/SingleCountTile.svelte';
     import { FieldType } from '$lib/js/form';
+    import type { Link as LinkType } from '$lib/@types/Link.type';
 
     export let id;
     export let pageState;
@@ -17,6 +18,8 @@
     export let counters = {};
     export let restInclude = '';
     export let resetFilters = () => {};
+    export let selectableRows = false;
+    export let actions: LinkType[] = [];
 
     let isLoading = false;
     let entities = [];
@@ -144,7 +147,7 @@
             on:link-click={() => onClickCounter(type)} 
             count={counter.count} 
             isLoading={counter.isLoading}
-            text={counter.text} 
+            text={counter.text}
         />
         {/each}
     </div>
@@ -158,10 +161,13 @@
             perPage={$pageState.tableData.perPage}
             offset={$pageState.tableData.offset}
             totalEntries={totalEntries}
+            selectableRows={selectableRows}
+            actions={actions}
             on:page-change={onPageChange}
             on:per-page-change={onPerPageChange}
             on:cell-enter={onCellEnter}
             on:cell-leave={onCellLeave}
+            on:action-click
             uid="id"
         />
     </div></div>
@@ -171,6 +177,34 @@
     .wrapper-content {
         display: flex;
         flex-direction: column;
+    }
+
+    .filters :global(form),
+    .filters :global(fieldset) {
+        display: flex;
+    }
+    
+    .filters :global(.wrapper-fieldset){
+        margin: .75em;
+    }
+
+    .filters :global(.wrapper-fieldset:nth-child(1)) {
+        margin-bottom: 0;
+    }
+
+    .filters :global(div.wrapper-field) {
+        padding: 0;
+        margin: 0;
+        margin-right: .5em;
+    }
+
+    .stats {
+        margin: 15px;
+        margin-bottom: 0;
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        z-index: 1;
     }
 
     div[class^='page-'][class*='-list']  :global(.filters form) {
@@ -184,10 +218,6 @@
 
     div[class^='page-'][class*='-list'] :global(.wrapper-field) {
         padding-bottom: 0;
-    }
-
-    div[class^='page-'][class*='-list'] :global(.cell-checkbox) {
-        width: 1%;
     }
 
     div[class^='page-'][class*='-list'] :global(.cell-uid) {
