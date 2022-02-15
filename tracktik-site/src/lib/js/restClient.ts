@@ -23,7 +23,7 @@ async function request(path: string, method: METHODS = METHODS.GET, params: obje
 
         const ip = get(clientIp);
         if (ip) {
-            headers['HTTP_X_FORWARDED_FOR'] = ip;
+            headers['rest_forwarded_for'] = ip;
         }
 
         let url = '/rest';
@@ -38,7 +38,7 @@ async function request(path: string, method: METHODS = METHODS.GET, params: obje
             method: 'POST',
             body: JSON.stringify(params),
         });
-        
+
         if (res.status === 401 && '/auth' !== path) {
             if (browser) {
                 location.reload();
