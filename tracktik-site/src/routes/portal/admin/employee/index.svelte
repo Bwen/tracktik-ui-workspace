@@ -4,8 +4,7 @@
     import { session } from '$app/stores';
 	import { t } from '$lib/i18n';
     import { SnackType, addSnack } from '$lib/stores/snack-bar';
-    import { faUsersCog, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-    import { faElevator } from '@fortawesome/free-solid-svg-icons/faElevator';
+    import { faUsersCog, faUserPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
     import { modal as modalComponent, props as modalProps } from '$lib/stores/modal';
     import BulkChange from '$components/BulkChange.svelte';
     
@@ -35,7 +34,7 @@
 
     let actions = [
         {id: 'add-employee', text: $t('page.employee.list.actions.add-employee'), icon: faUserPlus},
-        {id: 'import-employees', text: $t('page.employee.list.actions.import-employees'), icon: faElevator},
+        {id: 'import-employees', text: $t('page.employee.list.actions.import-employees'), icon: faUpload},
         {id: 'bulk-action', text: $t('page.employee.list.actions.bulk-action'), icon: faUsersCog},
     ];
 
