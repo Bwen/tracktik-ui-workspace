@@ -56,6 +56,15 @@
 </a>
 
 <style lang="css">
+    .wrapper-link {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
     a {
         cursor: pointer;
     }

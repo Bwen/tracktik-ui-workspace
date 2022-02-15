@@ -7,6 +7,7 @@
     import type { Link as LinkType } from '$lib/@types/Link.type';
     import Checkbox from '$components/ext/form/Checkbox.svelte';
     import Link from '$components/ext/Link.svelte';
+import { faBox } from '@fortawesome/free-solid-svg-icons';
 
     const dispatch = createEventDispatcher();
     export let isLoading = false;
@@ -57,6 +58,7 @@
         });
 
         enableActions = event.detail.checked;
+        dispatch('select-row', {row: null, checked: box.checked});
     }
 
     function onClickRow(event) {
@@ -76,10 +78,11 @@
             } else {
                 row.classList.remove('selected');
             }
-        }
 
-        const checkboxes = event.target.closest('tbody').querySelectorAll('input[type="checkbox"]:checked');
-        enableActions = checkboxes.length > 0 ? true : false;
+            const checkboxes = event.target.closest('tbody').querySelectorAll('input[type="checkbox"]:checked');
+            enableActions = checkboxes.length > 0 ? true : false;
+            dispatch('select-row', {row, checked: checkbox.checked});
+        }
     }
 
     function onActionClick(event) {

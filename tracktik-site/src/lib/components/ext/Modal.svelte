@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { modal as modalComponent } from '$lib/stores/modal';
+    import { onDestroy } from 'svelte';
+    import { modal as modalComponent, props as modalProps } from '$lib/stores/modal';
 
     let active = false;
     modalComponent.subscribe((value) => {
@@ -26,6 +27,11 @@
         event.preventDefault();
         active = false;
     }
+
+    onDestroy(() => {
+        $modalComponent = undefined;
+        $modalProps = {};
+    });
 </script>
 <svelte:head>
 {#if active}
@@ -48,7 +54,7 @@
 
 <div class="overlay-modal" class:active on:mouseup={onModalClick}>
     <div class="wrapper-modal"><div class="wrapper-content"><div class="content">
-        {#if $modalComponent}<svelte:component this={$modalComponent} />{/if}
+        {#if $modalComponent}<svelte:component this={$modalComponent} {...$modalProps} />{/if}
     </div></div></div>
 </div>
 

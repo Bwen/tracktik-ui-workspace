@@ -1,9 +1,9 @@
 <script lang="ts">
+    import TableData from '$components/ext/TableData.svelte';
     import { browser } from '$app/env';
     import { session } from '$app/stores';
     import { showProfileToolTip } from '$lib/js/utils';
     import { request, METHODS } from '$lib/js/restClient';
-    import TableData from '$components/ext/TableData.svelte';
     import Form from '$lib/components/ext/form/Form.svelte';
     import ProfileTooltip from '$lib/components/ProfileTooltip.svelte';
     import TableDataCountTile from '$components/stats/TableDataCountTile.svelte';
@@ -123,6 +123,13 @@
         tooltipProfile = null;
     }
 
+    function onSelectRow(event) {
+        // if select all
+        if (event.detail.row === null) {
+            return;
+        }
+    }
+
     if (browser) {
         session.subscribe(() => {
             fetchEntries();
@@ -167,6 +174,7 @@
             on:per-page-change={onPerPageChange}
             on:cell-enter={onCellEnter}
             on:cell-leave={onCellLeave}
+            on:select-row={onSelectRow}
             on:action-click
             uid="id"
         />
@@ -179,17 +187,20 @@
         flex-direction: column;
     }
 
-    .filters :global(form),
+    .filters :global(form) {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
     .filters :global(fieldset) {
         display: flex;
+        flex-wrap: wrap;
     }
     
     .filters :global(.wrapper-fieldset){
         margin: .75em;
-    }
-
-    .filters :global(.wrapper-fieldset:nth-child(1)) {
-        margin-bottom: 0;
     }
 
     .filters :global(div.wrapper-field) {
@@ -205,11 +216,6 @@
         flex-direction: row;
         gap: 15px;
         z-index: 1;
-    }
-
-    div[class^='page-'][class*='-list']  :global(.filters form) {
-        display: flex;
-        flex-direction: column;
     }
 
     div[class^='page-'][class*='-list'] .filters :global(.wrapper-checkbox) {

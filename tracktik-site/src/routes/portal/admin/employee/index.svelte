@@ -6,6 +6,8 @@
     import { SnackType, addSnack } from '$lib/stores/snack-bar';
     import { faUsersCog, faUserPlus } from '@fortawesome/free-solid-svg-icons';
     import { faElevator } from '@fortawesome/free-solid-svg-icons/faElevator';
+    import { modal as modalComponent, props as modalProps } from '$lib/stores/modal';
+    import BulkChange from '$components/BulkChange.svelte';
     
     const counters = getCounters();
     const columns = getTableDataColumns($session);
@@ -42,7 +44,14 @@
             let checkboxes = document.querySelectorAll('.table-data input[name="entityIds"]:checked');
             if (!checkboxes.length) {
                 addSnack({text: $t('page.employee.list.warning-import'), type: SnackType.Warning});
+                return;
             }
+
+            $modalProps = {
+                icon: faUsersCog,
+                title: 'BulkChange',
+            };
+            $modalComponent = BulkChange;
         }
     }
 </script>
