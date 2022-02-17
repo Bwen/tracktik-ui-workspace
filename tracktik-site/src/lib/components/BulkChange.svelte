@@ -9,6 +9,7 @@
     import { getRegionOptions } from '$lib/js/utils';
     import Form from '$components/ext/form/Form.svelte';
     import { Fieldset, FieldType } from '$form';
+import Select from './ext/form/Select.svelte';
 
     export let id: string = '';
     export let icon: IconDefinition = null;
@@ -151,7 +152,9 @@
         const selectedActions = [];
         let fields = event.detail.fieldsets[0].fields;
         fields.forEach(field => {
+            document.querySelector(`[data-name="${field.id}"]`).classList.add('hidden');
             if (field.checked) {
+                document.querySelector(`[data-name="${field.id}"]`).classList.remove('hidden');
                 selectedActions.push(field.id);
             }
         });
@@ -226,6 +229,10 @@
     .wrapper-bulk-change .content,
     .wrapper-bulk-change :global(.wrapper-fieldset) {
         padding: 0 1em;
+    }
+
+    .wrapper-bulk-change :global(.wrapper-fieldset.hidden) {
+        display: none;
     }
 
     .wrapper-bulk-change :global(.wrapper-field) {
