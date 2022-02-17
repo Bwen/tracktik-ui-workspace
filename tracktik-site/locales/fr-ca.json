@@ -38,10 +38,12 @@
 		"clocked-in": "Pointé",
 		"filters": {
 			"department": "Filtrer par Département",
-			"zone": "Filtrer par Zone",
-			"status": "Filtrer par Statut",
-			"region": "Filtrer par Region",
-			"keyword": "Tapez pour Filtrer"
+			"zone": "Filtrer Zone",
+			"status": "Filtrer Statut",
+			"region": "Filtrer Region",
+			"keyword": "Tapez pour Filtrer",
+			"siteOrZone": "Filtrer le site ou la zone",
+			"employeeClass": "Filtrer la catégorie d'employés"
 		},
 		"filtered-entries": "Entrées filtrées",
 		"statuses": {
@@ -50,7 +52,8 @@
 			"INACTIVE": "Inactif",
 			"TERMINATED": "Résilié",
 			"CLOSED": "Fermé"
-		}
+		},
+		"warning-bulk": "Nécessite au moins une entrée sélectionnée"
 	},
 	"clientType": {
         "CLIENT": "CLIENT",
@@ -180,7 +183,6 @@
 					"import-employees": "Importer des employés",
 					"bulk-action": "Changement en masse"
 				},
-				"warning-import": "Nécessite au moins une entrée sélectionnée",
 				"counters": {
 					"active": "Employés actifs",
 					"inactive": "Employés inactifs",

@@ -38,10 +38,12 @@
 		"clocked-in": "Clocked-in",
 		"filters": {
 			"department": "Filter By Department",
-			"zone": "Filter by Zone",
-			"status": "Filter by Status",
-			"region": "Filter by Region",
-			"keyword": "Type to Filter"
+			"zone": "Filter Zone",
+			"status": "Filter Status",
+			"region": "Filter Region",
+			"keyword": "Type to Filter",
+			"siteOrZone": "Filter site or zone",
+			"employeeClass": "Filter Employee Class"
 		},
 		"filtered-entries": "Filtered Entries",
 		"statuses": {
@@ -50,7 +52,8 @@
 			"INACTIVE": "Inactive",
 			"TERMINATED": "Terminated",
 			"CLOSED": "Closed"
-		}
+		},
+		"warning-bulk": "Requires at least one entry selected"
 	},
 	"clientType": {
         "CLIENT": "CLIENT",
@@ -174,7 +177,6 @@
 					"import-employees": "Import Employees",
 					"bulk-action": "Bulk Change"
 				},
-				"warning-import": "Requires at least one entry selected",
 				"counters": {
 					"active": "Active Employees",
 					"inactive": "Inactive Employees",

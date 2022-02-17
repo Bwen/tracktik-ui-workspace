@@ -3,10 +3,7 @@
     import { pageState, getTableDataColumns, getFiltersFieldset, getCounters } from '$lib/stores/page/employee.list';
     import { session } from '$app/stores';
 	import { t } from '$lib/i18n';
-    import { SnackType, addSnack } from '$lib/stores/snack-bar';
     import { faUsersCog, faUserPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
-    import { modal as modalComponent, props as modalProps } from '$lib/stores/modal';
-    import BulkChange from '$components/BulkChange.svelte';
     
     const counters = getCounters();
     const columns = getTableDataColumns($session);
@@ -38,21 +35,6 @@
         {id: 'bulk-action', text: $t('page.employee.list.actions.bulk-action'), icon: faUsersCog},
     ];
 
-    function onActionClick(event) {
-        if (event.detail.hyperlink.id === 'bulk-action') {
-            let checkboxes = document.querySelectorAll('.table-data input[name="entityIds"]:checked');
-            if (!checkboxes.length) {
-                addSnack({text: $t('page.employee.list.warning-import'), type: SnackType.Warning});
-                return;
-            }
-
-            $modalProps = {
-                icon: faUsersCog,
-                title: 'BulkChange',
-            };
-            $modalComponent = BulkChange;
-        }
-    }
 </script>
 
 <EntityList
@@ -65,7 +47,6 @@
     resetFilters={resetFilters}
     selectableRows={true}
     actions={actions}
-    on:action-click={onActionClick}
 />
 
 <style lang="css">

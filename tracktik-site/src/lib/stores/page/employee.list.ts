@@ -150,7 +150,7 @@ async function getZoneOptions(regions) {
     return zoneOptions;
 }
 
-function getStatusOptions() {
+export function getStatusOptions() {
     let statusOptions = [];
     for (const status in EmployeesItem.status) {
         statusOptions.push({

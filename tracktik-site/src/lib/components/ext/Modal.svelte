@@ -15,6 +15,8 @@
     function handleKeydown(event){
         if(event.key=="Escape") {
             active = false;
+            $modalComponent = undefined;
+            $modalProps = {};
         } 
     }
 
@@ -26,6 +28,8 @@
         
         event.preventDefault();
         active = false;
+        $modalComponent = undefined;
+        $modalProps = {};
     }
 
     onDestroy(() => {
@@ -74,7 +78,7 @@
 		align-items: center;
 		justify-content: center;
     }
-    
+
     .overlay-modal.active {
         visibility: visible;
     }

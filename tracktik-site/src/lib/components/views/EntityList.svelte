@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { t } from '$lib/i18n';
+    import { faUsersCog } from '@fortawesome/free-solid-svg-icons';
     import TableData from '$components/ext/TableData.svelte';
     import { browser } from '$app/env';
     import { session } from '$app/stores';
@@ -10,6 +12,9 @@
     import SingleCountTile from '$components/stats/SingleCountTile.svelte';
     import { FieldType } from '$lib/js/form';
     import type { Link as LinkType } from '$lib/@types/Link.type';
+    import { SnackType, addSnack } from '$lib/stores/snack-bar';
+    import { modal as modalComponent, props as modalProps } from '$lib/stores/modal';
+    import BulkChange from '$components/BulkChange.svelte';
 
     export let id;
     export let pageState;
@@ -123,13 +128,6 @@
         tooltipProfile = null;
     }
 
-    function onSelectRow(event) {
-        // if select all
-        if (event.detail.row === null) {
-            return;
-        }
-    }
-
     if (browser) {
         session.subscribe(() => {
             fetchEntries();
@@ -142,6 +140,30 @@
     fetchEntries();
     for (let type in counters) {
         fetchCounter(type);
+    }
+
+    function onActionClick(event) {
+        if (event.detail.hyperlink.id === 'bulk-action') {
+            let checkboxes = document.querySelectorAll('.table-data input[name="entityIds"]:checked');
+            let effectedEntries = checkboxes.length;
+            if (!checkboxes.length) {
+                addSnack({text: $t('common.warning-bulk'), type: SnackType.Warning});
+                return;
+            }
+
+            if (document.querySelector('.table-data input[name="checkAll"]:checked')) {
+                effectedEntries = totalEntries;
+            }
+
+            $modalProps = {
+                id,
+                icon: faUsersCog,
+                title: 'BulkChange',
+                filters: $pageState.filters,
+                effectedEntries,
+            };
+            $modalComponent = BulkChange;
+        }
     }
 </script>
 
@@ -174,8 +196,7 @@
             on:per-page-change={onPerPageChange}
             on:cell-enter={onCellEnter}
             on:cell-leave={onCellLeave}
-            on:select-row={onSelectRow}
-            on:action-click
+            on:action-click={onActionClick}
             uid="id"
         />
     </div></div>

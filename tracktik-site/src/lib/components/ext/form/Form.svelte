@@ -135,7 +135,7 @@
     <LoadingBar isLoading={isLoading} />
     <form on:submit={onSubmit} id={formId}>
         {#each sanitizedFieldsets as fieldset}
-        <div class="wrapper-fieldset">
+        <div class="wrapper-fieldset" data-name={fieldset.name ?? ''}>
             <fieldset>
                 {#if fieldset.legend}<legend>{fieldset.legend}</legend>{/if}
                 {#each fieldset.fields as field}
@@ -173,5 +173,14 @@
 <style lang="css">
     .wrapper-form [type="submit"] {
         cursor: pointer;
+    }
+
+    .wrapper-form label {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 </style>

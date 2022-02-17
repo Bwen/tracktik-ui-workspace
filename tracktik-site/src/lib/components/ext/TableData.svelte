@@ -44,6 +44,7 @@ import { faBox } from '@fortawesome/free-solid-svg-icons';
         dispatch('cell-leave');
     }
 
+    let disabledSelectRows = false;
     let enableActions = false;
     function onCheckAll(event) {
         const checkboxes = document.querySelectorAll('.table-data tbody input[type="checkbox"]');
@@ -58,11 +59,16 @@ import { faBox } from '@fortawesome/free-solid-svg-icons';
         });
 
         enableActions = event.detail.checked;
-        dispatch('select-row', {row: null, checked: box.checked});
+        disabledSelectRows = enableActions;
+        dispatch('select-row', {row: null, checked: enableActions});
     }
 
     function onClickRow(event) {
         if (!selectableRows) {
+            return;
+        }
+
+        if (document.querySelector('.table-data input[name="checkAll"]:checked')) {
             return;
         }
 
@@ -136,7 +142,7 @@ import { faBox } from '@fortawesome/free-solid-svg-icons';
         <tbody>
         {#each pageEntries as entry, i}
             <tr id="row-{ uid ? entry[uid] : i}" on:click={onClickRow}>
-                {#if selectableRows}<td class='cell-checkbox'><Checkbox name="entityIds" value="{ uid ? entry[uid] : i}" /></td>{/if}
+                {#if selectableRows}<td class='cell-checkbox'><Checkbox name="entityIds" value="{ uid ? entry[uid] : i}" disabled="{disabledSelectRows}" /></td>{/if}
                 {#each columns as column}
                 <td class="{column.css || ''}" on:mouseenter={onCellMouseEnter} on:mouseleave={onCellMouseLeave}>
                     {#if column.parse}
